@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml:2:1-21:12
+ADDED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml:2:1-25:12
 	package
 		ADDED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml:3:5-53
 		INJECTED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml
@@ -14,7 +14,7 @@ ADDED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main
 		INJECTED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml
 		INJECTED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml
 application
-ADDED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml:5:5-19:19
+ADDED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml:5:5-23:19
 MERGED from [com.android.support:appcompat-v7:25.1.1] /home/trollpc/.android/build-cache/42e6b3dc33c7c3afddaa50aaddab8fdf69830801/output/AndroidManifest.xml:25:5-20
 MERGED from [com.android.support:support-v4:25.1.1] /home/trollpc/.android/build-cache/77fbd95217bdd96a68cdbc0909905642bd397b6e/output/AndroidManifest.xml:25:5-20
 MERGED from [com.android.support:support-fragment:25.1.1] /home/trollpc/.android/build-cache/d7e5dff2ce21d092db4e429b9872cca0263e545d/output/AndroidManifest.xml:25:5-20
@@ -37,10 +37,10 @@ MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /home/troll
 		ADDED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml:7:9-43
 	android:theme
 		ADDED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml:11:9-40
-activity#ntu.ce2006.swensens.hdbdesirabilityapp.MainActivity
+activity#ntu.ce2006.swensens.hdbdesirabilityapp.activity.MainActivity
 ADDED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml:12:9-18:20
 	android:name
-		ADDED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml:12:19-47
+		ADDED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml:12:19-56
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
 ADDED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml:13:13-17:29
 action#android.intent.action.MAIN
@@ -51,6 +51,22 @@ category#android.intent.category.LAUNCHER
 ADDED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml:16:17-77
 	android:name
 		ADDED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml:16:27-74
+activity#ntu.ce2006.swensens.hdbdesirabilityapp.activity.SearchActivity
+ADDED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml:19:9-61
+	android:name
+		ADDED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml:19:19-58
+activity#ntu.ce2006.swensens.hdbdesirabilityapp.activity.HistoryActivity
+ADDED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml:20:9-62
+	android:name
+		ADDED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml:20:19-59
+activity#ntu.ce2006.swensens.hdbdesirabilityapp.activity.ResultsActivity
+ADDED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml:21:9-62
+	android:name
+		ADDED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml:21:19-59
+activity#ntu.ce2006.swensens.hdbdesirabilityapp.activity.PinsActivity
+ADDED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml:22:9-68
+	android:name
+		ADDED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml:22:19-56
 uses-sdk
 INJECTED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 MERGED from [com.android.support:appcompat-v7:25.1.1] /home/trollpc/.android/build-cache/42e6b3dc33c7c3afddaa50aaddab8fdf69830801/output/AndroidManifest.xml:21:5-23:78

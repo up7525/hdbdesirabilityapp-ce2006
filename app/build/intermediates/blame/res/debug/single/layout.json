@@ -12,12 +12,20 @@
         "source": "/home/trollpc/.android/build-cache/42e6b3dc33c7c3afddaa50aaddab8fdf69830801/output/res/layout/abc_action_bar_title_item.xml"
     },
     {
+        "merged": "/home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/build/intermediates/res/merged/debug/layout/activity_pins.xml",
+        "source": "/home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/res/layout/activity_pins.xml"
+    },
+    {
         "merged": "/home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/build/intermediates/res/merged/debug/layout/abc_search_dropdown_item_icons_2line.xml",
         "source": "/home/trollpc/.android/build-cache/42e6b3dc33c7c3afddaa50aaddab8fdf69830801/output/res/layout/abc_search_dropdown_item_icons_2line.xml"
     },
     {
         "merged": "/home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/build/intermediates/res/merged/debug/layout/abc_alert_dialog_title_material.xml",
         "source": "/home/trollpc/.android/build-cache/42e6b3dc33c7c3afddaa50aaddab8fdf69830801/output/res/layout/abc_alert_dialog_title_material.xml"
+    },
+    {
+        "merged": "/home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/build/intermediates/res/merged/debug/layout/activity_history.xml",
+        "source": "/home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/res/layout/activity_history.xml"
     },
     {
         "merged": "/home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/build/intermediates/res/merged/debug/layout/notification_template_icon_group.xml",
@@ -112,6 +120,10 @@
         "source": "/home/trollpc/.android/build-cache/42e6b3dc33c7c3afddaa50aaddab8fdf69830801/output/res/layout/support_simple_spinner_dropdown_item.xml"
     },
     {
+        "merged": "/home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/build/intermediates/res/merged/debug/layout/activity_search.xml",
+        "source": "/home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/res/layout/activity_search.xml"
+    },
+    {
         "merged": "/home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/build/intermediates/res/merged/debug/layout/abc_screen_content_include.xml",
         "source": "/home/trollpc/.android/build-cache/42e6b3dc33c7c3afddaa50aaddab8fdf69830801/output/res/layout/abc_screen_content_include.xml"
     },
@@ -162,5 +174,9 @@
     {
         "merged": "/home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/build/intermediates/res/merged/debug/layout/notification_template_lines_media.xml",
         "source": "/home/trollpc/.android/build-cache/42e6b3dc33c7c3afddaa50aaddab8fdf69830801/output/res/layout/notification_template_lines_media.xml"
+    },
+    {
+        "merged": "/home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/build/intermediates/res/merged/debug/layout/activity_results.xml",
+        "source": "/home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/res/layout/activity_results.xml"
     }
 ]

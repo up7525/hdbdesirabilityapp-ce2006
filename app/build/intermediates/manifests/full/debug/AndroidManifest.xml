@@ -15,13 +15,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <activity android:name="ntu.ce2006.swensens.hdbdesirabilityapp.MainActivity" >
+        <activity android:name="ntu.ce2006.swensens.hdbdesirabilityapp.activity.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="ntu.ce2006.swensens.hdbdesirabilityapp.activity.SearchActivity" />
+        <activity android:name="ntu.ce2006.swensens.hdbdesirabilityapp.activity.HistoryActivity" />
+        <activity android:name="ntu.ce2006.swensens.hdbdesirabilityapp.activity.ResultsActivity" />
+        <activity android:name="ntu.ce2006.swensens.hdbdesirabilityapp.activity.PinsActivity" />
     </application>
 
 </manifest>
