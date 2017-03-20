@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ntu.ce2006.swensens.hdbdesirabilityapp.activity.MainActivity">
+    tools:context="ntu.ce2006.swensens.hdbdesirabilityapp.MainActivity">
 
     <TextView
         android:layout_width="wrap_content"

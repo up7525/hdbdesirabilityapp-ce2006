@@ -5,5 +5,22 @@ package ntu.ce2006.swensens.hdbdesirabilityapp.search.filters;
  */
 
 public enum Amenities {
-    SCHOOL, MALL, MRT;
+    CLINIC {
+        @Override
+        public String getGoogleType() {
+            return "hospital";
+        }
+    }, MALL {
+        @Override
+        public String getGoogleType() {
+            return "shopping_mall";
+        }
+    }, MRT {
+        @Override
+        public String getGoogleType() {
+            return "subway_station";
+        }
+    };
+
+    public abstract String getGoogleType();
 }
