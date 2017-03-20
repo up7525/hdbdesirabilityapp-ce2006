@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/build/intermediates/res/merged/debug/mipmap-mdpi/ic_launcher.png",
+        "source": "/home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/res/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/build/intermediates/res/merged/debug/mipmap-mdpi/ic_launcher_round.png",
+        "source": "/home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/res/mipmap-mdpi/ic_launcher_round.png"
+    }
+]
