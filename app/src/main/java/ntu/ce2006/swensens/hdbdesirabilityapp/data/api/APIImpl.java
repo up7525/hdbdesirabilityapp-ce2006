@@ -8,9 +8,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -37,13 +35,29 @@ public class APIImpl implements APIDAO {
     // Filename & Location for HDB CSV
     private final String HDBDATA = "app/src/main/assets/resale-flat-prices-based-on-registration-date-from-march-2012-onwards.csv";
 
+    //Filename for Gov Data API
+    private final String GOVDATA = "https://data.gov.sg/api/action/datastore_search?resource_id=83b2fc37-ce8c-4df4-968b-370fd818138b";
+
     // Available Google API Keys
     private final String[] GOOGLEKEY = {"AIzaSyAMSDKBMf-Bwvhe_8vkmp5KgKr8ivQocw4"};
 
     // TODO THIS IMPLEMENTATION NEEDS SOME UPDATING ON THE METHODS. (High Priority)
+    // no idea how to add more than 1 parameter for query boo.
     @Override
-    public void getData() {
-
+    public JsonArray getData() {
+        JsonArray govApiData;
+        while (true) {
+            try {
+                govApiData = requestAPI(GOVDATA);
+                // For Debugging
+                Log.d(TAG, urlFinal);
+                break;
+            } catch (IOException e)
+                {
+                    throw new IOException("Error connecting to API");
+                }
+            }
+        return govApiData;
     }
 
     // TODO Retrieving HDB Price Data (Might need to rethink DAO/Implementation structure) (High Priority)
@@ -63,7 +77,6 @@ public class APIImpl implements APIDAO {
                 flatDataMap.put("street_name", record.get("street_name"));
                 flatDataMap.put("storey_range", record.get("storey_range"));
                 flatDataMap.put("floor_area_sqm", record.get("floor_area_sqm"));
-                flatDataMap.put("flat_model", record.get("flat_model"));
                 flatDataMap.put("resale_price", record.get("resale_price"));
                 hdbList.add(flatDataMap);
             }

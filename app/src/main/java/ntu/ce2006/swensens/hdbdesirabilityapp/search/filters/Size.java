@@ -5,5 +5,5 @@ package ntu.ce2006.swensens.hdbdesirabilityapp.search.filters;
  */
 
 public enum Size {
-    ROOM_2, ROOM_3, ROOM_4;
+    ROOM_2, ROOM_3, ROOM_4, ROOM_5, EXECUTIVE;
 }
