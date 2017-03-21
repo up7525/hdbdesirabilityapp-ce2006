@@ -59,7 +59,6 @@ public class Query {
             return this;
         }
 
-        // TODO SIZE DOES NOT DISPLAY IN RESULT???!??!?!
         public Builder size(ArrayList<Size> sizes) {
             sizeFilters = sizes;
             return this;
@@ -113,5 +112,25 @@ public class Query {
 
     public List<Amenities> getAmenitiesFilters() {
         return amenitiesFilters;
+    }
+
+    public boolean isLocationEmpty() {
+        return locationFilters.size() == 0;
+    }
+
+    public boolean isSizeEmpty() {
+        return locationFilters.size() == 0;
+    }
+
+    public boolean isPriceEmpty() {
+        return priceFilters[0] == 0 && priceFilters[1] == 0;
+    }
+
+    public boolean isAreaEmpty() {
+        return areaFilters[0] == 0 && areaFilters[1] == 0;
+    }
+
+    public boolean isAmenitiesEmpty() {
+        return amenitiesFilters.size() == 0;
     }
 }
