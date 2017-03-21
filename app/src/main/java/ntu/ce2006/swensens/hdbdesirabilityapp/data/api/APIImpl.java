@@ -7,12 +7,20 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
+
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import ntu.ce2006.swensens.hdbdesirabilityapp.data.api.daointerface.APIDAO;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Amenities;
@@ -26,6 +34,9 @@ public class APIImpl implements APIDAO {
     // Tag for logger
     private static final String TAG = "APIImpl";
 
+    // Filename & Location for HDB CSV
+    private final String HDBDATA = "app/src/main/assets/resale-flat-prices-based-on-registration-date-from-march-2012-onwards.csv";
+
     // Available Google API Keys
     private final String[] GOOGLEKEY = {"AIzaSyAMSDKBMf-Bwvhe_8vkmp5KgKr8ivQocw4"};
 
@@ -36,6 +47,37 @@ public class APIImpl implements APIDAO {
     }
 
     // TODO Retrieving HDB Price Data (Might need to rethink DAO/Implementation structure) (High Priority)
+    public List<HashMap<String, String>> getHDBData() {
+        // TODO NEED SOOOOOO MUCH OPTIMIZATION (Low Priority)
+        ArrayList<HashMap<String, String>> hdbList = new ArrayList<>();
+        FileReader fileReader = null;
+        try {
+            fileReader = new FileReader(new File(HDBDATA));
+            Iterable<CSVRecord> records = CSVFormat.RFC4180.withFirstRecordAsHeader().parse(fileReader);
+            for (CSVRecord record: records) {
+                HashMap<String, String> flatDataMap = new HashMap<>();
+                flatDataMap.put("month", record.get("month"));
+                flatDataMap.put("town", record.get("town"));
+                flatDataMap.put("flat_type", record.get("flat_type"));
+                flatDataMap.put("block", record.get("block"));
+                flatDataMap.put("street_name", record.get("street_name"));
+                flatDataMap.put("storey_range", record.get("storey_range"));
+                flatDataMap.put("floor_area_sqm", record.get("floor_area_sqm"));
+                flatDataMap.put("flat_model", record.get("flat_model"));
+                flatDataMap.put("resale_price", record.get("resale_price"));
+                hdbList.add(flatDataMap);
+            }
+            fileReader.close();
+        } catch (IOException e) {
+            // TODO SOMETHING TO HANDLE\
+            Log.d(TAG, "FileReader cannot be opened. Possibly file not found.", e);
+        }
+        return hdbList;
+    }
+
+
+
+
     // TODO ALSO CONSIDER JACKSON/GSON/ALTERNATIVES TO MAP API TO OBJECT DIRECTLY FOR HDB (Low Priority)
 
 
@@ -68,7 +110,7 @@ public class APIImpl implements APIDAO {
                 jsonArray = requestAPI(urlFinal);
                 break;
             } catch (IOException e) {
-                if (googleKeyIndex < GOOGLEKEY.length) {
+                if (googleKeyIndex < GOOGLEKEY.length - 1) {
                     googleKeyIndex++;
                 } else {
                     throw new IOException("Error connecting to API");

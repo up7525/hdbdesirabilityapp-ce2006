@@ -22,18 +22,24 @@ import org.powermock.modules.junit4.*;
 @PrepareForTest({Log.class})
 public class APIImplTest {
 
-    private double[] coordinates = {1.3483367,103.6743799};
+    private double[] coordinates = {1.3483367, 103.6743799};
     private int radius = 3000;
+    private APIImpl apiImpl = new APIImpl();
 
     @Before
     public void setUp() {
         PowerMockito.mockStatic(Log.class);
+        apiImpl = new APIImpl();
     }
+
     @Test
     public void getAmenitiesNoException() throws IOException {
-        PowerMockito.mockStatic(Log.class);
-        APIImpl apiImpl = new APIImpl();
-
         assertNotNull(true);
+    }
+
+    @Test
+    public void getCSVData() {
+        apiImpl.getHDBData();
+        assertTrue(true);
     }
 }
