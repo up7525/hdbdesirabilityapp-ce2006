@@ -34,12 +34,19 @@ public class APIImplTest {
 
     @Test
     public void getAmenitiesNoException() throws IOException {
+        apiImpl.getNearbyAmenities(coordinates[0], coordinates[1], radius);
         assertNotNull(true);
     }
 
     @Test
     public void getCSVData() {
         apiImpl.getHDBData();
+        assertTrue(true);
+    }
+
+    @Test
+    public void getData() throws IOException {
+        apiImpl.getData();
         assertTrue(true);
     }
 }

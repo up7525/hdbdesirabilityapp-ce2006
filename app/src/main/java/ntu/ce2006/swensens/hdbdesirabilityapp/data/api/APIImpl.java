@@ -8,7 +8,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 import java.io.BufferedReader;
@@ -37,13 +36,23 @@ public class APIImpl implements APIDAO {
     // Filename & Location for HDB CSV
     private final String HDBDATA = "app/src/main/assets/resale-flat-prices-based-on-registration-date-from-march-2012-onwards.csv";
 
+    //Filename for Gov Data API
+    private final String GOVDATA = "https://data.gov.sg/api/action/datastore_search?resource_id=83b2fc37-ce8c-4df4-968b-370fd818138b";
+
     // Available Google API Keys
     private final String[] GOOGLEKEY = {"AIzaSyAMSDKBMf-Bwvhe_8vkmp5KgKr8ivQocw4"};
 
     // TODO THIS IMPLEMENTATION NEEDS SOME UPDATING ON THE METHODS. (High Priority)
+    // no idea how to add more than 1 parameter for query boo.
     @Override
-    public void getData() {
-
+    public JsonObject getData() throws IOException {
+        JsonObject govApiData;
+        try {
+            govApiData = requestAPI(GOVDATA);
+        } catch (IOException e) {
+            throw new IOException("Error connecting to API");
+        }
+        return govApiData;
     }
 
     // TODO Retrieving HDB Price Data (Might need to rethink DAO/Implementation structure) (High Priority)
@@ -54,7 +63,7 @@ public class APIImpl implements APIDAO {
         try {
             fileReader = new FileReader(new File(HDBDATA));
             Iterable<CSVRecord> records = CSVFormat.RFC4180.withFirstRecordAsHeader().parse(fileReader);
-            for (CSVRecord record: records) {
+            for (CSVRecord record : records) {
                 HashMap<String, String> flatDataMap = new HashMap<>();
                 flatDataMap.put("month", record.get("month"));
                 flatDataMap.put("town", record.get("town"));
@@ -63,7 +72,6 @@ public class APIImpl implements APIDAO {
                 flatDataMap.put("street_name", record.get("street_name"));
                 flatDataMap.put("storey_range", record.get("storey_range"));
                 flatDataMap.put("floor_area_sqm", record.get("floor_area_sqm"));
-                flatDataMap.put("flat_model", record.get("flat_model"));
                 flatDataMap.put("resale_price", record.get("resale_price"));
                 hdbList.add(flatDataMap);
             }
@@ -74,8 +82,6 @@ public class APIImpl implements APIDAO {
         }
         return hdbList;
     }
-
-
 
 
     // TODO ALSO CONSIDER JACKSON/GSON/ALTERNATIVES TO MAP API TO OBJECT DIRECTLY FOR HDB (Low Priority)
@@ -94,6 +100,7 @@ public class APIImpl implements APIDAO {
     }
 
     private int getAmenitiesQuantity(double latitude, double longitude, int radius, Amenities amenities) throws IOException {
+        JsonObject jsonObject;
         JsonArray jsonArray;
         while (true) {
             int googleKeyIndex = 0;
@@ -107,7 +114,8 @@ public class APIImpl implements APIDAO {
                 // For Debugging
                 Log.d(TAG, urlFinal);
 
-                jsonArray = requestAPI(urlFinal);
+                jsonObject = requestAPI(urlFinal);
+                jsonArray = jsonObject.getAsJsonArray("results");
                 break;
             } catch (IOException e) {
                 if (googleKeyIndex < GOOGLEKEY.length - 1) {
@@ -120,9 +128,11 @@ public class APIImpl implements APIDAO {
         return jsonArray.size();
     }
 
-    private JsonArray requestAPI(String urlString) throws IOException {
+    private JsonObject requestAPI(String urlString) throws IOException {
         URL url = new URL(urlString);
         URLConnection connection = url.openConnection();
+        connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+        connection.connect();
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         int input;
         StringBuilder jsonString = new StringBuilder();
@@ -134,8 +144,7 @@ public class APIImpl implements APIDAO {
         }
         JsonElement jsonElement = new JsonParser().parse(jsonString.toString());
         JsonObject jsonObject = jsonElement.getAsJsonObject();
-        JsonArray jsonArray = jsonObject.getAsJsonArray("results");
         bufferedReader.close();
-        return jsonArray;
+        return jsonObject;
     }
 }
