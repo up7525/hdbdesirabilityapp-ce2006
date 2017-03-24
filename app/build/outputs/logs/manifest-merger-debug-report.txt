@@ -15,15 +15,15 @@ ADDED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main
 		INJECTED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml
 application
 ADDED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml:5:5-23:19
-MERGED from [com.android.support:appcompat-v7:25.1.1] /home/trollpc/.android/build-cache/1b7fd20d41413b491f0160bd0de1c9b1444e1a81/output/AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-v4:25.1.1] /home/trollpc/.android/build-cache/003ea7f41fb5ea349f07f57f7f4bab4db699b2f8/output/AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-fragment:25.1.1] /home/trollpc/.android/build-cache/bfc74d0051c4af1721a46340979258a932282b6b/output/AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-media-compat:25.1.1] /home/trollpc/.android/build-cache/0fd35080f89002f180e684d35b7cf6898cee160b/output/AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-core-ui:25.1.1] /home/trollpc/.android/build-cache/c1d14ba0cdeb1bc8f70dc660d48abcaf76d18706/output/AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-core-utils:25.1.1] /home/trollpc/.android/build-cache/f997a102f646be59ccdf89873832f32a06aebccf/output/AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:animated-vector-drawable:25.1.1] /home/trollpc/.android/build-cache/52be6fbf70f11c05a8219d10dd669c5d78acdd5e/output/AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:support-vector-drawable:25.1.1] /home/trollpc/.android/build-cache/d2e03fafef0ba9aa3acafeb0ae22575d60818861/output/AndroidManifest.xml:23:5-20
-MERGED from [com.android.support:support-compat:25.1.1] /home/trollpc/.android/build-cache/a7ad1164ab9b08f806b2d342169332036ab3fba9/output/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:appcompat-v7:25.1.1] /home/trollpc/.android/build-cache/e6c7b97d8b733d72b18474cc3abe02921d2f5358/output/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-v4:25.1.1] /home/trollpc/.android/build-cache/8cd7a34520d01477e0faccb3908afd798cf37093/output/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-fragment:25.1.1] /home/trollpc/.android/build-cache/241455b9d7401e48b56768c5aac3b77126f3c616/output/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-media-compat:25.1.1] /home/trollpc/.android/build-cache/28aa87fd2e81bc7a13f23d872633246fe86889db/output/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-ui:25.1.1] /home/trollpc/.android/build-cache/c31c22900ed832672bfef27a992918dea4fd04cf/output/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-utils:25.1.1] /home/trollpc/.android/build-cache/a03f43dfe1c3ef4cdedf8b81cd2be26a8daff7af/output/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.1.1] /home/trollpc/.android/build-cache/81501bcb6479c067d850912b0c677578ed0ad886/output/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-vector-drawable:25.1.1] /home/trollpc/.android/build-cache/df48387385dd4ae2d9b2313d7eb60ec01a1e5f02/output/AndroidManifest.xml:23:5-20
+MERGED from [com.android.support:support-compat:25.1.1] /home/trollpc/.android/build-cache/f07b2145d580267a74a53cb7e405a88955a993db/output/AndroidManifest.xml:25:5-20
 MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /home/trollpc/.android/build-cache/a8b84ee593f85a9a5e5e13acd1f4316a3ee08ba8/output/AndroidManifest.xml:9:5-20
 	android:label
 		ADDED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml:8:9-41
@@ -69,18 +69,18 @@ ADDED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main
 		ADDED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml:22:19-56
 uses-sdk
 INJECTED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
-MERGED from [com.android.support:appcompat-v7:25.1.1] /home/trollpc/.android/build-cache/1b7fd20d41413b491f0160bd0de1c9b1444e1a81/output/AndroidManifest.xml:21:5-23:78
-MERGED from [com.android.support:support-v4:25.1.1] /home/trollpc/.android/build-cache/003ea7f41fb5ea349f07f57f7f4bab4db699b2f8/output/AndroidManifest.xml:21:5-23:54
-MERGED from [com.android.support:support-fragment:25.1.1] /home/trollpc/.android/build-cache/bfc74d0051c4af1721a46340979258a932282b6b/output/AndroidManifest.xml:21:5-23:60
-MERGED from [com.android.support:support-media-compat:25.1.1] /home/trollpc/.android/build-cache/0fd35080f89002f180e684d35b7cf6898cee160b/output/AndroidManifest.xml:21:5-23:63
-MERGED from [com.android.support:support-core-ui:25.1.1] /home/trollpc/.android/build-cache/c1d14ba0cdeb1bc8f70dc660d48abcaf76d18706/output/AndroidManifest.xml:21:5-23:58
-MERGED from [com.android.support:support-core-utils:25.1.1] /home/trollpc/.android/build-cache/f997a102f646be59ccdf89873832f32a06aebccf/output/AndroidManifest.xml:21:5-23:61
-MERGED from [com.android.support:animated-vector-drawable:25.1.1] /home/trollpc/.android/build-cache/52be6fbf70f11c05a8219d10dd669c5d78acdd5e/output/AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-vector-drawable:25.1.1] /home/trollpc/.android/build-cache/d2e03fafef0ba9aa3acafeb0ae22575d60818861/output/AndroidManifest.xml:21:5-43
-MERGED from [com.android.support:support-compat:25.1.1] /home/trollpc/.android/build-cache/a7ad1164ab9b08f806b2d342169332036ab3fba9/output/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:appcompat-v7:25.1.1] /home/trollpc/.android/build-cache/e6c7b97d8b733d72b18474cc3abe02921d2f5358/output/AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:support-v4:25.1.1] /home/trollpc/.android/build-cache/8cd7a34520d01477e0faccb3908afd798cf37093/output/AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-fragment:25.1.1] /home/trollpc/.android/build-cache/241455b9d7401e48b56768c5aac3b77126f3c616/output/AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-media-compat:25.1.1] /home/trollpc/.android/build-cache/28aa87fd2e81bc7a13f23d872633246fe86889db/output/AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-core-ui:25.1.1] /home/trollpc/.android/build-cache/c31c22900ed832672bfef27a992918dea4fd04cf/output/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-utils:25.1.1] /home/trollpc/.android/build-cache/a03f43dfe1c3ef4cdedf8b81cd2be26a8daff7af/output/AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:animated-vector-drawable:25.1.1] /home/trollpc/.android/build-cache/81501bcb6479c067d850912b0c677578ed0ad886/output/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:25.1.1] /home/trollpc/.android/build-cache/df48387385dd4ae2d9b2313d7eb60ec01a1e5f02/output/AndroidManifest.xml:21:5-43
+MERGED from [com.android.support:support-compat:25.1.1] /home/trollpc/.android/build-cache/f07b2145d580267a74a53cb7e405a88955a993db/output/AndroidManifest.xml:21:5-23:58
 MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /home/trollpc/.android/build-cache/a8b84ee593f85a9a5e5e13acd1f4316a3ee08ba8/output/AndroidManifest.xml:5:5-7:41
 	tools:overrideLibrary
-		ADDED from [com.android.support:appcompat-v7:25.1.1] /home/trollpc/.android/build-cache/1b7fd20d41413b491f0160bd0de1c9b1444e1a81/output/AndroidManifest.xml:23:9-75
+		ADDED from [com.android.support:appcompat-v7:25.1.1] /home/trollpc/.android/build-cache/e6c7b97d8b733d72b18474cc3abe02921d2f5358/output/AndroidManifest.xml:23:9-75
 	android:targetSdkVersion
 		INJECTED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml
 		INJECTED from /home/trollpc/Documents/github/hdbdesirabilityapp-ce2006/app/src/main/AndroidManifest.xml
