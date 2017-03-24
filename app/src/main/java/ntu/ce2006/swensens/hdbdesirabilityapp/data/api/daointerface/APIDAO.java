@@ -9,5 +9,10 @@ import java.io.IOException;
  */
 
 public interface APIDAO {
+    /**
+     * Retrieves the data from API based on the filters defined in the Query
+     *
+     * @return JsonObject containing the information retrieved
+     */
     public JsonObject getData() throws IOException;
 }
