@@ -25,7 +25,7 @@ public class GovDataAPIImpl extends JsonRequest {
     // Filename & Location for HDB CSV
     private final String HDBDATA = "app/src/main/assets/resale-flat-prices-based-on-registration-date-from-march-2012-onwards.csv";
 
-    private final String GOVDATA = "https://data.gov.sg/api/action/datastore_search?resource_id=83b2fc37-ce8c-4df4-968b-370fd818138b";
+    private final String GOVDATA = "https://data.gov.sg/api/action/datastore_search?resource_id=83b2fc37-ce8c-4df4-968b-370fd818138b&limit=100000";
 
     /**
      * Retrieves the data from API based on the filters defined in the Query

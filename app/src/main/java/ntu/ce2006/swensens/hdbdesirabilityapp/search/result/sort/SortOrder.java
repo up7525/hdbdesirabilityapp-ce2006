@@ -1,4 +1,4 @@
-package ntu.ce2006.swensens.hdbdesirabilityapp.search.result;
+package ntu.ce2006.swensens.hdbdesirabilityapp.search.result.sort;
 
 /**
  * Created by trollpc on 24/03/17.

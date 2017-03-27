@@ -1,9 +1,9 @@
 package ntu.ce2006.swensens.hdbdesirabilityapp.search.result;
 
-import android.support.annotation.NonNull;
-
 import java.util.Comparator;
 import java.util.HashMap;
+
+import ntu.ce2006.swensens.hdbdesirabilityapp.search.result.sort.SortOrder;
 
 /**
  * Created by Swensens on 20/03/17.
@@ -17,11 +17,17 @@ public class Flat implements Comparable<Flat> {
     // Address of the result
     private String address;
 
+    private String streetName;
+
+    private String block;
+
+    private String town;
+
     // Price of the result
-    private int price;
+    private double price;
 
     // Area of the result
-    private int area;
+    private double area;
 
     // Amenities of the result in format {name, distance}
     private HashMap<String, Integer> amenities;
@@ -29,15 +35,21 @@ public class Flat implements Comparable<Flat> {
     public static class Builder {
         // Required Parameters
         private double score;
+        private String streetName;
+        private String block;
+        private String town;
         private String address;
-        private int price;
-        private int area;
+        private double price;
+        private double area;
 
         // Optional Parameters
         private HashMap<String, Integer> amenities = new HashMap<>();
 
-        public Builder(double score, String address, int price, int area) {
+        public Builder(double score, String block, String streetName, String town, String address, double price, double area) {
             this.score = score;
+            this.block = block;
+            this.streetName = streetName;
+            this.town = town;
             this.address = address;
             this.price = price;
             this.area = area;
@@ -59,10 +71,25 @@ public class Flat implements Comparable<Flat> {
 
     private Flat(Builder builder) {
         score = builder.score;
+        block = builder.block;
+        streetName = builder.streetName;
+        town = builder.town;
         address = builder.address;
         price = builder.price;
         area = builder.area;
         amenities = builder.amenities;
+    }
+
+    public String getBlock() {
+        return block;
+    }
+
+    public String getStreetName() {
+        return streetName;
+    }
+
+    public String getTown() {
+        return town;
     }
 
     /**
@@ -88,7 +115,7 @@ public class Flat implements Comparable<Flat> {
      *
      * @return price of the result
      */
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
@@ -97,7 +124,7 @@ public class Flat implements Comparable<Flat> {
      *
      * @return area of the result
      */
-    public int getArea() {
+    public double getArea() {
         return area;
     }
 
@@ -114,8 +141,8 @@ public class Flat implements Comparable<Flat> {
     public String toString() {
         return "Score: " + Double.toString(score) + "/10" + System.getProperty("line.separator")
                 + "Address: " + address + System.getProperty("line.separator")
-                + "Price: S$" + Integer.toString(price) + System.getProperty("line.separator")
-                + "Area: " + Integer.toString(area) + "SQM" + System.getProperty("line.separator");
+                + "Price: S$" + Double.toString(price) + System.getProperty("line.separator")
+                + "Area: " + Double.toString(area) + "SQM" + System.getProperty("line.separator");
         // TODO String Representations of amenities
                 /*
                 + "Amenities " + + System.getProperty("line.separator")
@@ -150,14 +177,24 @@ public class Flat implements Comparable<Flat> {
     }
 
     private int priceAscendingCompare(Flat otherFlat) {
-        return this.price - otherFlat.price;
+        if (this.price > otherFlat.price) {
+            return 1;
+        } else if (this.price < otherFlat.price) {
+            return -1;
+        }
+        return 0;
     }
 
     private int priceDescendingCompare(Flat otherFlat) {
-        return otherFlat.price - this.price;
+        if (this.price > otherFlat.price) {
+            return -1;
+        } else if (this.price < otherFlat.price) {
+            return 1;
+        }
+        return 0;
     }
 
-    static Comparator<Flat> PriceAscendingComparator() {
+    public static Comparator<Flat> PriceAscendingComparator() {
         return new Comparator<Flat>() {
             @Override
             public int compare(Flat flat1, Flat flat2) {
@@ -166,7 +203,7 @@ public class Flat implements Comparable<Flat> {
         };
     }
 
-    static Comparator<Flat> PriceDescendingComparator() {
+    public static Comparator<Flat> PriceDescendingComparator() {
         return new Comparator<Flat>() {
             @Override
             public int compare(Flat flat1, Flat flat2) {
@@ -175,7 +212,7 @@ public class Flat implements Comparable<Flat> {
         };
     }
 
-    static Comparator<Flat> DefaultComparator() {
+    public static Comparator<Flat> DefaultComparator() {
         return new Comparator<Flat>() {
             @Override
             public int compare(Flat flat1, Flat flat2) {
