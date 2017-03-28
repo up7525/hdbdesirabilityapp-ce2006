@@ -1,11 +1,7 @@
 package ntu.ce2006.swensens.hdbdesirabilityapp.search.query;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-
-import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Amenities;
-import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Location;
-import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Size;
 
 /**
  * Query in builder pattern
@@ -22,10 +18,10 @@ public class Query {
     private int id_key;
 
     // A list of location filters
-    private List<Location> locationFilters;
+    private List<String> locationFilters;
 
     // A list of size filters
-    private List<Size> sizeFilters;
+    private List<String> sizeFilters;
 
     // Price range: [minimum, maximum]
     private int[] priceFilters;
@@ -34,7 +30,7 @@ public class Query {
     // private int[] areaFilters;
 
     // A list of amenity filters
-    private List<Amenities> amenitiesFilters;
+    private List<String> amenitiesFilters;
 
     /**
      * Builder Class
@@ -43,10 +39,10 @@ public class Query {
         // Optional Parameters
         private int id_key = 0;
         // A list of location filters
-        private List<Location> locationFilters = new ArrayList<>();
+        private List<String> locationFilters;
 
         // A list of size filters
-        private List<Size> sizeFilters = new ArrayList<>();
+        private List<String> sizeFilters;
 
         // Price range: [minimum, maximum]
         private int[] priceFilters = new int[2];
@@ -55,26 +51,26 @@ public class Query {
         // private int[] areaFilters = new int[2];
 
         // A list of amenity filters
-        private List<Amenities> amenitiesFilters = new ArrayList<>();
+        private List<String> amenitiesFilters;
 
         public Builder idDB(int id){
             id_key = id;
             return this;
         }
 
-        public Builder locations(ArrayList<Location> locations) {
+        public Builder locations(List<String> locations) {
             locationFilters = locations;
             return this;
         }
 
-        public Builder size(ArrayList<Size> sizes) {
+        public Builder size(List<String> sizes) {
             sizeFilters = sizes;
             return this;
         }
 
-        public Builder price(int minimum, int maximum) {
-            priceFilters[0] = minimum;
-            priceFilters[1] = maximum;
+        public Builder price(int[] prices) {
+            priceFilters[0] = prices[0];
+            priceFilters[1] = prices[1];
             return this;
         }
 
@@ -84,7 +80,7 @@ public class Query {
         //    return this;
         //}
 
-        public Builder amenities(ArrayList<Amenities> amenities) {
+        public Builder amenities(List<String> amenities) {
             amenitiesFilters = amenities;
             return this;
         }
@@ -107,11 +103,11 @@ public class Query {
         return id_key;
     }
 
-    public List<Location> getLocationFilters() {
+    public List<String> getLocationFilters() {
         return locationFilters;
     }
 
-    public List<Size> getSizeFilters() {
+    public List<String> getSizeFilters() {
         return sizeFilters;
     }
 
@@ -123,7 +119,7 @@ public class Query {
     //    return areaFilters;
     //}
 
-    public List<Amenities> getAmenitiesFilters() {
+    public List<String> getAmenitiesFilters() {
         return amenitiesFilters;
     }
 
@@ -149,10 +145,22 @@ public class Query {
 
     public static String strSeparator = "__,__";
 
-    public static String convertArrayToString(String[] array){
+    public static String convertArrayToString(List<String> array){
+        String str = "";
+        for (int i = 0;i<array.size(); i++) {
+            str = str+array.get(i);
+            // Do not append comma at the end of last element
+            if(i<array.size()-1){
+                str = str+strSeparator;
+            }
+        }
+        return str;
+    }
+
+    public static String convertIntArrayToString(int[] array){
         String str = "";
         for (int i = 0;i<array.length; i++) {
-            str = str+array[i];
+            str = str+Integer.toString(array[i]);
             // Do not append comma at the end of last element
             if(i<array.length-1){
                 str = str+strSeparator;
@@ -160,9 +168,11 @@ public class Query {
         }
         return str;
     }
-    public static String[] convertStringToArray(String str){
+
+    public static List<String> convertStringToArray(String str){
         String[] arr = str.split(strSeparator);
-        return arr;
+        List<String> propArr = Arrays.asList(arr);
+        return propArr;
     }
     public static int[] convertStringToIntArray(String str){
         String[] arr = str.split(strSeparator);

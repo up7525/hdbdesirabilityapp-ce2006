@@ -72,12 +72,11 @@ public class DbHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        // TODO talk about Query attributes (convert to String[])
-        //values.put(KEY_ID, query.convertArrayToString(query.getId_key()));
-        //values.put(QUERY_LOC, query.convertArrayToString(query.getLocationFilters()));
-        //values.put(QUERY_SIZE, query.convertArrayToString(query.getSizeFilters()));
-        //values.put(QUERY_PRICE, query.convertArrayToString(query.getPriceFilters()));
-        //values.put(QUERY_AMEN, query.convertArrayToString(query.getAmenitiesFilters()));
+        values.put(KEY_ID, query.getId_key());
+        values.put(QUERY_LOC, query.convertArrayToString(query.getLocationFilters()));
+        values.put(QUERY_SIZE, query.convertArrayToString(query.getSizeFilters()));
+        values.put(QUERY_PRICE, query.convertIntArrayToString(query.getPriceFilters()));
+        values.put(QUERY_AMEN, query.convertArrayToString(query.getAmenitiesFilters()));
         // Inserting Row
         db.insert(TABLE_QUERY, null, values);
         db.close(); // Closing database connection
@@ -107,12 +106,11 @@ public class DbHandler extends SQLiteOpenHelper {
             cursor.moveToFirst();
 
         Query.Builder queryBuilder = new Query.Builder();
-        /*
-        queryBuilder.idDB(KEY_ID, Query.convertArrayToString(cursor.getString(0)));
+        queryBuilder.idDB(Integer.parseInt(cursor.getString(0)));
         queryBuilder.locations(Query.convertStringToArray(cursor.getString(1)));
         queryBuilder.size(Query.convertStringToArray(cursor.getString(2)));
-        queryBuilder.price(Integer.parseInt(cursor.getString(3)));
-        queryBuilder.amenities(Query.convertStringToArray(cursor.getString(4))); */
+        queryBuilder.price(Query.convertStringToIntArray(cursor.getString(3)));
+        queryBuilder.amenities(Query.convertStringToArray(cursor.getString(4)));
         Query query = queryBuilder.build();
         return query;
     }
@@ -145,16 +143,15 @@ public class DbHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Query.Builder queryBuilder = new Query.Builder();
-                /*
-                queryBuilder.idDB(KEY_ID, Query.convertArrayToString(cursor.getString(0)));
+                queryBuilder.idDB(Integer.parseInt(cursor.getString(0)));
                 queryBuilder.locations(Query.convertStringToArray(cursor.getString(1)));
                 queryBuilder.size(Query.convertStringToArray(cursor.getString(2)));
-                queryBuilder.price(Integer.parseInt(cursor.getString(3)));
+                queryBuilder.price(Query.convertStringToIntArray(cursor.getString(3)));
                 queryBuilder.amenities(Query.convertStringToArray(cursor.getString(4)));
-                Query query = queryBuilder.build();*/
+                Query query = queryBuilder.build();
 
                 // Adding to list
-                //queryList.add(query);
+                queryList.add(query);
             } while (cursor.moveToNext());
         }
 
@@ -189,11 +186,11 @@ public class DbHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        //values.put(KEY_ID, query.convertArrayToString(query.getId_key()));
-        //values.put(QUERY_LOC, query.convertArrayToString(query.getLocationFilters()));
-        //values.put(QUERY_SIZE, query.convertArrayToString(query.getSizeFilters()));
-        //values.put(QUERY_PRICE, query.convertArrayToString(query.getPriceFilters()));
-        //values.put(QUERY_AMEN, query.convertArrayToString(query.getAmenitiesFilters()));
+        values.put(KEY_ID, query.getId_key());
+        values.put(QUERY_LOC, query.convertArrayToString(query.getLocationFilters()));
+        values.put(QUERY_SIZE, query.convertArrayToString(query.getSizeFilters()));
+        values.put(QUERY_PRICE, query.convertIntArrayToString(query.getPriceFilters()));
+        values.put(QUERY_AMEN, query.convertArrayToString(query.getAmenitiesFilters()));
 
         // updating row
         return db.update(TABLE_QUERY, values, KEY_ID + " = ?",
