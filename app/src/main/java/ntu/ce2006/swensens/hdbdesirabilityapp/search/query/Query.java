@@ -1,7 +1,11 @@
 package ntu.ce2006.swensens.hdbdesirabilityapp.search.query;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
+
+import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Amenities;
+import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Location;
+import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Size;
 
 /**
  * Query in builder pattern
@@ -18,19 +22,16 @@ public class Query {
     private int id_key;
 
     // A list of location filters
-    private List<String> locationFilters;
+    private List<Location> locationFilters;
 
     // A list of size filters
-    private List<String> sizeFilters;
+    private List<Size> sizeFilters;
 
     // Price range: [minimum, maximum]
     private int[] priceFilters;
 
-    // Area range: [minimum, maximum]
-    // private int[] areaFilters;
-
     // A list of amenity filters
-    private List<String> amenitiesFilters;
+    private List<Amenities> amenitiesFilters;
 
     /**
      * Builder Class
@@ -39,48 +40,39 @@ public class Query {
         // Optional Parameters
         private int id_key = 0;
         // A list of location filters
-        private List<String> locationFilters;
+        private List<Location> locationFilters = new ArrayList<>();
 
         // A list of size filters
-        private List<String> sizeFilters;
+        private List<Size> sizeFilters = new ArrayList<>();
 
         // Price range: [minimum, maximum]
         private int[] priceFilters = new int[2];
 
-        // Area range: [minimum, maximum]
-        // private int[] areaFilters = new int[2];
-
         // A list of amenity filters
-        private List<String> amenitiesFilters;
+        private List<Amenities> amenitiesFilters = new ArrayList<>();
 
         public Builder idDB(int id){
             id_key = id;
             return this;
         }
 
-        public Builder locations(List<String> locations) {
+        public Builder locations(ArrayList<Location> locations) {
             locationFilters = locations;
             return this;
         }
 
-        public Builder size(List<String> sizes) {
+        public Builder size(ArrayList<Size> sizes) {
             sizeFilters = sizes;
             return this;
         }
 
-        public Builder price(int[] prices) {
-            priceFilters[0] = prices[0];
-            priceFilters[1] = prices[1];
+        public Builder price(int[] arr) {
+            priceFilters[0] = arr[0];
+            priceFilters[1] = arr[1];
             return this;
         }
 
-        //public Builder area(int minimum, int maximum) {
-        //    areaFilters[0] = minimum;
-        //    areaFilters[1] = maximum;
-        //    return this;
-        //}
-
-        public Builder amenities(List<String> amenities) {
+        public Builder amenities(ArrayList<Amenities> amenities) {
             amenitiesFilters = amenities;
             return this;
         }
@@ -95,7 +87,6 @@ public class Query {
         locationFilters = builder.locationFilters;
         sizeFilters = builder.sizeFilters;
         priceFilters = builder.priceFilters;
-        //areaFilters = builder.areaFilters;
         amenitiesFilters = builder.amenitiesFilters;
     }
 
@@ -103,11 +94,11 @@ public class Query {
         return id_key;
     }
 
-    public List<String> getLocationFilters() {
+    public List<Location> getLocationFilters() {
         return locationFilters;
     }
 
-    public List<String> getSizeFilters() {
+    public List<Size> getSizeFilters() {
         return sizeFilters;
     }
 
@@ -115,11 +106,7 @@ public class Query {
         return priceFilters;
     }
 
-    //public int[] getAreaFilters() {
-    //    return areaFilters;
-    //}
-
-    public List<String> getAmenitiesFilters() {
+    public List<Amenities> getAmenitiesFilters() {
         return amenitiesFilters;
     }
 
@@ -135,53 +122,9 @@ public class Query {
         return priceFilters[0] == 0 && priceFilters[1] == 0;
     }
 
-    //public boolean isAreaEmpty() {
-    //    return areaFilters[0] == 0 && areaFilters[1] == 0;
-    //}
-
     public boolean isAmenitiesEmpty() {
         return amenitiesFilters.size() == 0;
     }
-
-    public static String strSeparator = "__,__";
-
-    public static String convertArrayToString(List<String> array){
-        String str = "";
-        for (int i = 0;i<array.size(); i++) {
-            str = str+array.get(i);
-            // Do not append comma at the end of last element
-            if(i<array.size()-1){
-                str = str+strSeparator;
-            }
-        }
-        return str;
-    }
-
-    public static String convertIntArrayToString(int[] array){
-        String str = "";
-        for (int i = 0;i<array.length; i++) {
-            str = str+Integer.toString(array[i]);
-            // Do not append comma at the end of last element
-            if(i<array.length-1){
-                str = str+strSeparator;
-            }
-        }
-        return str;
-    }
-
-    public static List<String> convertStringToArray(String str){
-        String[] arr = str.split(strSeparator);
-        List<String> propArr = Arrays.asList(arr);
-        return propArr;
-    }
-    public static int[] convertStringToIntArray(String str){
-        String[] arr = str.split(strSeparator);
-        int[] intArr = new int[2];
-        intArr[0] = Integer.parseInt(arr[0]);
-        intArr[1] = Integer.parseInt(arr[1]);
-        return intArr;
-    }
-
 
 
 }
