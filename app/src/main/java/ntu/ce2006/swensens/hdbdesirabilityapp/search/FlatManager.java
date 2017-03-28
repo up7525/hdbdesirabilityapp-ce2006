@@ -8,13 +8,16 @@ import com.google.gson.JsonParser;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
+import ntu.ce2006.swensens.hdbdesirabilityapp.data.api.GoogleGeoLocImpl;
+import ntu.ce2006.swensens.hdbdesirabilityapp.data.api.GooglePlacesImpl;
 import ntu.ce2006.swensens.hdbdesirabilityapp.data.api.GovDataAPIImpl;
+import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Amenities;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Location;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.result.Flat;
-import ntu.ce2006.swensens.hdbdesirabilityapp.search.result.sort.SortOrder;
 
 /**
  * Created by trollpc on 27/03/17.
@@ -46,15 +49,15 @@ public class FlatManager {
     }
 
     private void requestAPI() throws IOException {
-        List<Flat> unfilteredFlatList = new ArrayList<>();
+        List<Flat> filteredFlatList = new ArrayList<>();
         // Request of General Flat Data and make it into list of Flats object
         GovDataAPIImpl govDataAPI = new GovDataAPIImpl();
-        unfilteredFlatList = makeFlat(govDataAPI.getData());
-        System.out.println(unfilteredFlatList);
-        //
+        filteredFlatList = makeFlat(govDataAPI.getData());
+        // TODO remove this when don't need anymore
+        System.out.println(filteredFlatList);
     }
 
-    private List<Flat> makeFlat(JsonObject jsonObject) {
+    private List<Flat> makeFlat(JsonObject jsonObject) throws IOException {
         List<Flat> flatList = new ArrayList<>();
         JsonArray jsonArray = jsonObject.getAsJsonObject("result").getAsJsonArray("records");
         for (int i = 0; i < jsonArray.size(); i++) {
@@ -64,33 +67,61 @@ public class FlatManager {
     }
 
     // TODO not completed
-    private List<Flat> filterFlat(List<Flat> flatList) {
+    private List<Flat> filterFlat(List<Flat> flatList) throws IOException {
         List<Flat> filteredList = new ArrayList<>();
         // TODO FIND MORE EFFICIENT THAN O(flatList.size()*locationFilter.size())
         for (int i = 0; i < flatList.size(); i++) {
-            // Filter by location
-            if (containsLocation(flatList.get(i))) {
+            // Filters
+            if (containsLocation(flatList.get(i)) && isWithinPrice(flatList.get(i))
+                    && isWithinArea(flatList.get(i)) && hasAmenities(flatList.get(i))) {
                 filteredList.add(flatList.get(i));
             }
-
-            // Filter by price
-            if (isWithinPrice(flatList.get(i))) {
-                filteredList.add(flatList.get(i));
-            }
-
-            // Filter by area
-            if (isWithinArea(flatList.get(i))) {
-                filteredList.add(flatList.get(i));
-            }
-
         }
-
         // TODO PLease confirm if still using Filter by size
 
-
         // Filter by Amenities
-
         return filteredList;
+    }
+
+    private boolean hasAmenities(Flat flat) throws IOException {
+        // Get Geolocation
+        GoogleGeoLocImpl googleGeoLoc = new GoogleGeoLocImpl(flat);
+        HashMap<String, Integer> amenitiesQuantity = new HashMap<>();
+        JsonParser parser = new JsonParser();
+        JsonElement googleGeoLocData = googleGeoLoc.getData().getAsJsonArray("results").get(0);
+        JsonObject locationData= parser.parse(googleGeoLocData.toString()).getAsJsonObject().getAsJsonObject("geometry").getAsJsonObject("location");
+        System.out.println(locationData);
+        double latitude = locationData.get("lat").getAsDouble();
+        double longitude = locationData.get("lng").getAsDouble();
+        System.out.println(latitude + " " + longitude);
+        int radius = 3000;
+
+        GooglePlacesImpl googlePlaces;
+        if (query.getAmenitiesFilters().contains(Amenities.MRT) || query.getAmenitiesFilters().size() == 0) {
+            googlePlaces = new GooglePlacesImpl(latitude, longitude, radius, Amenities.MRT);
+            amenitiesQuantity.put(Amenities.MRT.toString(), googlePlaces.getData().getAsJsonArray("results").size());
+            if (googlePlaces.getData().getAsJsonArray("results").size() == 0 && query.getAmenitiesFilters().size() != 0) {
+                return false;
+            }
+        }
+
+        if (query.getAmenitiesFilters().contains(Amenities.CLINIC) || query.getAmenitiesFilters().size() == 0) {
+            googlePlaces = new GooglePlacesImpl(latitude, longitude, radius, Amenities.CLINIC);
+            amenitiesQuantity.put(Amenities.CLINIC.toString(), googlePlaces.getData().getAsJsonArray("results").size());
+            if (googlePlaces.getData().getAsJsonArray("results").size() == 0 && query.getAmenitiesFilters().size() != 0) {
+                return false;
+            }
+        }
+
+        if (query.getAmenitiesFilters().contains(Amenities.MALL) || query.getAmenitiesFilters().size() == 0) {
+            googlePlaces = new GooglePlacesImpl(latitude, longitude, radius, Amenities.MALL);
+            amenitiesQuantity.put(Amenities.MALL.toString(), googlePlaces.getData().getAsJsonArray("results").size());
+            if (googlePlaces.getData().getAsJsonArray("results").size() == 0 && query.getAmenitiesFilters().size() != 0) {
+                return false;
+            }
+        }
+        flat.setAmenities(amenitiesQuantity);
+        return true;
     }
 
     private boolean containsLocation(Flat flat) {
@@ -113,8 +144,8 @@ public class FlatManager {
     private Flat flat(JsonElement jsonElement) {
         JsonParser parser = new JsonParser();
         JsonObject flatJson = parser.parse(jsonElement.toString()).getAsJsonObject();
-        return new Flat.Builder(computeScore(), flatJson.get("block").toString(), flatJson.get("street_name").toString(),
-                flatJson.get("town").toString(), makeAddress(flatJson), flatJson.get("resale_price").getAsDouble(),
+        return new Flat.Builder(computeScore(), flatJson.get("block").getAsString(), flatJson.get("street_name").getAsString(),
+                flatJson.get("town").getAsString(), makeAddress(flatJson), flatJson.get("resale_price").getAsDouble(),
                 flatJson.get("floor_area_sqm").getAsDouble()).build();
     }
 
@@ -124,8 +155,8 @@ public class FlatManager {
     }
 
     private String makeAddress(JsonObject flatJson) {
-        return flatJson.get("block").toString() + " " + flatJson.get("street_name").toString() + " "
-                + flatJson.get("town").toString();
+        return flatJson.get("block").getAsString() + " " + flatJson.get("street_name").getAsString() + " "
+                + flatJson.get("town").getAsString();
     }
 
 }

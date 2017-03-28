@@ -92,6 +92,9 @@ public class Flat implements Comparable<Flat> {
         return town;
     }
 
+    public void setAmenities(HashMap<String, Integer> amenities) {
+        this.amenities = amenities;
+    }
     /**
      * Returns the score
      *
@@ -141,7 +144,7 @@ public class Flat implements Comparable<Flat> {
     public String toString() {
         return "Score: " + Double.toString(score) + "/10" + System.getProperty("line.separator")
                 + "Address: " + address + System.getProperty("line.separator")
-                + "Price: S$" + Double.toString(price) + System.getProperty("line.separator")
+                + "Price: S$" + String.format("%.2f", price) + System.getProperty("line.separator")
                 + "Area: " + Double.toString(area) + "SQM" + System.getProperty("line.separator");
         // TODO String Representations of amenities
                 /*

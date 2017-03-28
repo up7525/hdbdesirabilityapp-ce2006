@@ -5,17 +5,17 @@ package ntu.ce2006.swensens.hdbdesirabilityapp.search.filters;
  */
 
 public enum Amenities {
-    CLINIC {
+    CLINIC("CLINIC") {
         @Override
         public String getGoogleType() {
             return "hospital";
         }
-    }, MALL {
+    }, MALL("MALL") {
         @Override
         public String getGoogleType() {
             return "shopping_mall";
         }
-    }, MRT {
+    }, MRT("MRT") {
         @Override
         public String getGoogleType() {
             return "subway_station";
@@ -23,4 +23,14 @@ public enum Amenities {
     };
 
     public abstract String getGoogleType();
+
+    private String name;
+
+    Amenities(String name) {
+        this.name = name;
+    }
+    @Override
+    public String toString() {
+        return name;
+    }
 }

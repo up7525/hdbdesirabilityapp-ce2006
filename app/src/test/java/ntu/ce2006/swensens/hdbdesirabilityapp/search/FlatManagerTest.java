@@ -35,7 +35,7 @@ public class FlatManagerTest {
         //when(query.getSizeFilters()).thenReturn()
 
         // Area
-        when(query.getAreaFilters()).thenReturn(new int[]{70000, 80000});
+        when(query.getAreaFilters()).thenReturn(new int[]{110, 110});
 
         // Location
         List<Location> locations = new ArrayList<>();
@@ -43,7 +43,7 @@ public class FlatManagerTest {
         when(query.getLocationFilters()).thenReturn(locations);
 
         // Price
-        when(query.getPriceFilters()).thenReturn(new int[]{700000, 800000});
+        when(query.getPriceFilters()).thenReturn(new int[]{759000, 759000});
 
         // amenities
         when(query.getAmenitiesFilters()).thenReturn(new ArrayList<Amenities>());
@@ -53,7 +53,7 @@ public class FlatManagerTest {
 
     @Test
     public void testGetFlat() throws IOException {
-        //flatManager.getFlats();
+        flatManager.getFlats();
         assertTrue(true);
     }
 }

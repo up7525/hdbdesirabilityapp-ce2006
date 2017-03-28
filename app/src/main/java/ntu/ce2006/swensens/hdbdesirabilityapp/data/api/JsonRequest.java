@@ -31,9 +31,7 @@ public abstract class JsonRequest implements APIDAO {
         StringBuilder jsonString = new StringBuilder();
         while ((input = bufferedReader.read()) != -1) {
             char inputChar = (char) input;
-            if (inputChar != '\n' && inputChar != ' ') {
-                jsonString.append(inputChar);
-            }
+            jsonString.append(inputChar);
         }
         JsonElement jsonElement = new JsonParser().parse(jsonString.toString());
         JsonObject jsonObject = jsonElement.getAsJsonObject();
