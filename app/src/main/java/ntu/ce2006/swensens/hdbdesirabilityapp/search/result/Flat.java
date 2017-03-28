@@ -23,6 +23,8 @@ public class Flat implements Comparable<Flat> {
 
     private String town;
 
+    private String size;
+
     // Price of the result
     private double price;
 
@@ -39,18 +41,20 @@ public class Flat implements Comparable<Flat> {
         private String block;
         private String town;
         private String address;
+        private String size;
         private double price;
         private double area;
 
         // Optional Parameters
         private HashMap<String, Integer> amenities = new HashMap<>();
 
-        public Builder(double score, String block, String streetName, String town, String address, double price, double area) {
+        public Builder(double score, String block, String streetName, String town, String address, String size, double price, double area) {
             this.score = score;
             this.block = block;
             this.streetName = streetName;
             this.town = town;
             this.address = address;
+            this.size = size;
             this.price = price;
             this.area = area;
         }
@@ -75,6 +79,7 @@ public class Flat implements Comparable<Flat> {
         streetName = builder.streetName;
         town = builder.town;
         address = builder.address;
+        size = builder.size;
         price = builder.price;
         area = builder.area;
         amenities = builder.amenities;
@@ -95,6 +100,7 @@ public class Flat implements Comparable<Flat> {
     public void setAmenities(HashMap<String, Integer> amenities) {
         this.amenities = amenities;
     }
+
     /**
      * Returns the score
      *
@@ -111,6 +117,15 @@ public class Flat implements Comparable<Flat> {
      */
     public String getAddress() {
         return address;
+    }
+
+    /**
+     * Returns the size of the flat
+     *
+     * @return size of the flat
+     */
+    public String getSize() {
+        return size;
     }
 
     /**

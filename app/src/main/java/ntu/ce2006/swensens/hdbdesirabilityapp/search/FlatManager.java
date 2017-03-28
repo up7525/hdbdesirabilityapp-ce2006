@@ -16,6 +16,7 @@ import ntu.ce2006.swensens.hdbdesirabilityapp.data.api.GooglePlacesImpl;
 import ntu.ce2006.swensens.hdbdesirabilityapp.data.api.GovDataAPIImpl;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Amenities;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Location;
+import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Size;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.result.Flat;
 
@@ -73,7 +74,7 @@ public class FlatManager {
         for (int i = 0; i < flatList.size(); i++) {
             // Filters
             if (containsLocation(flatList.get(i)) && isWithinPrice(flatList.get(i))
-                    && isWithinArea(flatList.get(i)) && hasAmenities(flatList.get(i))) {
+                    && hasSize(flatList.get(i)) && hasAmenities(flatList.get(i))) {
                 filteredList.add(flatList.get(i));
             }
         }
@@ -90,10 +91,8 @@ public class FlatManager {
         JsonParser parser = new JsonParser();
         JsonElement googleGeoLocData = googleGeoLoc.getData().getAsJsonArray("results").get(0);
         JsonObject locationData= parser.parse(googleGeoLocData.toString()).getAsJsonObject().getAsJsonObject("geometry").getAsJsonObject("location");
-        System.out.println(locationData);
         double latitude = locationData.get("lat").getAsDouble();
         double longitude = locationData.get("lng").getAsDouble();
-        System.out.println(latitude + " " + longitude);
         int radius = 3000;
 
         GooglePlacesImpl googlePlaces;
@@ -133,8 +132,13 @@ public class FlatManager {
         return false;
     }
 
-    private boolean isWithinArea(Flat flat) {
-        return flat.getArea() >= query.getAreaFilters()[0] && flat.getArea() <= query.getAreaFilters()[1];
+    private boolean hasSize(Flat flat) {
+        for (Size size : query.getSizeFilters()) {
+            if (size.toString().equals(flat.getSize())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean isWithinPrice(Flat flat) {
@@ -145,7 +149,7 @@ public class FlatManager {
         JsonParser parser = new JsonParser();
         JsonObject flatJson = parser.parse(jsonElement.toString()).getAsJsonObject();
         return new Flat.Builder(computeScore(), flatJson.get("block").getAsString(), flatJson.get("street_name").getAsString(),
-                flatJson.get("town").getAsString(), makeAddress(flatJson), flatJson.get("resale_price").getAsDouble(),
+                flatJson.get("town").getAsString(), makeAddress(flatJson), flatJson.get("flat_type").getAsString(), flatJson.get("resale_price").getAsDouble(),
                 flatJson.get("floor_area_sqm").getAsDouble()).build();
     }
 

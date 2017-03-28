@@ -5,6 +5,8 @@ import org.junit.Test;
 
 import java.util.HashMap;
 
+import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Size;
+
 import static junit.framework.Assert.assertEquals;
 
 /**
@@ -19,6 +21,7 @@ public class FlatTest {
     private String streetName = "Street";
     private String town = "Town";
     private String address = "My Street Address";
+    private String size = Size.ROOM_5.toString();
     private double price = 5059244;
     private double area = 70;
     private HashMap<String, Integer> amenities = new HashMap<>();
@@ -28,7 +31,7 @@ public class FlatTest {
         amenities.put("MRT", 5);
         amenities.put("Mall", 10);
         amenities.put("Clinics", 4);
-        flat = new Flat.Builder(score, block, streetName, town, address, price, area).amenities(amenities).build();
+        flat = new Flat.Builder(score, block, streetName, town, address, size, price, area).amenities(amenities).build();
     }
 
     /**

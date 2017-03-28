@@ -4,18 +4,19 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Amenities;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Location;
+import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Size;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query;
+
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by trollpc on 27/03/17.
@@ -34,8 +35,10 @@ public class FlatManagerTest {
         // TODO DETERMINE HOW SIZE IS GOING TO FIT IN, ALSO NOT PRESENT IN Flat class
         //when(query.getSizeFilters()).thenReturn()
 
-        // Area
-        when(query.getAreaFilters()).thenReturn(new int[]{110, 110});
+        // Size
+        List<Size> sizes = new ArrayList<>();
+        sizes.add(Size.ROOM_5);
+        when(query.getSizeFilters()).thenReturn(sizes);
 
         // Location
         List<Location> locations = new ArrayList<>();
