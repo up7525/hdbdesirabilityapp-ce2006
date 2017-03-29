@@ -5,13 +5,11 @@ import android.os.Bundle;
 
 import ntu.ce2006.swensens.hdbdesirabilityapp.R;
 
-public class HistoryActivity extends AppCompatActivity {
+public class Info extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history);
-        String s = "History";
-        setTitle(s);
+        setContentView(R.layout.activity_info);
     }
 }

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.nicholas.myapplication.Search_Loc_Activity">
+
+    <LinearLayout
+        android:layout_width="344dp"
+        android:layout_height="495dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <CheckBox
+                    android:id="@+id/AngMoKio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:layout_weight="0.08"
+                    android:text="Ang Mo Kio" />
+                <CheckBox
+                    android:id="@+id/Bedok"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:layout_weight="0.08"
+                    android:text="Bedok" />
+                <CheckBox
+                    android:id="@+id/Bishan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:layout_weight="0.08"
+                    android:text="Bishan" />
+                <CheckBox
+                    android:id="@+id/BukitBatok"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:layout_weight="0.08"
+                    android:text="Bukit Batok" />
+                <CheckBox
+                    android:id="@+id/BukitMerah"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:layout_weight="0.08"
+                    android:text="Bukit Merah" />
+                <CheckBox
+                    android:id="@+id/BukitPanjang"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:layout_weight="0.08"
+                    android:text="Bukit Panjang" />
+                <CheckBox
+                    android:id="@+id/BukitTimah"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:layout_weight="0.08"
+                    android:text="Bukit Timah" />
+                <CheckBox
+                    android:id="@+id/CentralArea"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:layout_weight="0.08"
+                    android:text="Central Area" />
+                <CheckBox
+                    android:id="@+id/ChoaChuKang"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:layout_weight="0.08"
+                    android:text="Choa Chu Kang" />
+                <CheckBox
+                    android:id="@+id/Clementi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:layout_weight="0.08"
+                    android:text="Clementi" />
+                <CheckBox
+                    android:id="@+id/Geylang"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:layout_weight="0.08"
+                    android:text="Geylang" />
+                <CheckBox
+                    android:id="@+id/Hougang"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:layout_weight="0.08"
+                    android:text="Hougang" />
+                <CheckBox
+                    android:id="@+id/JurongEast"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:layout_weight="0.08"
+                    android:text="Jurong East" />
+                <CheckBox
+                    android:id="@+id/JurongWest"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:layout_weight="0.08"
+                    android:text="Jurong West" />
+                <CheckBox
+                    android:id="@+id/KallangWhampoa"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:layout_weight="0.08"
+                    android:text="Kallang/Whampoa" />
+                <CheckBox
+                    android:id="@+id/MarineParade"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:layout_weight="0.08"
+                    android:text="Marine Parade" />
+                <CheckBox
+                    android:id="@+id/PasirRis"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:layout_weight="0.08"
+                    android:text="Pasir Ris" />
+                <CheckBox
+                    android:id="@+id/Punggol"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:layout_weight="0.08"
+                    android:text="Punggol" />
+                <CheckBox
+                    android:id="@+id/Queenstown"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:layout_weight="0.08"
+                    android:text="Queenstown" />
+                <CheckBox
+                    android:id="@+id/Sembawang"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:layout_weight="0.08"
+                    android:text="Sembawang" />
+                <CheckBox
+                    android:id="@+id/Sengkang"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:layout_weight="0.08"
+                    android:text="Sengkang" />
+                <CheckBox
+                    android:id="@+id/Serangoon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:layout_weight="0.08"
+                    android:text="Serangoon" />
+                <CheckBox
+                    android:id="@+id/Tampines"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:layout_weight="0.08"
+                    android:text="Tampines" />
+                <CheckBox
+                    android:id="@+id/ToaPayoh"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:layout_weight="0.08"
+                    android:text="Toa Payoh" />
+                <CheckBox
+                    android:id="@+id/Woodlands"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:layout_weight="0.08"
+                    android:text="Woodlands" />
+                <CheckBox
+                    android:id="@+id/Yishun"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:layout_weight="0.08"
+                    android:text="Yishun" />
+
+
+
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
