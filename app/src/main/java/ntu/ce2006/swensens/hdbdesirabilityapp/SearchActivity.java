@@ -6,12 +6,11 @@ import android.view.*;
 import android.content.*;
 import android.widget.*;
 import android.app.AlertDialog.*;
-
 import java.util.ArrayList;
-
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Amenities;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Location;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Size;
+import ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -132,78 +131,71 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
-//    private Query createUserQuery(){
-//        Query userQuery = new Query();
-//
-//        // load filter values
-//
-//        // load amenities
-//        boolean Mall = load("checkBoxMall");
-//        boolean MRT = load("checkBoxClinic");
-//        boolean Clinic = load("checkBoxClinic");
-//
-//        boolean[] amenitiesBoolean = {Mall, MRT, Clinic};
-//
-//        // load locations
-//        boolean AngMoKio = load("AngMoKio");
-//        boolean Bedok = load("Bedok");
-//        boolean Bishan = load("Bishan");
-//        boolean BukitBatok = load("BukitBatok");
-//        boolean BukitMerah = load("BukitMerah");
-//        boolean BukitPanjang = load("BukitPanjang");
-//        boolean BukitTimah = load("BukitTimah");
-//        boolean CentralArea = load("CentralArea");
-//        boolean ChoaChuKang = load("ChoaChuKang");
-//        boolean Clementi = load("Clementi");
-//        boolean Geylang = load("Geylang");
-//        boolean Hougang = load("Hougang");
-//        boolean JurongEast = load("JurongEast");
-//        boolean JurongWest = load("JurongWest");
-//        boolean KallangWhampoa = load("KallangWhampoa");
-//        boolean MarineParade = load("MarineParade");
-//        boolean PasirRis = load("PasirRis");
-//        boolean Punggol = load("Punggol");
-//        boolean Queenstown = load("Queenstown");
-//        boolean Sembawang = load("Sembawang");
-//        boolean Sengkang = load("Sengkang");
-//        boolean Serangoon = load("Serangoon");
-//        boolean Tampines = load("Tampines");
-//        boolean ToaPayoh = load("ToaPayoh");
-//        boolean Woodlands = load("Woodlands");
-//        boolean Yishun = load("Yishun");
-//
-//        boolean[] locationsBoolean = {AngMoKio, Bedok, Bishan, BukitBatok, BukitMerah, BukitPanjang, BukitTimah, CentralArea, ChoaChuKang, Clementi, Geylang, Hougang, JurongEast, JurongWest, KallangWhampoa, MarineParade, PasirRis, Punggol, Queenstown, Sembawang, Sengkang, Serangoon, Tampines, ToaPayoh, Woodlands, Yishun};
-//
-//        // load price
-//        String MinPriceInput = loadString("MinPriceInput");
-//        String MaxPriceInput = loadString("MaxPriceInput");
-//
-//        // load size
-//        boolean booleanTwoRoomCheckBox = load("TwoRoomCheckBox");
-//        boolean booleanThreeRoomCheckBox = load("ThreeRoomCheckBox");
-//        boolean booleanFourRoomCheckBox = load("FourRoomCheckBox");
-//        boolean booleanFiveRoomCheckBox = load("FiveRoomCheckBox");
-//        boolean booleanExecutiveCheckBox = load("ExecutiveCheckBox");
-//
-//        boolean[] sizeBoolean = {booleanTwoRoomCheckBox,booleanThreeRoomCheckBox,booleanFourRoomCheckBox,booleanFiveRoomCheckBox,booleanExecutiveCheckBox};
-//
-//        // load pins
-//        String Pin1Input = loadString("Pin1Input");
-//        String Pin2Input = loadString("Pin2Input");
-//        String Pin3Input = loadString("Pin3Input");
-//
-//        ArrayList<Location> locationFilters = convertLocs(locationsBoolean);
-//        ArrayList<Size> sizeFilters = convertSize(sizeBoolean);
-//        int[] priceFilters = convertPrice(MinPriceInput,MaxPriceInput);
-//        ArrayList<Amenities> amenitiesFilters = convertAmenities(amenitiesBoolean);
-//
-//
-//        Query.Builder queryBuilder = new Query.Builder();
-//        queryBuilder.locations(locationFilters);
-//
-//
-//        return userQuery;
-//    }
+    private Query createUserQuery(){
+
+        // load filter values
+
+        // load amenities
+        boolean Mall = load("checkBoxMall");
+        boolean MRT = load("checkBoxClinic");
+        boolean Clinic = load("checkBoxClinic");
+        boolean[] amenitiesBoolean = {Mall, MRT, Clinic};
+
+        // load locations
+        boolean AngMoKio = load("AngMoKio");
+        boolean Bedok = load("Bedok");
+        boolean Bishan = load("Bishan");
+        boolean BukitBatok = load("BukitBatok");
+        boolean BukitMerah = load("BukitMerah");
+        boolean BukitPanjang = load("BukitPanjang");
+        boolean BukitTimah = load("BukitTimah");
+        boolean CentralArea = load("CentralArea");
+        boolean ChoaChuKang = load("ChoaChuKang");
+        boolean Clementi = load("Clementi");
+        boolean Geylang = load("Geylang");
+        boolean Hougang = load("Hougang");
+        boolean JurongEast = load("JurongEast");
+        boolean JurongWest = load("JurongWest");
+        boolean KallangWhampoa = load("KallangWhampoa");
+        boolean MarineParade = load("MarineParade");
+        boolean PasirRis = load("PasirRis");
+        boolean Punggol = load("Punggol");
+        boolean Queenstown = load("Queenstown");
+        boolean Sembawang = load("Sembawang");
+        boolean Sengkang = load("Sengkang");
+        boolean Serangoon = load("Serangoon");
+        boolean Tampines = load("Tampines");
+        boolean ToaPayoh = load("ToaPayoh");
+        boolean Woodlands = load("Woodlands");
+        boolean Yishun = load("Yishun");
+        boolean[] locationsBoolean = {AngMoKio, Bedok, Bishan, BukitBatok, BukitMerah, BukitPanjang, BukitTimah, CentralArea, ChoaChuKang, Clementi, Geylang, Hougang, JurongEast, JurongWest, KallangWhampoa, MarineParade, PasirRis, Punggol, Queenstown, Sembawang, Sengkang, Serangoon, Tampines, ToaPayoh, Woodlands, Yishun};
+
+        // load price
+        String MinPriceInput = loadString("MinPriceInput");
+        String MaxPriceInput = loadString("MaxPriceInput");
+
+        // load size
+        boolean booleanTwoRoomCheckBox = load("TwoRoomCheckBox");
+        boolean booleanThreeRoomCheckBox = load("ThreeRoomCheckBox");
+        boolean booleanFourRoomCheckBox = load("FourRoomCheckBox");
+        boolean booleanFiveRoomCheckBox = load("FiveRoomCheckBox");
+        boolean booleanExecutiveCheckBox = load("ExecutiveCheckBox");
+
+        boolean[] sizeBoolean = {booleanTwoRoomCheckBox,booleanThreeRoomCheckBox,booleanFourRoomCheckBox,booleanFiveRoomCheckBox,booleanExecutiveCheckBox};
+
+        // load pins
+        String Pin1Input = loadString("Pin1Input");
+        String Pin2Input = loadString("Pin2Input");
+        String Pin3Input = loadString("Pin3Input");
+
+        ArrayList<Location> locationFilters = convertLocs(locationsBoolean);
+        ArrayList<Size> sizeFilters = convertSize(sizeBoolean);
+        int[] priceFilters = convertPrice(MinPriceInput,MaxPriceInput);
+        ArrayList<Amenities> amenitiesFilters = convertAmenities(amenitiesBoolean);
+
+        Query query = new Query.Builder().locations(locationFilters).size(sizeFilters).price(priceFilters).amenities(amenitiesFilters).build();
+        return query;
+    }
 
     private ArrayList<Location> convertLocs(boolean[] locationsBoolean){
         ArrayList<Location> locationsList = new ArrayList<>();
