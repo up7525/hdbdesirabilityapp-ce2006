@@ -1,16 +1,23 @@
 package ntu.ce2006.swensens.hdbdesirabilityapp;
 
+import android.support.v4.media.MediaBrowserServiceCompat;
 import android.support.v7.app.*;
 import android.os.*;
 import android.view.*;
 import android.content.*;
 import android.widget.*;
 import android.app.AlertDialog.*;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Amenities;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Location;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Size;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query;
+import ntu.ce2006.swensens.hdbdesirabilityapp.search.FlatManager ;
+import ntu.ce2006.swensens.hdbdesirabilityapp.search.result.Flat;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -97,9 +104,16 @@ public class SearchActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Query userQuery = createUserQuery();
-                Intent query = new Intent(SearchActivity.this,ResultsActivity.class);
-                query.putExtra("ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query",userQuery);
+//                FlatManager flatManager = new FlatManager(userQuery);
+//                // TODO how to call flatManager.makeQuery
+//
+//                try {
+//                    listOfFlats = flatManager.getFlats();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
 
+                Intent query = new Intent(SearchActivity.this,ResultsActivity.class);
                 startActivity(query);
             }
         });

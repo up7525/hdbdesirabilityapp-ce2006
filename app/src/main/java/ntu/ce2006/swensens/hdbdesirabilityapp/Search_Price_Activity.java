@@ -30,7 +30,21 @@ public class Search_Price_Activity extends AppCompatActivity {
         String maxPriceString = ((EditText) findViewById(R.id.MaxPriceInput)).getText().toString();
         maxPriceString = sanitizePrice(maxPriceString);
 
-        if(Integer.parseInt(maxPriceString) > Integer.parseInt(minPriceString)) {
+        if(minPriceString.equalsIgnoreCase("NULLSTRING") | maxPriceString.equalsIgnoreCase("NULLSTRING")){
+            if(minPriceString.equalsIgnoreCase("NULLSTRING") & maxPriceString.equalsIgnoreCase("NULLSTRING")){
+                save("MinPriceInput","NULLSTRING");
+                save("MaxPriceInput","NULLSTRING");
+            }
+            else if(minPriceString.equalsIgnoreCase("NULLSTRING")){
+                save("MinPriceInput","NULLSTRING");
+                save("MaxPriceInput", maxPriceString);
+            }
+            else if(maxPriceString.equalsIgnoreCase("NULLSTRING")){
+                save("MinPriceInput",minPriceString);
+                save("MaxPriceInput","NULLSTRING");
+            }
+        }
+        else if(Integer.parseInt(maxPriceString) > Integer.parseInt(minPriceString)) {
             save("MinPriceInput", minPriceString);
             save("MaxPriceInput", maxPriceString);
         }
@@ -39,8 +53,15 @@ public class Search_Price_Activity extends AppCompatActivity {
             save("MaxPriceInput", minPriceString);
         }
         else{
-            save("MinPriceInput", Integer.toString(Integer.parseInt(minPriceString)-1));
-            save("MaxPriceInput", minPriceString);
+            if(Integer.parseInt(minPriceString) > 0) {
+                save("MinPriceInput", Integer.toString(Integer.parseInt(minPriceString) - 1));
+                save("MaxPriceInput", minPriceString);
+            }
+            else{
+                save("MinPriceInput", Integer.toString(0));
+                save("MaxPriceInput", Integer.toString(1));
+            }
+
         }
     }
 
@@ -49,13 +70,15 @@ public class Search_Price_Activity extends AppCompatActivity {
         // remove non-numeric characters
         inputString.replaceAll("[^0-9.]", "");
 
+        if(inputString.length() == 0)
+            return "NULLSTRING";
+
         // convert to number
         int price = Integer.parseInt(inputString);
 
         // limit max number
         if(price > 2000000)
             return "2000000";
-
         return Integer.toString(price);
     }
 
@@ -69,12 +92,14 @@ public class Search_Price_Activity extends AppCompatActivity {
         // item = text field with number input
         tempEditText = (EditText) findViewById(R.id.MinPriceInput);
         savedString = load("MinPriceInput");
-        tempEditText.setText(savedString);
+        if(!savedString.equalsIgnoreCase("NULLSTRING"))
+            tempEditText.setText(savedString);
 
         // item = text field with number input
         tempEditText = (EditText) findViewById(R.id.MaxPriceInput);
         savedString = load("MaxPriceInput");
-        tempEditText.setText(savedString);
+        if(!savedString.equalsIgnoreCase("NULLSTRING"))
+            tempEditText.setText(savedString);
     }
 
     private void save(String itemName, String itemString) {
