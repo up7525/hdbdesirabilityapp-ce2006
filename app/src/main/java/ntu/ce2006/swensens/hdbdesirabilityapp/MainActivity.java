@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     public Button historyButton;
 
     public void init(){
+        setTitle("");
         searchMenuButton = (Button)findViewById(R.id.searchMenuButton);
         searchMenuButton.setOnClickListener(new View.OnClickListener()  {
             @Override

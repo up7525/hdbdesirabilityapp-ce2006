@@ -28,11 +28,12 @@
 
             <EditText
                 android:id="@+id/MinPriceInput"
+                android:maxLength="7"
                 android:layout_width="match_parent"
                 android:layout_height="49dp"
                 android:ems="10"
                 android:inputType="number"
-                android:hint="100 000"/>
+                android:hint="100,000"/>
         </LinearLayout>
 
         <LinearLayout
@@ -50,11 +51,12 @@
 
             <EditText
                 android:id="@+id/MaxPriceInput"
+                android:maxLength="7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="number"
-                android:hint="1200 000"/>
+                android:hint="2,000,000"/>
         </LinearLayout>
 
     </LinearLayout>

@@ -1,22 +1,35 @@
 package ntu.ce2006.swensens.hdbdesirabilityapp;
-
-import android.support.v7.app.AppCompatActivity;
-import android.os.*;
-import android.view.*;
+import android.app.AlertDialog.*;
 import android.content.*;
+import android.os.*;
+import android.support.v4.media.MediaBrowserServiceCompat;
+import android.support.v7.app.*;
+import android.view.*;
 import android.widget.*;
-import ntu.ce2006.swensens.hdbdesirabilityapp.R;
-
+import static ntu.ce2006.swensens.hdbdesirabilityapp.R.id.ClearButtonSmall;
 
 
 public class PinActivity extends AppCompatActivity {
 
+    public ImageButton ClearButtonSmall;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pin);
-        String s = "Pins";
-        setTitle(s);
+        setTitle("Pins");
+        init();
+    }
+    public void init(){
+        ClearButtonSmall = (ImageButton) findViewById(R.id.ClearButtonSmall2);
+        ClearButtonSmall.setOnClickListener(new View.OnClickListener()  {
+            @Override
+            public void onClick(View v) {
+                ((EditText) findViewById(R.id.Pin1Input)).setText("");
+                ((EditText) findViewById(R.id.Pin2Input)).setText("");
+                ((EditText) findViewById(R.id.Pin3Input)).setText("");
+                Toast.makeText(PinActivity.this,"Cleared Pins.",Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
@@ -83,14 +96,15 @@ public class PinActivity extends AppCompatActivity {
 
     private void save(String itemName, String itemString) {
         // item = int
-        SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("Pins",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(itemName,itemString);
         editor.commit();
     }
 
     private String load(String itemName) {
-        SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("Pins",Context.MODE_PRIVATE);
         return sharedPreferences.getString(itemName,"");
     }
+
 }

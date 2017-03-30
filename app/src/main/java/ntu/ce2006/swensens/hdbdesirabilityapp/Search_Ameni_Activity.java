@@ -14,6 +14,7 @@ public class Search_Ameni_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search__ameni_);
+        setTitle("Set Amenities");
     }
 
     @Override

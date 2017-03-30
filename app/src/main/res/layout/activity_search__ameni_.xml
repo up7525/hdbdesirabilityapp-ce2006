@@ -13,16 +13,6 @@
         tools:layout_editor_absoluteY="8dp"
         tools:layout_editor_absoluteX="8dp">
 
-        <TextView
-            android:background="@color/Yellow"
-            android:id="@+id/AmenitiesText"
-            android:text="Amenities"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="36sp" />
-
         <CheckBox
             android:id="@+id/checkBoxMRT"
             android:layout_width="match_parent"

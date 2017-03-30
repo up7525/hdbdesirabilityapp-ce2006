@@ -13,8 +13,7 @@ public class Search_Size_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search__size_);
-        String s = "Set Size";
-        setTitle(s);
+        setTitle("Set Size");
     }
 
     @Override
