@@ -36,7 +36,7 @@ public class Flat implements Comparable<Flat> {
 
     public static class Builder {
         // Required Parameters
-        private double score;
+        private double score = 0;
         private String streetName;
         private String block;
         private String town;
@@ -48,8 +48,7 @@ public class Flat implements Comparable<Flat> {
         // Optional Parameters
         private HashMap<String, Integer> amenities = new HashMap<>();
 
-        public Builder(double score, String block, String streetName, String town, String address, String size, double price, double area) {
-            this.score = score;
+        public Builder(String block, String streetName, String town, String address, String size, double price, double area) {
             this.block = block;
             this.streetName = streetName;
             this.town = town;
@@ -65,6 +64,11 @@ public class Flat implements Comparable<Flat> {
         */
         public Builder amenities(HashMap<String, Integer> amenities) {
             this.amenities = amenities;
+            return this;
+        }
+
+        public Builder score(double score) {
+            this.score = score;
             return this;
         }
 
@@ -99,6 +103,10 @@ public class Flat implements Comparable<Flat> {
 
     public void setAmenities(HashMap<String, Integer> amenities) {
         this.amenities = amenities;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
     }
 
     /**
@@ -157,15 +165,22 @@ public class Flat implements Comparable<Flat> {
 
     @Override
     public String toString() {
-        return "Score: " + Double.toString(score) + "/10" + System.getProperty("line.separator")
+        StringBuilder sb = new StringBuilder("Score: " + String.format("%.2f", score) + "/10" + System.getProperty("line.separator")
                 + "Address: " + address + System.getProperty("line.separator")
                 + "Price: S$" + String.format("%.2f", price) + System.getProperty("line.separator")
-                + "Area: " + Double.toString(area) + "SQM" + System.getProperty("line.separator");
-        // TODO String Representations of amenities
-                /*
-                + "Amenities " + + System.getProperty("line.separator")
-                + "Distance: " +  + System.getProperty("line.separator");
-                */
+                + "Size: " + size + System.getProperty("line.separator")
+                + "Amenities: ");
+        // Amenities
+        int index = 0;
+        for (String amenitiesName : amenities.keySet()) {
+            if (index == amenities.size() - 1) {
+                sb.append(amenities.get(amenitiesName) + " " + amenitiesName);
+                break;
+            }
+            sb.append(amenities.get(amenitiesName) + " " + amenitiesName + ", ");
+            index++;
+        }
+        return sb.toString();
     }
 
     // DEFAULT (By Score) UNDERNEATH ARE SORTING

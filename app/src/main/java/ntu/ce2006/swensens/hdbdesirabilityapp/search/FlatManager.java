@@ -45,10 +45,6 @@ public class FlatManager {
         return flats;
     }
 
-    private void computerScore() {
-
-    }
-
     private void requestAPI() throws IOException {
         List<Flat> filteredFlatList = new ArrayList<>();
         // Request of General Flat Data and make it into list of Flats object
@@ -76,11 +72,12 @@ public class FlatManager {
             if (containsLocation(flatList.get(i)) && isWithinPrice(flatList.get(i))
                     && hasSize(flatList.get(i)) && hasAmenities(flatList.get(i))) {
                 filteredList.add(flatList.get(i));
+                computeScore(flatList.get(i));
             }
         }
         // TODO PLease confirm if still using Filter by size
 
-        // Filter by Amenities
+
         return filteredList;
     }
 
@@ -90,10 +87,10 @@ public class FlatManager {
         HashMap<String, Integer> amenitiesQuantity = new HashMap<>();
         JsonParser parser = new JsonParser();
         JsonElement googleGeoLocData = googleGeoLoc.getData().getAsJsonArray("results").get(0);
-        JsonObject locationData= parser.parse(googleGeoLocData.toString()).getAsJsonObject().getAsJsonObject("geometry").getAsJsonObject("location");
+        JsonObject locationData = parser.parse(googleGeoLocData.toString()).getAsJsonObject().getAsJsonObject("geometry").getAsJsonObject("location");
         double latitude = locationData.get("lat").getAsDouble();
         double longitude = locationData.get("lng").getAsDouble();
-        int radius = 3000;
+        int radius = 1000;
 
         GooglePlacesImpl googlePlaces;
         if (query.getAmenitiesFilters().contains(Amenities.MRT) || query.getAmenitiesFilters().size() == 0) {
@@ -124,7 +121,7 @@ public class FlatManager {
     }
 
     private boolean containsLocation(Flat flat) {
-        for (Location loc: query.getLocationFilters()) {
+        for (Location loc : query.getLocationFilters()) {
             if (loc.toString().equals(flat.getTown())) {
                 return true;
             }
@@ -148,14 +145,25 @@ public class FlatManager {
     private Flat flat(JsonElement jsonElement) {
         JsonParser parser = new JsonParser();
         JsonObject flatJson = parser.parse(jsonElement.toString()).getAsJsonObject();
-        return new Flat.Builder(computeScore(), flatJson.get("block").getAsString(), flatJson.get("street_name").getAsString(),
+        return new Flat.Builder(flatJson.get("block").getAsString(), flatJson.get("street_name").getAsString(),
                 flatJson.get("town").getAsString(), makeAddress(flatJson), flatJson.get("flat_type").getAsString(), flatJson.get("resale_price").getAsDouble(),
                 flatJson.get("floor_area_sqm").getAsDouble()).build();
     }
 
-    private double computeScore() {
-        // TODO RETURN PLACEHOLDER FOR NOW
-        return 6.6;
+    private void computeScore(Flat flat) {
+        double weight = 10.0 / flat.getAmenities().size();
+        double score = 0;
+        for (Amenities amenities : Amenities.values()) {
+            if (flat.getAmenities().get(amenities.toString()) != null) {
+                if (flat.getAmenities().get(amenities.toString()) >= amenities.getMaxScoreWeight()) {
+                    score += weight;
+                } else {
+                    score += (flat.getAmenities().get(amenities.toString()) * weight * 1.0)
+                            / (amenities.getMaxScoreWeight());
+                }
+            }
+        }
+        flat.setScore(score);
     }
 
     private String makeAddress(JsonObject flatJson) {

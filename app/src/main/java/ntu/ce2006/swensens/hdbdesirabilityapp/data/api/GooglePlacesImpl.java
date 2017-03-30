@@ -58,6 +58,7 @@ public class GooglePlacesImpl extends JsonRequest {
                         latitude + "," + longitude + "&radius=" + Integer.toString(radius)
                         + "&type=" + amenities.getGoogleType()
                         + "&key=" + GOOGLEKEY[index];
+
                 jsonObject = requestAPI(urlFinal);
                 break;
             } catch (IOException e) {

@@ -31,7 +31,7 @@ public class FlatTest {
         amenities.put("MRT", 5);
         amenities.put("Mall", 10);
         amenities.put("Clinics", 4);
-        flat = new Flat.Builder(score, block, streetName, town, address, size, price, area).amenities(amenities).build();
+        flat = new Flat.Builder(block, streetName, town, address, size, price, area).amenities(amenities).build();
     }
 
     /**
