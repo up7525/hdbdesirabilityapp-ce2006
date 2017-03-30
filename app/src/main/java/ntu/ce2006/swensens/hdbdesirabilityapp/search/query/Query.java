@@ -1,5 +1,6 @@
 package ntu.ce2006.swensens.hdbdesirabilityapp.search.query;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Size;
  * Created by Swensens on 20/03/17.
  */
 
-public class Query {
+public class Query implements Serializable{
 
     private int id_key;
 

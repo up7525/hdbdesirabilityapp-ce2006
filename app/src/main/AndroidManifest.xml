@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.nicholas.myapplication">
+    package="ntu.ce2006.swensens.hdbdesirabilityapp">
 
     <application
         android:allowBackup="true"
@@ -24,7 +24,11 @@
         <activity android:name=".Search_Price_Activity" />
         <activity android:name=".Search_Ameni_Activity" />
         <activity android:name=".ResultsActivity" />
-        <activity android:name=".Info"></activity>
+        <activity android:name=".Info">
+
+
+
+        </activity>
     </application>
 
 </manifest>

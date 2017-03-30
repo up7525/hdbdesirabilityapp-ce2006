@@ -49,19 +49,14 @@ public class Search_Price_Activity extends AppCompatActivity {
         // remove non-numeric characters
         inputString.replaceAll("[^0-9.]", "");
 
-        // remove any redundant 0s at the front of the number
-        while(Character.toString(inputString.charAt(0)).equalsIgnoreCase("0"))
-            inputString = inputString.substring(1,inputString.length()-1);
-
-        // truncate to 7 numbers only
-        if(inputString.length() > 7)
-            inputString = inputString.substring(0,7);
+        // convert to number
+        int price = Integer.parseInt(inputString);
 
         // limit max number
-        if(Integer.parseInt(inputString) > 2000000)
+        if(price > 2000000)
             return "2000000";
 
-        return inputString;
+        return Integer.toString(price);
     }
 
     @Override
@@ -84,14 +79,14 @@ public class Search_Price_Activity extends AppCompatActivity {
 
     private void save(String itemName, String itemString) {
         // item = int
-        SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(itemName,itemString);
         editor.commit();
     }
 
     private String load(String itemName) {
-        SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
-        return sharedPreferences.getString(itemName,"hello");
+        SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
+        return sharedPreferences.getString(itemName,"0");
     }
 }

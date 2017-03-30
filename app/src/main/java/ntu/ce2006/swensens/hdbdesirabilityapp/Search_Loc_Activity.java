@@ -184,14 +184,14 @@ public class Search_Loc_Activity extends AppCompatActivity {
     }
 
     private void save(boolean ch, String name) {
-        SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(name, ch);
         editor.commit();
     }
 
     private boolean load(String name) {
-        SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
         return sharedPreferences.getBoolean(name, false);
     }
 

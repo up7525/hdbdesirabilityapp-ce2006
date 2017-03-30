@@ -96,7 +96,9 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                Query userQuery = createUserQuery();
                 Intent query = new Intent(SearchActivity.this,ResultsActivity.class);
+                query.putExtra("ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query",userQuery);
 
                 startActivity(query);
             }
@@ -116,10 +118,10 @@ public class SearchActivity extends AppCompatActivity {
                 String s = "Cleared";
                 Toast.makeText(SearchActivity.this,s,Toast.LENGTH_LONG).show();
 
-                SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.clear();
-                //editor.commit();
+                editor.commit();
             }
         });
     }
@@ -290,31 +292,25 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private boolean load(String name) {
-        SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
         return sharedPreferences.getBoolean(name, false);
     }
 
     private String loadString(String name) {
-        SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
         return sharedPreferences.getString(name, "");
     }
 
-    private void clearBoolean(String name){
-        saveBoolean(false, name);
-    }
-    private void clearString(String name) {
-        saveString(name,"");
-    }
 
     private void saveBoolean(boolean boolValue, String name) {
-        SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(name, boolValue);
         editor.commit();
     }
 
     private void saveString(String string, String name){
-        SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(name, string);
         editor.commit();
