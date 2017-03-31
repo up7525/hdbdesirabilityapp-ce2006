@@ -1,12 +1,11 @@
-package ntu.ce2006.swensens.hdbdesirabilityapp.search.query;
+package com.example.jonathan.local_2006_test;
 
-import java.io.Serializable;
+/**
+ * Created by Jonathan on 29-Mar-17.
+ */
 import java.util.ArrayList;
 import java.util.List;
 
-import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Amenities;
-import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Location;
-import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Size;
 
 /**
  * Query in builder pattern
@@ -18,9 +17,12 @@ import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Size;
  * Created by Swensens on 20/03/17.
  */
 
-public class Query implements Serializable{
+public class Query {
 
     private int id_key;
+
+    //String Identifier
+    private String desc;
 
     // A list of location filters
     private List<Location> locationFilters;
@@ -40,6 +42,10 @@ public class Query implements Serializable{
     public static class Builder {
         // Optional Parameters
         private int id_key = 0;
+
+        //String identifier
+        private String desc = "Default";
+
         // A list of location filters
         private List<Location> locationFilters = new ArrayList<>();
 
@@ -54,6 +60,11 @@ public class Query implements Serializable{
 
         public Builder idDB(int id){
             id_key = id;
+            return this;
+        }
+
+        public Builder desc(String desc){
+            desc = desc;
             return this;
         }
 
@@ -85,6 +96,7 @@ public class Query implements Serializable{
 
     private Query(Builder builder) {
         id_key = builder.id_key;
+        desc = builder.desc;
         locationFilters = builder.locationFilters;
         sizeFilters = builder.sizeFilters;
         priceFilters = builder.priceFilters;
@@ -94,6 +106,8 @@ public class Query implements Serializable{
     public int getId_key() {
         return id_key;
     }
+
+    public String getDesc(){return desc;}
 
     public List<Location> getLocationFilters() {
         return locationFilters;
