@@ -33,11 +33,14 @@
         tools:layout_editor_absoluteX="-3dp">
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/SaveQuery"
+            android:textAllCaps="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/holo_blue_light"
-            android:text="Save" />
+            android:background="@color/DarkBlue"
+            android:textSize="24sp"
+            android:textColor="@color/white"
+            android:text="Save Query" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

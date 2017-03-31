@@ -5,20 +5,16 @@ import android.os.*;
 import android.view.*;
 import android.content.*;
 import android.widget.*;
-
-import java.util.ArrayList;
-
-import ntu.ce2006.swensens.hdbdesirabilityapp.R;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ResultsActivity extends AppCompatActivity {
     private ListView lv;
+    public Button saveQueryButton;
     @Override
     protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
-
+        setTitle("Results");
         lv = (ListView) findViewById(R.id.List);
 
         List<String> your_array_list = new ArrayList<String>();
@@ -39,6 +35,17 @@ public class ResultsActivity extends AppCompatActivity {
                 your_array_list );
 
         lv.setAdapter(arrayAdapter);
+        init();
+    }
 
+    public void init(){
+        saveQueryButton = (Button) findViewById(R.id.SaveQuery);
+        saveQueryButton.setOnClickListener(new View.OnClickListener()  {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ResultsActivity.this,"Query saved.",Toast.LENGTH_LONG).show();
+                // TODO save query to database
+            }
+        });
     }
 }

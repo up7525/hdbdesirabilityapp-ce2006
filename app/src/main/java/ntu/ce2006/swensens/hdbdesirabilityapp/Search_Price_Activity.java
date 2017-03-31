@@ -14,8 +14,7 @@ public class Search_Price_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search__price_);
-        String s = "Set Price";
-        setTitle(s);
+        setTitle("Set Price");
     }
 
     @Override
@@ -74,12 +73,16 @@ public class Search_Price_Activity extends AppCompatActivity {
             return "NULLSTRING";
 
         // convert to number
-        int price = Integer.parseInt(inputString);
+        long price = Integer.parseInt(inputString);
 
         // limit max number
         if(price > 2000000)
             return "2000000";
-        return Integer.toString(price);
+
+        if(price == 0)
+            return "NULLSTRING";
+
+        return Long.toString(price);
     }
 
     @Override
@@ -112,6 +115,6 @@ public class Search_Price_Activity extends AppCompatActivity {
 
     private String load(String itemName) {
         SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
-        return sharedPreferences.getString(itemName,"0");
+        return sharedPreferences.getString(itemName,"NULLSTRING");
     }
 }

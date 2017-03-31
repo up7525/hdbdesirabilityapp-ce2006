@@ -1,17 +1,15 @@
 package ntu.ce2006.swensens.hdbdesirabilityapp;
 
 import android.support.v4.media.MediaBrowserServiceCompat;
-import android.support.v7.app.*;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.os.*;
 import android.view.*;
 import android.content.*;
 import android.widget.*;
-import android.app.AlertDialog.*;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
+import android.app.*;
+import java.io.*;
+import java.util.*;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Amenities;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Location;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Size;
@@ -32,11 +30,8 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        String s = "Search";
-        setTitle(s);
-
+        setTitle("");
         init();
-
     }
 
     public void init(){
@@ -129,7 +124,7 @@ public class SearchActivity extends AppCompatActivity {
         ClearButtonSmall.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
-                String s = "Cleared";
+                String s = "Cleared all filters.";
                 Toast.makeText(SearchActivity.this,s,Toast.LENGTH_LONG).show();
 
                 SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
@@ -289,8 +284,29 @@ public class SearchActivity extends AppCompatActivity {
 
     private int[] convertPrice(String minPrice, String maxPrice){
         int[] priceArray = new int[2];
-        priceArray[0] = Integer.parseInt(minPrice);
-        priceArray[1] = Integer.parseInt(maxPrice);
+
+        boolean minIsNull = minPrice.equalsIgnoreCase("NULLSTRING") | minPrice.equalsIgnoreCase("0") | minPrice.equalsIgnoreCase("");
+        boolean maxIsNull = maxPrice.equalsIgnoreCase("NULLSTRING") | maxPrice.equalsIgnoreCase("0") | maxPrice.equalsIgnoreCase("");
+
+        if(minIsNull | maxIsNull){
+            if(minIsNull & maxIsNull){
+                priceArray[0] = 0;
+                priceArray[1] = 2000000;
+            }
+            else if (minIsNull){
+                priceArray[0] = 0;
+                priceArray[1] = Integer.parseInt(maxPrice);
+            }
+            else if (maxIsNull){
+                priceArray[0] = Integer.parseInt(minPrice);
+                priceArray[1] = 2000000;
+            }
+        }
+        else if (!minIsNull & !maxIsNull){
+            priceArray[0] = Integer.parseInt(minPrice);
+            priceArray[1] = Integer.parseInt(maxPrice);
+        }
+
         return priceArray;
     }
 
