@@ -5,12 +5,7 @@ import android.os.*;
 import android.view.*;
 import android.content.*;
 import android.widget.*;
-
-import java.util.ArrayList;
-
-import ntu.ce2006.swensens.hdbdesirabilityapp.R;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ResultsActivity extends AppCompatActivity {
     private ListView lv;

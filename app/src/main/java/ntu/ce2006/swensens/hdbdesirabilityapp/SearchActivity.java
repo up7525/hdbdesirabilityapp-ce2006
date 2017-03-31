@@ -1,17 +1,15 @@
 package ntu.ce2006.swensens.hdbdesirabilityapp;
 
 import android.support.v4.media.MediaBrowserServiceCompat;
-import android.support.v7.app.*;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.os.*;
 import android.view.*;
 import android.content.*;
 import android.widget.*;
-import android.app.AlertDialog.*;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
+import android.app.*;
+import java.io.*;
+import java.util.*;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Amenities;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Location;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Size;
