@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.result.Flat;
@@ -27,7 +28,7 @@ public class GoogleGeoLocImpl extends JsonRequest {
      * @return JsonObject containing the information retrieved
      */
     @Override
-    public JsonObject getData() throws IOException {
+    public JsonObject getData() throws IOException, ExecutionException, InterruptedException {
         JsonObject jsonObject;
         int index = 0;
         while(true) {

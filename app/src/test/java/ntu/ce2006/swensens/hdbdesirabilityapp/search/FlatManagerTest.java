@@ -9,6 +9,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Amenities;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Location;
@@ -55,7 +56,7 @@ public class FlatManagerTest {
     }
 
     @Test
-    public void testGetFlat() throws IOException {
+    public void testGetFlat() throws IOException, ExecutionException, InterruptedException {
         flatManager.getFlats();
         assertTrue(true);
     }

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import ntu.ce2006.swensens.hdbdesirabilityapp.data.api.GoogleGeoLocImpl;
 import ntu.ce2006.swensens.hdbdesirabilityapp.data.api.GooglePlacesImpl;
@@ -37,7 +38,7 @@ public class FlatManager {
         this.query = query;
     }
 
-    public List<Flat> getFlats() throws IOException {
+    public List<Flat> getFlats() throws IOException, ExecutionException, InterruptedException {
         if (flats.size() < 1) {
             requestAPI();
         }
@@ -45,7 +46,7 @@ public class FlatManager {
         return flats;
     }
 
-    private void requestAPI() throws IOException {
+    private void requestAPI() throws IOException, ExecutionException, InterruptedException {
         List<Flat> filteredFlatList = new ArrayList<>();
         // Request of General Flat Data and make it into list of Flats object
         GovDataAPIImpl govDataAPI = new GovDataAPIImpl();
@@ -54,7 +55,7 @@ public class FlatManager {
         System.out.println(filteredFlatList);
     }
 
-    private List<Flat> makeFlat(JsonObject jsonObject) throws IOException {
+    private List<Flat> makeFlat(JsonObject jsonObject) throws IOException, ExecutionException, InterruptedException {
         List<Flat> flatList = new ArrayList<>();
         JsonArray jsonArray = jsonObject.getAsJsonObject("result").getAsJsonArray("records");
         for (int i = 0; i < jsonArray.size(); i++) {
@@ -64,7 +65,7 @@ public class FlatManager {
     }
 
     // TODO not completed
-    private List<Flat> filterFlat(List<Flat> flatList) throws IOException {
+    private List<Flat> filterFlat(List<Flat> flatList) throws IOException, ExecutionException, InterruptedException {
         List<Flat> filteredList = new ArrayList<>();
         // TODO FIND MORE EFFICIENT THAN O(flatList.size()*locationFilter.size())
         for (int i = 0; i < flatList.size(); i++) {
@@ -81,7 +82,7 @@ public class FlatManager {
         return filteredList;
     }
 
-    private boolean hasAmenities(Flat flat) throws IOException {
+    private boolean hasAmenities(Flat flat) throws IOException, ExecutionException, InterruptedException {
         // Get Geolocation
         GoogleGeoLocImpl googleGeoLoc = new GoogleGeoLocImpl(flat);
         HashMap<String, Integer> amenitiesQuantity = new HashMap<>();

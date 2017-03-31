@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query;
 
@@ -33,7 +34,7 @@ public class GovDataAPIImpl extends JsonRequest {
      * @return JsonObject containing the information retrieved
      */
     @Override
-    public JsonObject getData() throws IOException {
+    public JsonObject getData() throws IOException, ExecutionException, InterruptedException {
         return requestAPI(GOVDATA);
     }
 

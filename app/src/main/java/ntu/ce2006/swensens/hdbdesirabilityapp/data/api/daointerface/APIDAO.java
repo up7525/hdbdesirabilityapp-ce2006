@@ -3,6 +3,7 @@ package ntu.ce2006.swensens.hdbdesirabilityapp.data.api.daointerface;
 import com.google.gson.JsonObject;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Swensens on 20/03/17.
@@ -14,5 +15,5 @@ public interface APIDAO {
      *
      * @return JsonObject containing the information retrieved
      */
-    public JsonObject getData() throws IOException;
+    public JsonObject getData() throws IOException, ExecutionException, InterruptedException;
 }

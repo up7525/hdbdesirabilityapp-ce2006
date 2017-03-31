@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 import static org.junit.Assert.*;
 
@@ -28,7 +29,7 @@ public class GovDataAPIImplTest {
     private GovDataAPIImpl govDataAPI = new GovDataAPIImpl();
 
     @Test
-    public void testExample() throws IOException {
+    public void testExample() throws IOException, ExecutionException, InterruptedException {
         JsonParser parser = new JsonParser();
         System.out.println(parser.parse(govDataAPI.getData().getAsJsonObject("result").getAsJsonArray("records").get(0).toString()).getAsJsonObject().get("town"));
     }

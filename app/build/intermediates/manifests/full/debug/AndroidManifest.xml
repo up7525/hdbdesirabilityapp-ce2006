@@ -22,10 +22,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="ntu.ce2006.swensens.hdbdesirabilityapp.activity.SearchActivity" />
-        <activity android:name="ntu.ce2006.swensens.hdbdesirabilityapp.activity.HistoryActivity" />
-        <activity android:name="ntu.ce2006.swensens.hdbdesirabilityapp.activity.ResultsActivity" />
-        <activity android:name="ntu.ce2006.swensens.hdbdesirabilityapp.activity.PinsActivity" />
+        <activity android:name="ntu.ce2006.swensens.hdbdesirabilityapp.SearchActivity" />
+        <activity android:name="ntu.ce2006.swensens.hdbdesirabilityapp.PinActivity" />
+        <activity android:name="ntu.ce2006.swensens.hdbdesirabilityapp.HistoryActivity" />
+        <activity android:name="ntu.ce2006.swensens.hdbdesirabilityapp.Search_Loc_Activity" />
+        <activity android:name="ntu.ce2006.swensens.hdbdesirabilityapp.Search_Size_Activity" />
+        <activity android:name="ntu.ce2006.swensens.hdbdesirabilityapp.Search_Price_Activity" />
+        <activity android:name="ntu.ce2006.swensens.hdbdesirabilityapp.Search_Ameni_Activity" />
+        <activity android:name="ntu.ce2006.swensens.hdbdesirabilityapp.ResultsActivity" />
+        <activity android:name="ntu.ce2006.swensens.hdbdesirabilityapp.Info" >
+        </activity>
     </application>
 
 </manifest>
