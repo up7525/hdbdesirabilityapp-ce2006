@@ -1,7 +1,7 @@
-package ntu.ce2006.swensens.hdbdesirabilityapp.pin;
+package com.example.jonathan.local_2006_test;
 
 /**
- * Created by Swensens on 20/03/17.
+ * Created by Jonathan on 29-Mar-17.
  */
 
 public class Pin {
@@ -9,7 +9,7 @@ public class Pin {
     private int id_DB;
 
     // Postal code indicating address
-    private int postalcode;
+    private String postalcode;
 
     // User generated name
     private String desc;
@@ -17,10 +17,10 @@ public class Pin {
     public Pin(){
         this.id_DB = 0;
         this.desc = "N/A";
-        this.postalcode = 0;
+        this.postalcode = "000000";
     }
 
-    public Pin(int id_DB, int postalcode, String desc){
+    public Pin(int id_DB, String postalcode, String desc){
         this.id_DB = id_DB;
         this.desc = desc;
         this.postalcode = postalcode;
@@ -30,7 +30,7 @@ public class Pin {
         return id_DB;
     }
 
-    public int getPostalcode() {
+    public String getPostalcode() {
         return postalcode;
     }
 
@@ -42,7 +42,7 @@ public class Pin {
         this.desc = desc;
     }
 
-    public void setPostalcode(int postalcode) {
+    public void setPostalcode(String postalcode) {
         this.postalcode = postalcode;
     }
 }
