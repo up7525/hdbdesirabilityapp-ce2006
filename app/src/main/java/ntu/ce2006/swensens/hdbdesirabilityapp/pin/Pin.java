@@ -4,23 +4,14 @@ package ntu.ce2006.swensens.hdbdesirabilityapp.pin;
  * Created by Jonathan on 29-Mar-17.
  */
 
-import com.google.gson.annotations.SerializedName;
-
-/**
- * Created by Jonathan on 29-Mar-17.
- */
-
 public class Pin {
 
-    @SerializedName("id")
     private int id_DB;
 
     // Postal code indicating address
-    @SerializedName("postalcode")
     private String postalcode;
 
     // User generated name
-    @SerializedName("desc")
     private String desc;
 
     public Pin(){

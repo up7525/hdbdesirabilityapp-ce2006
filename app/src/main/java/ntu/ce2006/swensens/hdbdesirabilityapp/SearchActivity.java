@@ -10,6 +10,8 @@ import android.widget.*;
 import android.app.*;
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Amenities;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Location;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Size;
@@ -99,17 +101,28 @@ public class SearchActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Query userQuery = createUserQuery();
-//                FlatManager flatManager = new FlatManager(userQuery);
-//                // TODO how to call flatManager.makeQuery
-//
-//                try {
-//                    listOfFlats = flatManager.getFlats();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
+                FlatManager flatManager = new FlatManager(userQuery);
+                List<Flat> listOfFlats = null;
 
-                Intent query = new Intent(SearchActivity.this,ResultsActivity.class);
-                startActivity(query);
+                try {
+                    listOfFlats = flatManager.getFlats();
+                    Intent intentFlat = new Intent(SearchActivity.this,ResultsActivity.class);
+                    intentFlat.putExtra("java.util.List<ntu.ce2006.swensens.hdbdesirabilityapp.search.result.Flat>", (Serializable) listOfFlats);
+                    startActivity(intentFlat);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
+
+                // intent.putExtra("<object package name>.<object name>", <actual object>);
+                // putExtra / putSerializableExtra depending on object type
+
+
+
             }
         });
         InfoButtonSmall = (ImageButton) findViewById(R.id.InfoButtonSmall);
@@ -137,7 +150,17 @@ public class SearchActivity extends AppCompatActivity {
 
     public void showAlert(View v) {
         AlertDialog.Builder info = new AlertDialog.Builder(this);
-        info.setMessage("Hi Chester").create();
+        String alert1 = "Set the following filters:";
+        String alert2 = "Location: Set NSEW";
+        String alert3 = "Size: Select the room type";
+        String alert4 = "Price: Set the minium and maximum pricings";
+        String alert5 = "Amenities: Choose nearby places of interest";
+        info.setMessage(alert1+"\n"+"\n"+"\n"+
+                alert2+"\n"+"\n"+
+                alert3+"\n"+"\n"+
+                alert4+"\n"+"\n"+
+                alert5
+        ).create();
         info.show();
 
     }

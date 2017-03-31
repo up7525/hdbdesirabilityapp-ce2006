@@ -12,6 +12,7 @@ import static ntu.ce2006.swensens.hdbdesirabilityapp.R.id.ClearButtonSmall;
 public class PinActivity extends AppCompatActivity {
 
     public ImageButton ClearButtonSmall;
+    public ImageButton InfoButtonSmall;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,8 +31,26 @@ public class PinActivity extends AppCompatActivity {
                 Toast.makeText(PinActivity.this,"Cleared Pins.",Toast.LENGTH_LONG).show();
             }
         });
-    }
+        InfoButtonSmall = (ImageButton) findViewById(R.id.InfoButtonSmall);
+        InfoButtonSmall.setOnClickListener(new View.OnClickListener()  {
+            @Override
+            public void onClick(View v) {
 
+                showAlert(v);
+            }
+        });
+
+    }
+    public void showAlert(View v) {
+        AlertDialog.Builder info = new AlertDialog.Builder(this);
+        String alert1 = "Enter postal code of desired locations.";
+        String alert2 = "Application will calculate the distance between the pinned locations and the flats searched.";
+        info.setMessage(alert1+"\n"+"\n"+"\n"+
+                alert2
+        ).create();
+        info.show();
+
+    }
     @Override
     public void onPause() {
         super.onPause();

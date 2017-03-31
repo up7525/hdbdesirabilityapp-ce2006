@@ -25,28 +25,43 @@ import ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query;
 
 
 public class DbHandler extends SQLiteOpenHelper {
-    private static final int DATABASE_VER = 1;
-    private static final String DATABASE_NAME = "local.db";
+    // If you change the database schema, you must increment the database version.
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "OverallDB.db";
     // Table names
     private static final String TABLE_QUERY = "queries";
     private static final String TABLE_PIN = "pins";
     // Common column names
     private static final String KEY_ID = "id";
     // TABLE_QUERY column names
-    private static final String QUERY = "query_data";
+    private static final String QUERY_DESC = "desc";
+    private static final String QUERY_LOC = "locations";
+    private static final String QUERY_SIZE = "size";
+    private static final String QUERY_COST = "cost";
+    private static final String QUERY_AMEN = "amenities";
     // TABLE_PIN column names
-    private static final String PIN = "pin_data";
+    private static final String PIN_CODE = "postal_code";
+    private static final String PIN_DESC = "desc";
 
     public DbHandler(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VER);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String create_query = "CREATE TABLE " + TABLE_QUERY + "( " + KEY_ID + " INTEGER PRIMARY KEY," + QUERY + " TEXT" + ")";
-        String create_pin = "CREATE TABLE " + TABLE_PIN + "( " + KEY_ID + " INTEGER PRIMARY KEY," + PIN + " TEXT" + ")";
-        db.execSQL(create_query);
-        db.execSQL(create_pin);
+        String CREATE_QUERY_TABLE = "CREATE TABLE " + TABLE_QUERY + "("
+                + KEY_ID + " NOT NULL INTEGER PRIMARY KEY,"
+                + QUERY_DESC + " TEXT,"
+                + QUERY_LOC + " TEXT,"
+                + QUERY_SIZE + " TEXT,"
+                + QUERY_COST + " TEXT,"
+                + QUERY_AMEN + " TEXT" + ")";
+        String CREATE_PINS_TABLE = "CREATE TABLE " + TABLE_PIN + "("
+                + KEY_ID + " INTEGER PRIMARY KEY,"
+                + PIN_CODE + " TEXT,"
+                + PIN_DESC + " TEXT" + ")";
+        db.execSQL(CREATE_QUERY_TABLE);
+        db.execSQL(CREATE_PINS_TABLE);
     }
 
     @Override
@@ -58,13 +73,22 @@ public class DbHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    /**
+     * All CRUD(Create, Read, Update, Delete) Operations
+     */
+
     // Adding new query
     public void addQuery(Query query) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         Gson gson = new Gson();
         //values.put(KEY_ID, query.getId_key());
-        values.put(QUERY, gson.toJson(query));
+        values.put(QUERY_DESC, query.getDesc());
+        values.put(QUERY_LOC, gson.toJson(query.getLocationFilters()));
+        values.put(QUERY_SIZE, gson.toJson(query.getSizeFilters()));
+        values.put(QUERY_COST,gson.toJson(query.getPriceFilters()));
+        values.put(QUERY_AMEN, gson.toJson(query.getAmenitiesFilters()));
+        System.out.println(gson.toJson(query.getLocationFilters()));
         // Inserting Row
         db.insertOrThrow(TABLE_QUERY, null, values);
         db.close(); // Closing database connection
@@ -73,10 +97,11 @@ public class DbHandler extends SQLiteOpenHelper {
     //Adding new Pin
     public void addPin(Pin pin) {
         SQLiteDatabase db = this.getWritableDatabase();
+
         ContentValues values = new ContentValues();
-        Gson gson = new Gson();
         //values.put(KEY_ID, pin.getId_DB());
-        values.put(PIN, gson.toJson(pin));
+        //values.put(PIN_CODE, pin.getPostalcode());
+        values.put(PIN_DESC, pin.getDesc());
         // Inserting Row
         db.insertOrThrow(TABLE_PIN, null, values);
         db.close(); // Closing database connection
@@ -90,20 +115,28 @@ public class DbHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("SELECT  * FROM " + TABLE_QUERY + " WHERE id = " + Integer.toString(id), null);
         if (cursor != null)
             cursor.moveToFirst();
-        String output = cursor.getString(cursor.getColumnIndex(QUERY));
-        Query query = gson.fromJson(output, Query.class);
+        Query.Builder queryBuilder = new Query.Builder();
+        queryBuilder.idDB(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_ID))));
+        queryBuilder.desc(cursor.getString(cursor.getColumnIndex(QUERY_DESC)));
+        queryBuilder.locations(gson.fromJson(cursor.getString((cursor.getColumnIndex(QUERY_LOC))), ArrayList.class));
+        queryBuilder.size(gson.fromJson(cursor.getString((cursor.getColumnIndex(QUERY_SIZE))), ArrayList.class));
+        queryBuilder.price(gson.fromJson(cursor.getString((cursor.getColumnIndex(QUERY_COST))), int[].class));
+        queryBuilder.amenities(gson.fromJson(cursor.getString((cursor.getColumnIndex(QUERY_AMEN))), ArrayList.class));
+
+        Query query = queryBuilder.build();
         return query;
     }
 
     // Getting single pin
-    public Pin getPin(int u_id) {
+    public Pin getPin(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Gson gson = new Gson();
-        Cursor cursor = db.rawQuery("SELECT  * FROM " + TABLE_PIN + " WHERE id = " + Integer.toString(u_id), null);
+
+        Cursor cursor = db.rawQuery("SELECT  * FROM " + TABLE_PIN + " WHERE id = " + Integer.toString(id), null);
         if (cursor != null)
             cursor.moveToFirst();
-        String output = cursor.getString(cursor.getColumnIndex(PIN));
-        Pin pin = gson.fromJson(output, Pin.class);
+
+        Pin pin = new Pin(cursor.getInt(cursor.getColumnIndex(KEY_ID)),
+                cursor.getString(cursor.getColumnIndex(PIN_CODE)), cursor.getString(cursor.getColumnIndex(PIN_DESC)));
 
         return pin;
     }
@@ -121,14 +154,13 @@ public class DbHandler extends SQLiteOpenHelper {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                String output = cursor.getString(cursor.getColumnIndex(QUERY));
                 Query.Builder queryBuilder = new Query.Builder();
-                queryBuilder.idDB(gson.fromJson(output, int.class));
-                queryBuilder.desc(gson.fromJson(output, String.class));
-                queryBuilder.locations(gson.fromJson(output, ArrayList.class));
-                queryBuilder.size(gson.fromJson(output, ArrayList.class));
-                queryBuilder.price(gson.fromJson(output, int[].class));
-                queryBuilder.amenities(gson.fromJson(output, ArrayList.class));
+                queryBuilder.idDB(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_ID))));
+                queryBuilder.desc(cursor.getString(cursor.getColumnIndex(QUERY_DESC)));
+                queryBuilder.locations(gson.fromJson(cursor.getString((cursor.getColumnIndex(QUERY_LOC))), ArrayList.class));
+                queryBuilder.size(gson.fromJson(cursor.getString((cursor.getColumnIndex(QUERY_SIZE))), ArrayList.class));
+                queryBuilder.price(gson.fromJson(cursor.getString((cursor.getColumnIndex(QUERY_COST))), int[].class));
+                queryBuilder.amenities(gson.fromJson(cursor.getString((cursor.getColumnIndex(QUERY_AMEN))), ArrayList.class));
                 Query query = queryBuilder.build();
                 // Adding to list
                 queryList.add(query);
@@ -144,18 +176,15 @@ public class DbHandler extends SQLiteOpenHelper {
         List<Pin> pinList = new ArrayList<Pin>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_PIN;
-        Gson gson = new Gson();
+
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                String output = cursor.getString(cursor.getColumnIndex(PIN));
-                int id = gson.fromJson(output, int.class);
-                String postalcode = gson.fromJson(output, String.class);
-                String desc = gson.fromJson(output, String.class);
-                Pin pin = new Pin(id, postalcode, desc);
+                Pin pin = new Pin(cursor.getInt(cursor.getColumnIndex(KEY_ID)),
+                        cursor.getString(cursor.getColumnIndex(PIN_CODE)), cursor.getString(cursor.getColumnIndex(PIN_DESC)));
                 // Adding to list
                 pinList.add(pin);
             } while (cursor.moveToNext());
@@ -171,7 +200,13 @@ public class DbHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         Gson gson = new Gson();
-        values.put(QUERY, gson.toJson(query));
+        values.put(KEY_ID, query.getId_key());
+        values.put(QUERY_DESC, query.getDesc());
+        values.put(QUERY_LOC, gson.toJson(query.getLocationFilters()));
+        values.put(QUERY_SIZE, gson.toJson(query.getSizeFilters()));
+        values.put(QUERY_COST,gson.toJson(query.getPriceFilters()));
+        values.put(QUERY_AMEN, gson.toJson(query.getAmenitiesFilters()));
+
         // updating row
         return db.update(TABLE_QUERY, values, KEY_ID + " = ?",
                 new String[] { String.valueOf(query.getId_key()) });
@@ -180,9 +215,11 @@ public class DbHandler extends SQLiteOpenHelper {
     // Updating pin
     public int updatePin(Pin pin) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Gson gson = new Gson();
+
         ContentValues values = new ContentValues();
-        values.put(PIN, gson.toJson(pin));
+        values.put(KEY_ID, pin.getId_DB());
+        values.put(PIN_CODE, pin.getPostalcode());
+        values.put(PIN_DESC, pin.getDesc());
 
         // updating row
         return db.update(TABLE_QUERY, values, KEY_ID + " = ?",

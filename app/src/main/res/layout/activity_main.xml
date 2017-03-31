@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="visible"
-    tools:context="ntu.ce2006.swensens.hdbdesirabilityapp.activity.MainActivity">
+    tools:context="ntu.ce2006.swensens.hdbdesirabilityapp.MainActivity">
 
     <LinearLayout
         android:layout_width="fill_parent"

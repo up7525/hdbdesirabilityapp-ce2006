@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/purple1"
     tools:context="ntu.ce2006.swensens.hdbdesirabilityapp.PinActivity">
 
     <LinearLayout
@@ -67,7 +68,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="351dp"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:layout_alignParentBottom="true">
