@@ -4,7 +4,6 @@ package ntu.ce2006.swensens.hdbdesirabilityapp.DatabaseTest;
  * Created by Jonathan on 31-Mar-17.
  */
 import android.content.Context;
-import android.support.test.InstrumentationRegistry;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -23,9 +22,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * Created by Jonathan on 28-Mar-17.
  */
 
+/**
+ * Created by Jonathan on 28-Mar-17.
+ */
+
 public class DatabaseTest {
 
-    Context mMockContext=InstrumentationRegistry.getTargetContext();
+    Context mMockContext;
 
     private DbHandler Dbtest = new DbHandler(mMockContext);
 
