@@ -285,8 +285,8 @@ public class SearchActivity extends AppCompatActivity {
     private int[] convertPrice(String minPrice, String maxPrice){
         int[] priceArray = new int[2];
 
-        boolean minIsNull = minPrice.equalsIgnoreCase("NULLSTRING") | minPrice.equalsIgnoreCase("0");
-        boolean maxIsNull = maxPrice.equalsIgnoreCase("NULLSTRING") | maxPrice.equalsIgnoreCase("0");
+        boolean minIsNull = minPrice.equalsIgnoreCase("NULLSTRING") | minPrice.equalsIgnoreCase("0") | minPrice.equalsIgnoreCase("");
+        boolean maxIsNull = maxPrice.equalsIgnoreCase("NULLSTRING") | maxPrice.equalsIgnoreCase("0") | maxPrice.equalsIgnoreCase("");
 
         if(minIsNull | maxIsNull){
             if(minIsNull & maxIsNull){

@@ -20,40 +20,50 @@
             tools:layout_editor_absoluteY="8dp"
             tools:layout_editor_absoluteX="8dp">
 
-            <CheckBox
-                android:id="@+id/History1"
-                android:text="History1"
+            <RadioGroup
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="24sp" />
+                android:layout_height="match_parent" >
 
-            <CheckBox
-                android:id="@+id/History2"
-                android:text="History2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="24sp" />
+                <RadioButton
+                    android:id="@+id/History1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="History1"
+                    android:textSize="24sp" />
 
-            <CheckBox
-                android:id="@+id/History3"
-                android:text="History3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="24sp" />
+                <RadioButton
+                    android:id="@+id/History2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="History2"
+                    android:textSize="24sp" />
 
-            <CheckBox
-                android:id="@+id/History4"
-                android:text="History4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="24sp" />
+                <RadioButton
+                    android:id="@+id/History3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="History3"
+                    android:textSize="24sp" />
 
-            <CheckBox
-                android:id="@+id/History5"
-                android:text="History5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="24sp" />
+                <RadioButton
+                    android:id="@+id/History4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="History4"
+                    android:textSize="24sp" />
+
+                <RadioButton
+                    android:id="@+id/History5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="History5"
+                    android:textSize="24sp" />
+            </RadioGroup>
         </LinearLayout>
 
         <LinearLayout
