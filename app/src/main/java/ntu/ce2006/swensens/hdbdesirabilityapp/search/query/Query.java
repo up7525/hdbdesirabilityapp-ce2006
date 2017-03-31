@@ -1,10 +1,14 @@
-package com.example.jonathan.local_2006_test;
+package ntu.ce2006.swensens.hdbdesirabilityapp.search.query;
 
 /**
  * Created by Jonathan on 29-Mar-17.
  */
 import java.util.ArrayList;
 import java.util.List;
+
+import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Amenities;
+import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Location;
+import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Size;
 
 
 /**

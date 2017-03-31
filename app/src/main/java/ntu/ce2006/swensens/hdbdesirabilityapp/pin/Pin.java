@@ -1,4 +1,4 @@
-package com.example.jonathan.local_2006_test;
+package ntu.ce2006.swensens.hdbdesirabilityapp.pin;
 
 /**
  * Created by Jonathan on 29-Mar-17.

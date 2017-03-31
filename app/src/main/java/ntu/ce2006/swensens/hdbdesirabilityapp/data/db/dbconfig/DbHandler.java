@@ -1,4 +1,4 @@
-package com.example.jonathan.local_2006_test;
+package ntu.ce2006.swensens.hdbdesirabilityapp.data.db.dbconfig;
 
 /**
  * Created by Jonathan on 29-Mar-17.
@@ -15,6 +15,9 @@ import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import ntu.ce2006.swensens.hdbdesirabilityapp.pin.Pin;
+import ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query;
 
 /**
  * Created by Jonathan on 27-Mar-17.
