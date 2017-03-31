@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonParser;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,11 +47,14 @@ public class DbHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_QUERY_TABLE = "CREATE TABLE " + TABLE_QUERY + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + QUERY_LOC + " TEXT,"
-                + QUERY_SIZE + " TEXT" + QUERY_PRICE + " TEXT," +
+                + KEY_ID + " INTEGER PRIMARY KEY,"
+                + QUERY_LOC + " TEXT,"
+                + QUERY_SIZE + " TEXT"
+                + QUERY_PRICE + " TEXT," +
                 QUERY_AMEN + " TEXT," + ")";
         String CREATE_PINS_TABLE = "CREATE TABLE " + TABLE_PIN + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + PIN_CODE + " INTEGER,"
+                + KEY_ID + " INTEGER PRIMARY KEY,"
+                + PIN_CODE + " INTEGER,"
                 + PIN_DESC + " TEXT" + ")";
         db.execSQL(CREATE_QUERY_TABLE);
         db.execSQL(CREATE_PINS_TABLE);
@@ -68,23 +74,22 @@ public class DbHandler extends SQLiteOpenHelper {
      */
 
     // Adding new query
-    void addQuery(Query query) {
+    public void addQuery(Query query) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
-        // TODO talk about Query attributes (convert to String[])
-        //values.put(KEY_ID, query.convertArrayToString(query.getId_key()));
-        //values.put(QUERY_LOC, query.convertArrayToString(query.getLocationFilters()));
-        //values.put(QUERY_SIZE, query.convertArrayToString(query.getSizeFilters()));
-        //values.put(QUERY_PRICE, query.convertArrayToString(query.getPriceFilters()));
-        //values.put(QUERY_AMEN, query.convertArrayToString(query.getAmenitiesFilters()));
+        Gson gson = new Gson();
+        values.put(KEY_ID, query.getId_key());
+        values.put(QUERY_LOC, gson.toJson(query.getLocationFilters()));
+        values.put(QUERY_SIZE, gson.toJson(query.getSizeFilters()));
+        values.put(QUERY_PRICE,gson.toJson(query.getPriceFilters()));
+        values.put(QUERY_AMEN, gson.toJson(query.getAmenitiesFilters()));
         // Inserting Row
         db.insert(TABLE_QUERY, null, values);
         db.close(); // Closing database connection
     }
 
     //Adding new Pin
-    void addPin(Pin pin) {
+    public void addPin(Pin pin) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -97,28 +102,28 @@ public class DbHandler extends SQLiteOpenHelper {
     }
 
     // Getting single query
-    Query getQuery(int id) {
+    public Query getQuery(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-
+        Gson gson = new Gson();
+        JsonParser parser = new JsonParser();
         Cursor cursor = db.query(TABLE_QUERY, new String[] { KEY_ID,
                         QUERY_LOC, QUERY_SIZE, QUERY_PRICE, QUERY_AMEN }, KEY_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
-
         Query.Builder queryBuilder = new Query.Builder();
-        /*
-        queryBuilder.idDB(KEY_ID, Query.convertArrayToString(cursor.getString(0)));
-        queryBuilder.locations(Query.convertStringToArray(cursor.getString(1)));
-        queryBuilder.size(Query.convertStringToArray(cursor.getString(2)));
-        queryBuilder.price(Integer.parseInt(cursor.getString(3)));
-        queryBuilder.amenities(Query.convertStringToArray(cursor.getString(4))); */
+        queryBuilder.idDB(Integer.parseInt(cursor.getString(0)));
+        queryBuilder.locations(gson.fromJson(cursor.getString(1), ArrayList.class));
+        queryBuilder.size(gson.fromJson(cursor.getString(2), ArrayList.class));
+        queryBuilder.price(gson.fromJson(cursor.getString(3), int[].class));
+        queryBuilder.amenities(gson.fromJson(cursor.getString(4), ArrayList.class));
+
         Query query = queryBuilder.build();
         return query;
     }
 
     // Getting single pin
-    Pin getPin(int id) {
+    public Pin getPin(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_PIN, new String[] { KEY_ID,
@@ -135,6 +140,7 @@ public class DbHandler extends SQLiteOpenHelper {
     // Getting All Queries
     public List<Query> getAllQueries() {
         List<Query> queryList = new ArrayList<Query>();
+        Gson gson = new Gson();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_QUERY;
 
@@ -145,16 +151,14 @@ public class DbHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Query.Builder queryBuilder = new Query.Builder();
-                /*
-                queryBuilder.idDB(KEY_ID, Query.convertArrayToString(cursor.getString(0)));
-                queryBuilder.locations(Query.convertStringToArray(cursor.getString(1)));
-                queryBuilder.size(Query.convertStringToArray(cursor.getString(2)));
-                queryBuilder.price(Integer.parseInt(cursor.getString(3)));
-                queryBuilder.amenities(Query.convertStringToArray(cursor.getString(4)));
-                Query query = queryBuilder.build();*/
-
+                queryBuilder.idDB(Integer.parseInt(cursor.getString(0)));
+                queryBuilder.locations(gson.fromJson(cursor.getString(1), ArrayList.class));
+                queryBuilder.size(gson.fromJson(cursor.getString(2), ArrayList.class));
+                queryBuilder.price(gson.fromJson(cursor.getString(3), int[].class));
+                queryBuilder.amenities(gson.fromJson(cursor.getString(4), ArrayList.class));
+                Query query = queryBuilder.build();
                 // Adding to list
-                //queryList.add(query);
+                queryList.add(query);
             } while (cursor.moveToNext());
         }
 
@@ -189,11 +193,12 @@ public class DbHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        //values.put(KEY_ID, query.convertArrayToString(query.getId_key()));
-        //values.put(QUERY_LOC, query.convertArrayToString(query.getLocationFilters()));
-        //values.put(QUERY_SIZE, query.convertArrayToString(query.getSizeFilters()));
-        //values.put(QUERY_PRICE, query.convertArrayToString(query.getPriceFilters()));
-        //values.put(QUERY_AMEN, query.convertArrayToString(query.getAmenitiesFilters()));
+        Gson gson = new Gson();
+        values.put(KEY_ID, query.getId_key());
+        values.put(QUERY_LOC, gson.toJson(query.getLocationFilters()));
+        values.put(QUERY_SIZE, gson.toJson(query.getSizeFilters()));
+        values.put(QUERY_PRICE,gson.toJson(query.getPriceFilters()));
+        values.put(QUERY_AMEN, gson.toJson(query.getAmenitiesFilters()));
 
         // updating row
         return db.update(TABLE_QUERY, values, KEY_ID + " = ?",

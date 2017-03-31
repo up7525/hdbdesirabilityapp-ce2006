@@ -170,5 +170,4 @@ public class FlatManager {
         return flatJson.get("block").getAsString() + " " + flatJson.get("street_name").getAsString() + " "
                 + flatJson.get("town").getAsString();
     }
-
 }

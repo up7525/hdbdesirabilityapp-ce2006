@@ -16,10 +16,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.SearchActivity" />
-        <activity android:name=".activity.HistoryActivity" />
-        <activity android:name=".activity.ResultsActivity" />
-        <activity android:name=".activity.PinsActivity"></activity>
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".PinActivity" />
+        <activity android:name=".HistoryActivity" />
+        <activity android:name=".Search_Loc_Activity" />
+        <activity android:name=".Search_Size_Activity" />
+        <activity android:name=".Search_Price_Activity" />
+        <activity android:name=".Search_Ameni_Activity" />
+        <activity android:name=".ResultsActivity" />
+        <activity android:name=".Info">
+
+
+
+        </activity>
     </application>
 
 </manifest>

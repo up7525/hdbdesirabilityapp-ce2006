@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="blue1">#4ea5d2</color>
+    <color name="blue2">#4a7bb3</color>
+    <color name="purple1">#605496</color>
+    <color name="purple2">#5f4272</color>
+    <color name="topbar">#42cdca</color>
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
+    <color name="MediumBlue">#14ACB9</color>
+    <color name="DarkBlue">#42cdca</color>
+    <color name="Yellow">#FEE04E</color>
+    <color name="SwitchDarkGreen">#56A73E</color>
+    <color name="SwitchLightGreen">#8ADC7A</color>
+    <color name="CheckboxGreen">#55C45B</color>
 </resources>

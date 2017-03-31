@@ -1,5 +1,6 @@
 package ntu.ce2006.swensens.hdbdesirabilityapp.search.query;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Size;
  * Created by Swensens on 20/03/17.
  */
 
-public class Query {
+public class Query implements Serializable{
 
     private int id_key;
 
@@ -29,9 +30,6 @@ public class Query {
 
     // Price range: [minimum, maximum]
     private int[] priceFilters;
-
-    // Area range: [minimum, maximum]
-    // private int[] areaFilters;
 
     // A list of amenity filters
     private List<Amenities> amenitiesFilters;
@@ -51,9 +49,6 @@ public class Query {
         // Price range: [minimum, maximum]
         private int[] priceFilters = new int[2];
 
-        // Area range: [minimum, maximum]
-        // private int[] areaFilters = new int[2];
-
         // A list of amenity filters
         private List<Amenities> amenitiesFilters = new ArrayList<>();
 
@@ -72,17 +67,11 @@ public class Query {
             return this;
         }
 
-        public Builder price(int minimum, int maximum) {
-            priceFilters[0] = minimum;
-            priceFilters[1] = maximum;
+        public Builder price(int[] arr) {
+            priceFilters[0] = arr[0];
+            priceFilters[1] = arr[1];
             return this;
         }
-
-        //public Builder area(int minimum, int maximum) {
-        //    areaFilters[0] = minimum;
-        //    areaFilters[1] = maximum;
-        //    return this;
-        //}
 
         public Builder amenities(ArrayList<Amenities> amenities) {
             amenitiesFilters = amenities;
@@ -99,7 +88,6 @@ public class Query {
         locationFilters = builder.locationFilters;
         sizeFilters = builder.sizeFilters;
         priceFilters = builder.priceFilters;
-        //areaFilters = builder.areaFilters;
         amenitiesFilters = builder.amenitiesFilters;
     }
 
@@ -119,10 +107,6 @@ public class Query {
         return priceFilters;
     }
 
-    //public int[] getAreaFilters() {
-    //    return areaFilters;
-    //}
-
     public List<Amenities> getAmenitiesFilters() {
         return amenitiesFilters;
     }
@@ -139,39 +123,9 @@ public class Query {
         return priceFilters[0] == 0 && priceFilters[1] == 0;
     }
 
-    //public boolean isAreaEmpty() {
-    //    return areaFilters[0] == 0 && areaFilters[1] == 0;
-    //}
-
     public boolean isAmenitiesEmpty() {
         return amenitiesFilters.size() == 0;
     }
-
-    public static String strSeparator = "__,__";
-
-    public static String convertArrayToString(String[] array){
-        String str = "";
-        for (int i = 0;i<array.length; i++) {
-            str = str+array[i];
-            // Do not append comma at the end of last element
-            if(i<array.length-1){
-                str = str+strSeparator;
-            }
-        }
-        return str;
-    }
-    public static String[] convertStringToArray(String str){
-        String[] arr = str.split(strSeparator);
-        return arr;
-    }
-    public static int[] convertStringToIntArray(String str){
-        String[] arr = str.split(strSeparator);
-        int[] intArr = new int[2];
-        intArr[0] = Integer.parseInt(arr[0]);
-        intArr[1] = Integer.parseInt(arr[1]);
-        return intArr;
-    }
-
 
 
 }

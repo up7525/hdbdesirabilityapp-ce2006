@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ntu.ce2006.swensens.hdbdesirabilityapp.Search_Ameni_Activity">
+
+    <LinearLayout
+        android:layout_width="344dp"
+        android:layout_height="495dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp">
+
+        <TextView
+            android:background="@color/Yellow"
+            android:id="@+id/AmenitiesText"
+            android:text="Amenities"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="36sp" />
+
+        <CheckBox
+            android:id="@+id/checkBoxMRT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="MRT"
+            android:textSize="24sp" />
+
+        <CheckBox
+            android:id="@+id/checkBoxMall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mall"
+            android:textSize="24sp" />
+
+        <CheckBox
+            android:id="@+id/checkBoxClinic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Clinic"
+            android:textSize="24sp" />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
