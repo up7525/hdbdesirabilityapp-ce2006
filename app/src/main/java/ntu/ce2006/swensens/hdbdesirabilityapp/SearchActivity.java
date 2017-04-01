@@ -4,6 +4,7 @@ import android.support.v4.media.MediaBrowserServiceCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.*;
+import android.util.Log;
 import android.view.*;
 import android.content.*;
 import android.widget.*;
@@ -20,6 +21,9 @@ import ntu.ce2006.swensens.hdbdesirabilityapp.search.FlatManager ;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.result.Flat;
 
 public class SearchActivity extends AppCompatActivity {
+
+    // FOr logger
+    private static final String TAG = "SearchActivity";
 
     public Button locationButton;
     public Button priceButton;
@@ -112,7 +116,7 @@ public class SearchActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Log.d(TAG, "Exception", e);
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 }

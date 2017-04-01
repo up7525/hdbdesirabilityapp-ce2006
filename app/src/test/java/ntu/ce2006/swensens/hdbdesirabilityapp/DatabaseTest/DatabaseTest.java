@@ -1,8 +1,11 @@
+/*
 package ntu.ce2006.swensens.hdbdesirabilityapp.DatabaseTest;
 
+*/
 /**
  * Created by Jonathan on 31-Mar-17.
- */
+ *//*
+
 import android.content.Context;
 import org.junit.Test;
 
@@ -18,9 +21,11 @@ import ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+*/
 /**
  * Created by Jonathan on 28-Mar-17.
- */
+ *//*
+
 
 /**
  * Created by Jonathan on 28-Mar-17.
@@ -78,3 +83,4 @@ public class DatabaseTest {
         assertThat(queryResult.getDesc(), is(query.getDesc()));
     }
 }
+*/

@@ -87,37 +87,42 @@ public class FlatManager {
         GoogleGeoLocImpl googleGeoLoc = new GoogleGeoLocImpl(flat);
         HashMap<String, Integer> amenitiesQuantity = new HashMap<>();
         JsonParser parser = new JsonParser();
-        JsonElement googleGeoLocData = googleGeoLoc.getData().getAsJsonArray("results").get(0);
-        JsonObject locationData = parser.parse(googleGeoLocData.toString()).getAsJsonObject().getAsJsonObject("geometry").getAsJsonObject("location");
-        double latitude = locationData.get("lat").getAsDouble();
-        double longitude = locationData.get("lng").getAsDouble();
-        int radius = 1000;
+        if (!googleGeoLoc.getData().getAsJsonArray("results").isJsonNull()) {
+            JsonElement googleGeoLocData = googleGeoLoc.getData().getAsJsonArray("results").get(0);
 
-        GooglePlacesImpl googlePlaces;
-        if (query.getAmenitiesFilters().contains(Amenities.MRT) || query.getAmenitiesFilters().size() == 0) {
-            googlePlaces = new GooglePlacesImpl(latitude, longitude, radius, Amenities.MRT);
-            amenitiesQuantity.put(Amenities.MRT.toString(), googlePlaces.getData().getAsJsonArray("results").size());
-            if (googlePlaces.getData().getAsJsonArray("results").size() == 0 && query.getAmenitiesFilters().size() != 0) {
-                return false;
-            }
-        }
+            JsonObject locationData = parser.parse(googleGeoLocData.toString()).getAsJsonObject().getAsJsonObject("geometry").getAsJsonObject("location");
+            double latitude = locationData.get("lat").getAsDouble();
+            double longitude = locationData.get("lng").getAsDouble();
+            int radius = 1000;
 
-        if (query.getAmenitiesFilters().contains(Amenities.CLINIC) || query.getAmenitiesFilters().size() == 0) {
-            googlePlaces = new GooglePlacesImpl(latitude, longitude, radius, Amenities.CLINIC);
-            amenitiesQuantity.put(Amenities.CLINIC.toString(), googlePlaces.getData().getAsJsonArray("results").size());
-            if (googlePlaces.getData().getAsJsonArray("results").size() == 0 && query.getAmenitiesFilters().size() != 0) {
-                return false;
+            GooglePlacesImpl googlePlaces;
+            if (query.getAmenitiesFilters().contains(Amenities.MRT) || query.getAmenitiesFilters().size() == 0) {
+                googlePlaces = new GooglePlacesImpl(latitude, longitude, radius, Amenities.MRT);
+                amenitiesQuantity.put(Amenities.MRT.toString(), googlePlaces.getData().getAsJsonArray("results").size());
+                if (googlePlaces.getData().getAsJsonArray("results").size() == 0 && query.getAmenitiesFilters().size() != 0) {
+                    return false;
+                }
             }
-        }
 
-        if (query.getAmenitiesFilters().contains(Amenities.MALL) || query.getAmenitiesFilters().size() == 0) {
-            googlePlaces = new GooglePlacesImpl(latitude, longitude, radius, Amenities.MALL);
-            amenitiesQuantity.put(Amenities.MALL.toString(), googlePlaces.getData().getAsJsonArray("results").size());
-            if (googlePlaces.getData().getAsJsonArray("results").size() == 0 && query.getAmenitiesFilters().size() != 0) {
-                return false;
+            if (query.getAmenitiesFilters().contains(Amenities.CLINIC) || query.getAmenitiesFilters().size() == 0) {
+                googlePlaces = new GooglePlacesImpl(latitude, longitude, radius, Amenities.CLINIC);
+                amenitiesQuantity.put(Amenities.CLINIC.toString(), googlePlaces.getData().getAsJsonArray("results").size());
+                if (googlePlaces.getData().getAsJsonArray("results").size() == 0 && query.getAmenitiesFilters().size() != 0) {
+                    return false;
+                }
             }
+
+            if (query.getAmenitiesFilters().contains(Amenities.MALL) || query.getAmenitiesFilters().size() == 0) {
+                googlePlaces = new GooglePlacesImpl(latitude, longitude, radius, Amenities.MALL);
+                amenitiesQuantity.put(Amenities.MALL.toString(), googlePlaces.getData().getAsJsonArray("results").size());
+                if (googlePlaces.getData().getAsJsonArray("results").size() == 0 && query.getAmenitiesFilters().size() != 0) {
+                    return false;
+                }
+            }
+            flat.setAmenities(amenitiesQuantity);
+        } else {
+            return false;
         }
-        flat.setAmenities(amenitiesQuantity);
         return true;
     }
 
