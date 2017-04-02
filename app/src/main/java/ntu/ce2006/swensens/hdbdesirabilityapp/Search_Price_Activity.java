@@ -29,6 +29,8 @@ public class Search_Price_Activity extends AppCompatActivity {
         String maxPriceString = ((EditText) findViewById(R.id.MaxPriceInput)).getText().toString();
         maxPriceString = sanitizePrice(maxPriceString);
 
+        // "NULLSTRING" = user has not inputted price
+
         if(minPriceString.equalsIgnoreCase("NULLSTRING") | maxPriceString.equalsIgnoreCase("NULLSTRING")){
             if(minPriceString.equalsIgnoreCase("NULLSTRING") & maxPriceString.equalsIgnoreCase("NULLSTRING")){
                 save("MinPriceInput","NULLSTRING");
@@ -65,6 +67,11 @@ public class Search_Price_Activity extends AppCompatActivity {
     }
 
     private String sanitizePrice(String inputString){
+        // convert user input into proper range.
+        // 1. Remove non-numeric characters.
+        // 2. If user has not inputted price, save as "NULLSTRING"
+        // 3. If user's inputted price exceeds max, save as 2,000,000
+        // 4. If user's inputted price is below min, save as 0
 
         // remove non-numeric characters
         inputString.replaceAll("[^0-9.]", "");
@@ -75,12 +82,11 @@ public class Search_Price_Activity extends AppCompatActivity {
         // convert to number
         long price = Integer.parseInt(inputString);
 
-        // limit max number
+        // set within limits
         if(price > 2000000)
             return "2000000";
-
-        if(price == 0)
-            return "NULLSTRING";
+        if(price < 0)
+            return "0";
 
         return Long.toString(price);
     }
@@ -97,12 +103,16 @@ public class Search_Price_Activity extends AppCompatActivity {
         savedString = load("MinPriceInput");
         if(!savedString.equalsIgnoreCase("NULLSTRING"))
             tempEditText.setText(savedString);
+        else
+            tempEditText.setText("");
 
         // item = text field with number input
         tempEditText = (EditText) findViewById(R.id.MaxPriceInput);
         savedString = load("MaxPriceInput");
         if(!savedString.equalsIgnoreCase("NULLSTRING"))
             tempEditText.setText(savedString);
+        else
+            tempEditText.setText("");
     }
 
     private void save(String itemName, String itemString) {
