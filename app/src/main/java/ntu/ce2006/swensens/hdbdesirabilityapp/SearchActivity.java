@@ -106,13 +106,13 @@ public class SearchActivity extends AppCompatActivity {
 
                 Query userQuery = createUserQuery();
                 FlatManager flatManager = new FlatManager(userQuery);
-                List<Flat> listOfFlats = null;
+                List<Flat> listOfFlats;
 
                 try {
                     listOfFlats = flatManager.getFlats();
-                    Intent intentFlat = new Intent(SearchActivity.this,ResultsActivity.class);
-                    intentFlat.putExtra("java.util.List<ntu.ce2006.swensens.hdbdesirabilityapp.search.result.Flat>", (Serializable) listOfFlats);
-                    startActivity(intentFlat);
+//                    Intent intentFlat = new Intent(SearchActivity.this,ResultsActivity.class);
+//                    intentFlat.putExtra("java.util.List<ntu.ce2006.swensens.hdbdesirabilityapp.search.result.Flat>", (Serializable) listOfFlats);
+//                    startActivity(intentFlat);
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
@@ -120,13 +120,6 @@ public class SearchActivity extends AppCompatActivity {
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
-
-
-                // intent.putExtra("<object package name>.<object name>", <actual object>);
-                // putExtra / putSerializableExtra depending on object type
-
-
-
             }
         });
         InfoButtonSmall = (ImageButton) findViewById(R.id.InfoButtonSmall);
@@ -155,9 +148,9 @@ public class SearchActivity extends AppCompatActivity {
     public void showAlert(View v) {
         AlertDialog.Builder info = new AlertDialog.Builder(this);
         String alert1 = "Set the following filters:";
-        String alert2 = "Location: Set NSEW";
-        String alert3 = "Size: Select the room type";
-        String alert4 = "Price: Set the minium and maximum pricings";
+        String alert2 = "Location: Set town(s).";
+        String alert3 = "Size: Select the room type.";
+        String alert4 = "Price: Set the minimum and maximum prices";
         String alert5 = "Amenities: Choose nearby places of interest";
         info.setMessage(alert1+"\n"+"\n"+"\n"+
                 alert2+"\n"+"\n"+
@@ -172,12 +165,25 @@ public class SearchActivity extends AppCompatActivity {
     private Query createUserQuery(){
 
         // load filter values
+        ArrayList<Location> locationFilters = convertLocs();
+        ArrayList<Size> sizeFilters = convertSize();
+        int[] priceFilters = convertPrice();
+        ArrayList<Amenities> amenitiesFilters = convertAmenities();
 
-        // load amenities
-        boolean Mall = load("checkBoxMall");
-        boolean MRT = load("checkBoxClinic");
-        boolean Clinic = load("checkBoxClinic");
-        boolean[] amenitiesBoolean = {Mall, MRT, Clinic};
+        Query query = new Query.Builder().locations(locationFilters).size(sizeFilters).price(priceFilters).amenities(amenitiesFilters).build();
+        return query;
+    }
+
+    private void loadPins(){
+        // TODO Pass pins to database, not through user query
+        // load pins
+        String Pin1Input = loadString("Pin1Input");
+        String Pin2Input = loadString("Pin2Input");
+        String Pin3Input = loadString("Pin3Input");
+        return;
+    }
+
+    private ArrayList<Location> convertLocs(){
 
         // load locations
         boolean AngMoKio = load("AngMoKio");
@@ -208,34 +214,12 @@ public class SearchActivity extends AppCompatActivity {
         boolean Yishun = load("Yishun");
         boolean[] locationsBoolean = {AngMoKio, Bedok, Bishan, BukitBatok, BukitMerah, BukitPanjang, BukitTimah, CentralArea, ChoaChuKang, Clementi, Geylang, Hougang, JurongEast, JurongWest, KallangWhampoa, MarineParade, PasirRis, Punggol, Queenstown, Sembawang, Sengkang, Serangoon, Tampines, ToaPayoh, Woodlands, Yishun};
 
-        // load price
-        String MinPriceInput = loadString("MinPriceInput");
-        String MaxPriceInput = loadString("MaxPriceInput");
+        // Check: if none checked, default = all checked
+        if (!(AngMoKio | Bedok | Bishan | BukitBatok | BukitMerah | BukitPanjang | BukitTimah | CentralArea | ChoaChuKang | Clementi | Geylang | Hougang | JurongEast | JurongWest | KallangWhampoa | MarineParade | PasirRis | Punggol | Queenstown | Sembawang | Sengkang | Serangoon | Tampines | ToaPayoh | Woodlands | Yishun)){
+            for(int i = 0; i < locationsBoolean.length; i++)
+                locationsBoolean[i] = true;
+        }
 
-        // load size
-        boolean booleanTwoRoomCheckBox = load("TwoRoomCheckBox");
-        boolean booleanThreeRoomCheckBox = load("ThreeRoomCheckBox");
-        boolean booleanFourRoomCheckBox = load("FourRoomCheckBox");
-        boolean booleanFiveRoomCheckBox = load("FiveRoomCheckBox");
-        boolean booleanExecutiveCheckBox = load("ExecutiveCheckBox");
-
-        boolean[] sizeBoolean = {booleanTwoRoomCheckBox,booleanThreeRoomCheckBox,booleanFourRoomCheckBox,booleanFiveRoomCheckBox,booleanExecutiveCheckBox};
-
-        // load pins
-        String Pin1Input = loadString("Pin1Input");
-        String Pin2Input = loadString("Pin2Input");
-        String Pin3Input = loadString("Pin3Input");
-
-        ArrayList<Location> locationFilters = convertLocs(locationsBoolean);
-        ArrayList<Size> sizeFilters = convertSize(sizeBoolean);
-        int[] priceFilters = convertPrice(MinPriceInput,MaxPriceInput);
-        ArrayList<Amenities> amenitiesFilters = convertAmenities(amenitiesBoolean);
-
-        Query query = new Query.Builder().locations(locationFilters).size(sizeFilters).price(priceFilters).amenities(amenitiesFilters).build();
-        return query;
-    }
-
-    private ArrayList<Location> convertLocs(boolean[] locationsBoolean){
         ArrayList<Location> locationsList = new ArrayList<>();
 
         if(locationsBoolean[0])	//	AngMoKio
@@ -294,7 +278,22 @@ public class SearchActivity extends AppCompatActivity {
         return locationsList;
     }
 
-    private ArrayList<Size> convertSize(boolean[] sizesBoolean){
+    private ArrayList<Size> convertSize(){
+
+        // load size
+        boolean bool2 = load("TwoRoomCheckBox");
+        boolean bool3 = load("ThreeRoomCheckBox");
+        boolean bool4 = load("FourRoomCheckBox");
+        boolean bool5 = load("FiveRoomCheckBox");
+        boolean boolE = load("ExecutiveCheckBox");
+        boolean[] sizesBoolean = {bool2, bool3, bool4, bool5, boolE};
+
+        // Check: if none checked, default = all checked
+        if(!(bool2 | bool3 | bool4 | bool5 | boolE)){
+            for(int i = 0; i < sizesBoolean.length; i++)
+                sizesBoolean[i] = true;
+        }
+
         ArrayList<Size> sizeList = new ArrayList<>();
         if(sizesBoolean[0])
             sizeList.add(Size.ROOM_2);
@@ -309,12 +308,17 @@ public class SearchActivity extends AppCompatActivity {
         return sizeList;
     }
 
-    private int[] convertPrice(String minPrice, String maxPrice){
+    private int[] convertPrice(){
+        // load price
+        String minPrice = loadString("MinPriceInput");
+        String maxPrice = loadString("MaxPriceInput");
+
         int[] priceArray = new int[2];
 
         boolean minIsNull = minPrice.equalsIgnoreCase("NULLSTRING") | minPrice.equalsIgnoreCase("0") | minPrice.equalsIgnoreCase("");
         boolean maxIsNull = maxPrice.equalsIgnoreCase("NULLSTRING") | maxPrice.equalsIgnoreCase("0") | maxPrice.equalsIgnoreCase("");
 
+        // Check: if no values, default = 0 to 2000000
         if(minIsNull | maxIsNull){
             if(minIsNull & maxIsNull){
                 priceArray[0] = 0;
@@ -337,7 +341,19 @@ public class SearchActivity extends AppCompatActivity {
         return priceArray;
     }
 
-    private ArrayList<Amenities> convertAmenities(boolean[] amenitiesBoolean){
+    private ArrayList<Amenities> convertAmenities(){
+        // load amenities
+        boolean Mall = load("checkBoxMall");
+        boolean MRT = load("checkBoxClinic");
+        boolean Clinic = load("checkBoxClinic");
+        boolean[] amenitiesBoolean = {Mall, MRT, Clinic};
+
+        // Check: if none checked, default = all checked
+        if(!(Mall | MRT | Clinic)){
+            for(int i = 0; i < amenitiesBoolean.length; i++)
+                amenitiesBoolean[i] = true;
+        }
+
         ArrayList<Amenities> amenitiesList = new ArrayList<>();
         if(amenitiesBoolean[0])
             amenitiesList.add(Amenities.MALL);

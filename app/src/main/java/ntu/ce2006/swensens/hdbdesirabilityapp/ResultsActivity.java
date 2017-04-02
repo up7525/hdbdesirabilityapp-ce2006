@@ -23,18 +23,7 @@ public class ResultsActivity extends AppCompatActivity {
         lv = (ListView) findViewById(R.id.List);
 
 //        List<Flat> flats = new ArrayList<>();
-
 //        List<String> your_array_list = new ArrayList<String>();
-//        your_array_list.add("1");
-//        your_array_list.add("2");
-//        your_array_list.add("3");
-//        your_array_list.add("4");
-//        your_array_list.add("5");
-//        your_array_list.add("6");
-//        your_array_list.add("7");
-//        your_array_list.add("8");
-//        your_array_list.add("9");
-//        your_array_list.add("10");
 
         Intent i =getIntent();
         List<Flat> altListOfFlats = null;
@@ -52,16 +41,10 @@ public class ResultsActivity extends AppCompatActivity {
 //        textView.setText(Integer.toString(a));
 
         List<String> listOfStrings = new ArrayList<String>();
-        for(int k = 0; k < listOfFlats.size(); k++){
+        for(int k = 0; k < listOfFlats.size(); k++)
             listOfStrings.add(listOfFlats.get(k).toString());
-        }
 
-
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_list_item_1,
-                listOfStrings);
-
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listOfStrings);
         lv.setAdapter(arrayAdapter);
         init();
     }

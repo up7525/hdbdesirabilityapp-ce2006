@@ -1,15 +1,14 @@
 package ntu.ce2006.swensens.hdbdesirabilityapp.search.result;
 
-import java.util.Comparator;
-import java.util.HashMap;
-
+import java.io.*;
+import java.util.*;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.result.sort.SortOrder;
 
 /**
  * Created by Swensens on 20/03/17.
  */
 
-public class Flat implements Comparable<Flat> {
+public class Flat implements Serializable, Comparable<Flat> {
 
     // Score of the result
     private double score;
