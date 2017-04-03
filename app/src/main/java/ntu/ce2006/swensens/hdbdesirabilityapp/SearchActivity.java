@@ -13,6 +13,7 @@ import java.io.*;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
+import ntu.ce2006.swensens.hdbdesirabilityapp.exceptions.APIErrorException;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Amenities;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Location;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Size;
@@ -120,6 +121,8 @@ public class SearchActivity extends AppCompatActivity {
                     Log.d(TAG, "Exception", e);
                 } catch (ExecutionException e) {
                     e.printStackTrace();
+                } catch (APIErrorException e){
+                    e.printStackTrace();
                 }
             }
         });
@@ -172,38 +175,38 @@ public class SearchActivity extends AppCompatActivity {
 
         // enable ALL locations
         locationFilters.add(Location.ANG_MO_KIO);
-        locationFilters.add(Location.BEDOK);
-        locationFilters.add(Location.BISHAN);
-        locationFilters.add(Location.BUKIT_BATOK);
-        locationFilters.add(Location.BUKIT_MERAH);
-        locationFilters.add(Location.CHUA_CHU_KANG);
-        locationFilters.add(Location.CENTRAL_AREA);
-        locationFilters.add(Location.BUKIT_TIMAH);
-        locationFilters.add(Location.BUKIT_PANJANG);
-        locationFilters.add(Location.CLEMENTI);
-        locationFilters.add(Location.GEYLANG);
-        locationFilters.add(Location.HOUGANG);
-        locationFilters.add(Location.JURONG_EAST);
-        locationFilters.add(Location.JURONG_WEST);
-        locationFilters.add(Location.KALLANG_WHAMPOA);
-        locationFilters.add(Location.MARINE_PARADE);
-        locationFilters.add(Location.PASIR_RIS);
-        locationFilters.add(Location.PUNGGOL);
-        locationFilters.add(Location.QUEENSTOWN);
-        locationFilters.add(Location.SEMBAWANG);
-        locationFilters.add(Location.SENGKANG);
-        locationFilters.add(Location.SERANGOON);
-        locationFilters.add(Location.TAMPINES);
-        locationFilters.add(Location.TOA_PAYOH);
-        locationFilters.add(Location.WOODLANDS);
-        locationFilters.add(Location.YISHUN);
+//        locationFilters.add(Location.BEDOK);
+//        locationFilters.add(Location.BISHAN);
+//        locationFilters.add(Location.BUKIT_BATOK);
+//        locationFilters.add(Location.BUKIT_MERAH);
+//        locationFilters.add(Location.CHUA_CHU_KANG);
+//        locationFilters.add(Location.CENTRAL_AREA);
+//        locationFilters.add(Location.BUKIT_TIMAH);
+//        locationFilters.add(Location.BUKIT_PANJANG);
+//        locationFilters.add(Location.CLEMENTI);
+//        locationFilters.add(Location.GEYLANG);
+//        locationFilters.add(Location.HOUGANG);
+//        locationFilters.add(Location.JURONG_EAST);
+//        locationFilters.add(Location.JURONG_WEST);
+//        locationFilters.add(Location.KALLANG_WHAMPOA);
+//        locationFilters.add(Location.MARINE_PARADE);
+//        locationFilters.add(Location.PASIR_RIS);
+//        locationFilters.add(Location.PUNGGOL);
+//        locationFilters.add(Location.QUEENSTOWN);
+//        locationFilters.add(Location.SEMBAWANG);
+//        locationFilters.add(Location.SENGKANG);
+//        locationFilters.add(Location.SERANGOON);
+//        locationFilters.add(Location.TAMPINES);
+//        locationFilters.add(Location.TOA_PAYOH);
+//        locationFilters.add(Location.WOODLANDS);
+//        locationFilters.add(Location.YISHUN);
 
         // enable ALL rooms
         sizeFilters.add(Size.ROOM_2);
-        sizeFilters.add(Size.ROOM_3);
-        sizeFilters.add(Size.ROOM_4);
-        sizeFilters.add(Size.ROOM_5);
-        sizeFilters.add(Size.EXECUTIVE);
+//        sizeFilters.add(Size.ROOM_3);
+//        sizeFilters.add(Size.ROOM_4);
+//        sizeFilters.add(Size.ROOM_5);
+//        sizeFilters.add(Size.EXECUTIVE);
 
         // default prices
         priceFilters[0] = 0;
