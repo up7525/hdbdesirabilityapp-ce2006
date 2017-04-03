@@ -4,6 +4,7 @@ import android.os.*;
 import android.view.*;
 import android.content.*;
 import android.widget.*;
+import ntu.ce2006.swensens.hdbdesirabilityapp.data.db.dbconfig.DbHandler;
 
 import ntu.ce2006.swensens.hdbdesirabilityapp.HistoryActivity;
 import ntu.ce2006.swensens.hdbdesirabilityapp.PinActivity;
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void init(){
         setTitle("");
+
         searchMenuButton = (Button)findViewById(R.id.searchMenuButton);
         searchMenuButton.setOnClickListener(new View.OnClickListener()  {
             @Override

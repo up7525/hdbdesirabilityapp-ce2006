@@ -20,24 +20,45 @@ import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Size;
  *
  * Created by Swensens on 20/03/17.
  */
+import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+/**
+ * Query in builder pattern
+ *
+ * Example Construction
+ * Query query = new Query.Builder().locations(locationList).sizes(sizesList).price(0, 100)
+ *          .areas(0,4).amenities(amenitiesList).build();
+ *
+ * Created by Swensens on 20/03/17.
+ */
 
 public class Query {
 
+    @SerializedName("id")
     private int id_key;
 
     //String Identifier
+    @SerializedName("desc")
     private String desc;
 
     // A list of location filters
+    @SerializedName("locations")
     private List<Location> locationFilters;
 
     // A list of size filters
+    @SerializedName("size")
     private List<Size> sizeFilters;
 
     // Price range: [minimum, maximum]
+    @SerializedName("price")
     private int[] priceFilters;
 
     // A list of amenity filters
+    @SerializedName("amen")
     private List<Amenities> amenitiesFilters;
 
     /**

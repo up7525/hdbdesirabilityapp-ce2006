@@ -6,6 +6,12 @@ import android.support.v4.media.MediaBrowserServiceCompat;
 import android.support.v7.app.*;
 import android.view.*;
 import android.widget.*;
+
+import java.util.List;
+
+import ntu.ce2006.swensens.hdbdesirabilityapp.data.db.dbconfig.DbHandler;
+import ntu.ce2006.swensens.hdbdesirabilityapp.pin.Pin;
+
 import static ntu.ce2006.swensens.hdbdesirabilityapp.R.id.ClearButtonSmall;
 
 
@@ -13,11 +19,15 @@ public class PinActivity extends AppCompatActivity {
 
     public ImageButton ClearButtonSmall;
     public ImageButton InfoButtonSmall;
+    public DbHandler database;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pin);
         setTitle("Pins");
+        Context context = getApplicationContext();
+        database = new DbHandler(context);
         init();
     }
     public void init(){
@@ -60,17 +70,23 @@ public class PinActivity extends AppCompatActivity {
         // item = text field
         itemString = ((EditText) findViewById(R.id.Pin1Input)).getText().toString();
         itemString = sanitizePostalCode(itemString);
-        save("Pin1Input",itemString);
+        Pin newPin = new Pin(0,itemString,itemString);
+        database.addPin(newPin);
+        // save("Pin1Input",itemString);
 
-        // item = text field
-        itemString = ((EditText) findViewById(R.id.Pin2Input)).getText().toString();
-        itemString = sanitizePostalCode(itemString);
-        save("Pin2Input",itemString);
-
-        // item = text field
-        itemString = ((EditText) findViewById(R.id.Pin3Input)).getText().toString();
-        itemString = sanitizePostalCode(itemString);
-        save("Pin3Input",itemString);
+//        // item = text field
+//        itemString = ((EditText) findViewById(R.id.Pin2Input)).getText().toString();
+//        itemString = sanitizePostalCode(itemString);
+//        newPin = new Pin(0,itemString,itemString);
+//        database.addPin(newPin);
+//        // save("Pin2Input",itemString);
+//
+//        // item = text field
+//        itemString = ((EditText) findViewById(R.id.Pin3Input)).getText().toString();
+//        itemString = sanitizePostalCode(itemString);
+//        newPin = new Pin(0,itemString,itemString);
+//        database.addPin(newPin);
+//        // save("Pin3Input",itemString);
     }
 
     private String sanitizePostalCode(String inputString){
@@ -97,20 +113,25 @@ public class PinActivity extends AppCompatActivity {
         EditText tempEditText;
         String savedString;
 
+        List<Pin> listOfPins = database.getAllPins();
+
         // item = text field with number input
         tempEditText = (EditText) findViewById(R.id.Pin1Input);
-        savedString = load("Pin1Input");
+        // savedString = load("Pin1Input");
+        savedString =listOfPins.get(0).getPostalcode();
         tempEditText.setText(savedString);
 
-        // item = text field with number input
-        tempEditText = (EditText) findViewById(R.id.Pin2Input);
-        savedString = load("Pin2Input");
-        tempEditText.setText(savedString);
-
-        // item = text field with number input
-        tempEditText = (EditText) findViewById(R.id.Pin3Input);
-        savedString = load("Pin3Input");
-        tempEditText.setText(savedString);
+//        // item = text field with number input
+//        tempEditText = (EditText) findViewById(R.id.Pin2Input);
+//        // savedString = load("Pin2Input");
+//        savedString =listOfPins.get(1).getPostalcode();
+//        tempEditText.setText(savedString);
+//
+//        // item = text field with number input
+//        tempEditText = (EditText) findViewById(R.id.Pin3Input);
+//        // savedString = load("Pin3Input");
+//        savedString =listOfPins.get(2).getPostalcode();
+//        tempEditText.setText(savedString);
     }
 
     private void save(String itemName, String itemString) {
