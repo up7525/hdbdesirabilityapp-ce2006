@@ -1,40 +1,33 @@
 package ntu.ce2006.swensens.hdbdesirabilityapp;
-import android.app.AlertDialog.*;
-import android.content.*;
 import android.os.*;
-import android.support.v4.media.MediaBrowserServiceCompat;
 import android.support.v7.app.*;
 import android.view.*;
 import android.widget.*;
 
-import java.util.List;
-
 import ntu.ce2006.swensens.hdbdesirabilityapp.data.db.dbconfig.DbHandler;
 import ntu.ce2006.swensens.hdbdesirabilityapp.pin.Pin;
 
-import static ntu.ce2006.swensens.hdbdesirabilityapp.R.id.ClearButtonSmall;
-
-
 public class PinActivity extends AppCompatActivity {
 
-    public ImageButton ClearButtonSmall;
-    public ImageButton InfoButtonSmall;
+    public ImageButton ClearButtonSmall, InfoButtonSmall;
     public DbHandler database;
+    public Pin p1, p2, p3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        database = new DbHandler(getApplicationContext());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pin);
         setTitle("Pins");
-        Context context = getApplicationContext();
-        database = new DbHandler(context);
         init();
     }
     public void init(){
+
         ClearButtonSmall = (ImageButton) findViewById(R.id.ClearButtonSmall2);
         ClearButtonSmall.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
+                database.deleteAllPin();
                 ((EditText) findViewById(R.id.Pin1Input)).setText("");
                 ((EditText) findViewById(R.id.Pin2Input)).setText("");
                 ((EditText) findViewById(R.id.Pin3Input)).setText("");
@@ -45,7 +38,6 @@ public class PinActivity extends AppCompatActivity {
         InfoButtonSmall.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
-
                 showAlert(v);
             }
         });
@@ -65,43 +57,35 @@ public class PinActivity extends AppCompatActivity {
     public void onPause() {
         super.onPause();
 
+        p1 = new Pin(1,"","");
+        p2 = new Pin(2,"","");
+        p3 = new Pin(3,"","");
         String itemString;
 
-        // item = text field
         itemString = ((EditText) findViewById(R.id.Pin1Input)).getText().toString();
         itemString = sanitizePostalCode(itemString);
-        Pin newPin = new Pin(0,itemString,itemString);
-        database.addPin(newPin);
-        // save("Pin1Input",itemString);
+        p1.setPostalcode(itemString);
 
-//        // item = text field
-//        itemString = ((EditText) findViewById(R.id.Pin2Input)).getText().toString();
-//        itemString = sanitizePostalCode(itemString);
-//        newPin = new Pin(0,itemString,itemString);
-//        database.addPin(newPin);
-//        // save("Pin2Input",itemString);
-//
-//        // item = text field
-//        itemString = ((EditText) findViewById(R.id.Pin3Input)).getText().toString();
-//        itemString = sanitizePostalCode(itemString);
-//        newPin = new Pin(0,itemString,itemString);
-//        database.addPin(newPin);
-//        // save("Pin3Input",itemString);
+        itemString = ((EditText) findViewById(R.id.Pin2Input)).getText().toString();
+        itemString = sanitizePostalCode(itemString);
+        p2.setPostalcode(itemString);
+
+        itemString = ((EditText) findViewById(R.id.Pin3Input)).getText().toString();
+        itemString = sanitizePostalCode(itemString);
+        p3.setPostalcode(itemString);
+
+        database.addPin(1,p1);
+        database.addPin(2,p2);
+        database.addPin(3,p3);
     }
 
     private String sanitizePostalCode(String inputString){
-
-        // remove non-numeric characters
         inputString.replaceAll("[^0-9.]", "");
-
-        // truncate to 6 numbers only
         if(inputString.length() > 6)
             inputString = inputString.substring(0,6);
-
         if(inputString.length() > 0)
-            if(Integer.parseInt(inputString) >= 0 && Integer.parseInt(inputString) <= 999999)
+            if(Integer.parseInt(inputString) >= 0 && Integer.parseInt(inputString) <= 2000000)
                 return inputString;
-
         return "";
     }
 
@@ -109,42 +93,11 @@ public class PinActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-
-        EditText tempEditText;
-        String savedString;
-
-        List<Pin> listOfPins = database.getAllPins();
-
-        // item = text field with number input
-        tempEditText = (EditText) findViewById(R.id.Pin1Input);
-        // savedString = load("Pin1Input");
-        savedString =listOfPins.get(0).getPostalcode();
-        tempEditText.setText(savedString);
-
-//        // item = text field with number input
-//        tempEditText = (EditText) findViewById(R.id.Pin2Input);
-//        // savedString = load("Pin2Input");
-//        savedString =listOfPins.get(1).getPostalcode();
-//        tempEditText.setText(savedString);
-//
-//        // item = text field with number input
-//        tempEditText = (EditText) findViewById(R.id.Pin3Input);
-//        // savedString = load("Pin3Input");
-//        savedString =listOfPins.get(2).getPostalcode();
-//        tempEditText.setText(savedString);
+        if(database.getPinCount() > 0){ // in case initial startup and onPause() hasn't been run yet
+            ((EditText) findViewById(R.id.Pin1Input)).setText(database.getPin(1).getPostalcode());
+            ((EditText) findViewById(R.id.Pin2Input)).setText(database.getPin(2).getPostalcode());
+            ((EditText) findViewById(R.id.Pin3Input)).setText(database.getPin(3).getPostalcode());
+            database.deleteAllPin();
+        }
     }
-
-    private void save(String itemName, String itemString) {
-        // item = int
-        SharedPreferences sharedPreferences = getSharedPreferences("Pins",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(itemName,itemString);
-        editor.commit();
-    }
-
-    private String load(String itemName) {
-        SharedPreferences sharedPreferences = getSharedPreferences("Pins",Context.MODE_PRIVATE);
-        return sharedPreferences.getString(itemName,"");
-    }
-
 }
