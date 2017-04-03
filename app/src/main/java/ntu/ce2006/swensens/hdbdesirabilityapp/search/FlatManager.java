@@ -1,5 +1,7 @@
 package ntu.ce2006.swensens.hdbdesirabilityapp.search;
 
+import android.util.Log;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -15,6 +17,7 @@ import java.util.concurrent.ExecutionException;
 import ntu.ce2006.swensens.hdbdesirabilityapp.data.api.GoogleGeoLocImpl;
 import ntu.ce2006.swensens.hdbdesirabilityapp.data.api.GooglePlacesImpl;
 import ntu.ce2006.swensens.hdbdesirabilityapp.data.api.GovDataAPIImpl;
+import ntu.ce2006.swensens.hdbdesirabilityapp.exceptions.APIErrorException;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Amenities;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Location;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Size;
@@ -27,6 +30,9 @@ import ntu.ce2006.swensens.hdbdesirabilityapp.search.result.Flat;
 
 public class FlatManager {
 
+    // For Logger
+    private static final String TAG = "FlatManager";
+
     private Query query;
     private List<Flat> flats = new ArrayList<>();
 
@@ -38,7 +44,7 @@ public class FlatManager {
         this.query = query;
     }
 
-    public List<Flat> getFlats() throws IOException, ExecutionException, InterruptedException {
+    public List<Flat> getFlats() throws IOException, ExecutionException, InterruptedException, APIErrorException {
         if (flats.size() < 1) {
             requestAPI();
         }
@@ -46,7 +52,7 @@ public class FlatManager {
         return flats;
     }
 
-    private void requestAPI() throws IOException, ExecutionException, InterruptedException {
+    private void requestAPI() throws IOException, ExecutionException, InterruptedException, APIErrorException {
         List<Flat> filteredFlatList = new ArrayList<>();
         // Request of General Flat Data and make it into list of Flats object
         GovDataAPIImpl govDataAPI = new GovDataAPIImpl();
@@ -55,7 +61,7 @@ public class FlatManager {
         System.out.println(filteredFlatList);
     }
 
-    private List<Flat> makeFlat(JsonObject jsonObject) throws IOException, ExecutionException, InterruptedException {
+    private List<Flat> makeFlat(JsonObject jsonObject) throws IOException, ExecutionException, InterruptedException, APIErrorException {
         List<Flat> flatList = new ArrayList<>();
         JsonArray jsonArray = jsonObject.getAsJsonObject("result").getAsJsonArray("records");
         for (int i = 0; i < jsonArray.size(); i++) {
@@ -65,7 +71,7 @@ public class FlatManager {
     }
 
     // TODO not completed
-    private List<Flat> filterFlat(List<Flat> flatList) throws IOException, ExecutionException, InterruptedException {
+    private List<Flat> filterFlat(List<Flat> flatList) throws IOException, ExecutionException, InterruptedException, APIErrorException {
         List<Flat> filteredList = new ArrayList<>();
         // TODO FIND MORE EFFICIENT THAN O(flatList.size()*locationFilter.size())
         for (int i = 0; i < flatList.size(); i++) {
@@ -82,12 +88,12 @@ public class FlatManager {
         return filteredList;
     }
 
-    private boolean hasAmenities(Flat flat) throws IOException, ExecutionException, InterruptedException {
+    private boolean hasAmenities(Flat flat) throws IOException, ExecutionException, InterruptedException, APIErrorException {
         // Get Geolocation
         GoogleGeoLocImpl googleGeoLoc = new GoogleGeoLocImpl(flat);
         HashMap<String, Integer> amenitiesQuantity = new HashMap<>();
         JsonParser parser = new JsonParser();
-        if (!googleGeoLoc.getData().getAsJsonArray("results").isJsonNull()) {
+        try {
             JsonElement googleGeoLocData = googleGeoLoc.getData().getAsJsonArray("results").get(0);
 
             JsonObject locationData = parser.parse(googleGeoLocData.toString()).getAsJsonObject().getAsJsonObject("geometry").getAsJsonObject("location");
@@ -120,8 +126,9 @@ public class FlatManager {
                 }
             }
             flat.setAmenities(amenitiesQuantity);
-        } else {
-            return false;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            Log.e(TAG, "Error searching Google Geodata or Places API for " + flat.getAddress(), e);
+            throw new APIErrorException("Error searching Google Geodata or Places API");
         }
         return true;
     }
