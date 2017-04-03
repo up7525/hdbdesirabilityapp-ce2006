@@ -126,8 +126,9 @@ public class FlatManager {
                 }
             }
             flat.setAmenities(amenitiesQuantity);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            Log.e(TAG, "Error searching Google Geodata or Places API for " + flat.getAddress(), e);
+        } catch (IndexOutOfBoundsException e) {
+            Log.e(TAG, "Error searching Google Geodata or Places API for address: " + flat.getAddress()
+                    + ". Caused by Status: " + googleGeoLoc.getData().get("status").getAsString(), e);
             throw new APIErrorException("Error searching Google Geodata or Places API");
         }
         return true;

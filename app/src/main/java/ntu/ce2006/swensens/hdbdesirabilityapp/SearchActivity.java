@@ -13,6 +13,7 @@ import java.io.*;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
+import ntu.ce2006.swensens.hdbdesirabilityapp.exceptions.APIErrorException;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Amenities;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Location;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Size;
@@ -119,6 +120,8 @@ public class SearchActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     Log.d(TAG, "Exception", e);
                 } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (APIErrorException e) {
                     e.printStackTrace();
                 }
             }
