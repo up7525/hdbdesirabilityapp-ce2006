@@ -1,4 +1,4 @@
-package ntu.ce2006.swensens.hdbdesirabilityapp.data.db.dbconfig;
+package com.example.jonathan.local_2006_test;
 
 /**
  * Created by Jonathan on 29-Mar-17.
@@ -15,14 +15,6 @@ import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import ntu.ce2006.swensens.hdbdesirabilityapp.pin.Pin;
-import ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query;
-
-/**
- * Created by Jonathan on 27-Mar-17.
- */
-
 
 public class DbHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VER = 1;
@@ -59,11 +51,11 @@ public class DbHandler extends SQLiteOpenHelper {
     }
 
     // Adding new query
-    public void addQuery(Query query) {
+    public void addQuery(int row, Query query) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         Gson gson = new Gson();
-        //values.put(KEY_ID, query.getId_key());
+        values.put(KEY_ID, row);
         values.put(QUERY, gson.toJson(query));
         // Inserting Row
         db.insertOrThrow(TABLE_QUERY, null, values);
@@ -71,11 +63,11 @@ public class DbHandler extends SQLiteOpenHelper {
     }
 
     //Adding new Pin
-    public void addPin(Pin pin) {
+    public void addPin(int row, Pin pin) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         Gson gson = new Gson();
-        //values.put(KEY_ID, pin.getId_DB());
+        values.put(KEY_ID, row);
         values.put(PIN, gson.toJson(pin));
         // Inserting Row
         db.insertOrThrow(TABLE_PIN, null, values);
@@ -96,10 +88,10 @@ public class DbHandler extends SQLiteOpenHelper {
     }
 
     // Getting single pin
-    public Pin getPin(int u_id) {
+    public Pin getPin(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         Gson gson = new Gson();
-        Cursor cursor = db.rawQuery("SELECT  * FROM " + TABLE_PIN + " WHERE id = " + Integer.toString(u_id), null);
+        Cursor cursor = db.rawQuery("SELECT  * FROM " + TABLE_PIN + " WHERE id = " + Integer.toString(id), null);
         if (cursor != null)
             cursor.moveToFirst();
         String output = cursor.getString(cursor.getColumnIndex(PIN));
@@ -122,14 +114,7 @@ public class DbHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 String output = cursor.getString(cursor.getColumnIndex(QUERY));
-                Query.Builder queryBuilder = new Query.Builder();
-                queryBuilder.idDB(gson.fromJson(output, int.class));
-                queryBuilder.desc(gson.fromJson(output, String.class));
-                queryBuilder.locations(gson.fromJson(output, ArrayList.class));
-                queryBuilder.size(gson.fromJson(output, ArrayList.class));
-                queryBuilder.price(gson.fromJson(output, int[].class));
-                queryBuilder.amenities(gson.fromJson(output, ArrayList.class));
-                Query query = queryBuilder.build();
+                Query query = gson.fromJson(output, Query.class);
                 // Adding to list
                 queryList.add(query);
             } while (cursor.moveToNext());
@@ -152,10 +137,7 @@ public class DbHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 String output = cursor.getString(cursor.getColumnIndex(PIN));
-                int id = gson.fromJson(output, int.class);
-                String postalcode = gson.fromJson(output, String.class);
-                String desc = gson.fromJson(output, String.class);
-                Pin pin = new Pin(id, postalcode, desc);
+                Pin pin = gson.fromJson(output, Pin.class);
                 // Adding to list
                 pinList.add(pin);
             } while (cursor.moveToNext());
@@ -191,17 +173,17 @@ public class DbHandler extends SQLiteOpenHelper {
 
     // Deleting single query
     public void deleteQuery(Query query) {
+        Gson gson = new Gson();
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_QUERY, KEY_ID + " = ?",
-                new String[] { String.valueOf(query.getId_key()) });
+        db.delete(TABLE_QUERY, QUERY + "=?", new String[] { gson.toJson(query) });
         db.close();
     }
 
     // Deleting single pin
     public void deletePin(Pin pin) {
+        Gson gson = new Gson();
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_PIN, KEY_ID + " = ?",
-                new String[] { Integer.toString(pin.getId_DB()) });
+        db.delete(TABLE_PIN, PIN + "=?", new String[] { gson.toJson(pin) });
         db.close();
     }
 
@@ -230,4 +212,17 @@ public class DbHandler extends SQLiteOpenHelper {
         return count;
     }
 
+    //delete ALL pins
+    public void deleteAllPin() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_PIN,null,null);
+        db.close();
+    }
+
+    //delete ALL queries
+    public void deleteAllQuery() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_QUERY,null,null);
+        db.close();
+    }
 }
