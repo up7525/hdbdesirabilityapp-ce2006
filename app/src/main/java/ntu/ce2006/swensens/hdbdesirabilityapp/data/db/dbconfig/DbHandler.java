@@ -1,8 +1,4 @@
-package com.example.jonathan.local_2006_test;
-
-/**
- * Created by Jonathan on 29-Mar-17.
- */
+package ntu.ce2006.swensens.hdbdesirabilityapp.data.db.dbconfig;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -15,6 +11,13 @@ import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * Created by Jonathan on 29-Mar-17.
+ */
+
+import ntu.ce2006.swensens.hdbdesirabilityapp.pin.Pin;
+import ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query;
 
 public class DbHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VER = 1;
