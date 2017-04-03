@@ -104,7 +104,8 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Query userQuery = createUserQuery();
+                // Query userQuery = createUserQuery();
+                Query userQuery = createDefaultQuery();
                 FlatManager flatManager = new FlatManager(userQuery);
                 List<Flat> listOfFlats;
 
@@ -160,6 +161,61 @@ public class SearchActivity extends AppCompatActivity {
         ).create();
         info.show();
 
+    }
+
+    private Query createDefaultQuery(){
+        // load filter values
+        ArrayList<Location> locationFilters = new ArrayList<>();
+        ArrayList<Size> sizeFilters = new ArrayList<>();
+        int[] priceFilters = new int[2];
+        ArrayList<Amenities> amenitiesFilters = new ArrayList<>();
+
+        // enable ALL locations
+        locationFilters.add(Location.ANG_MO_KIO);
+        locationFilters.add(Location.BEDOK);
+        locationFilters.add(Location.BISHAN);
+        locationFilters.add(Location.BUKIT_BATOK);
+        locationFilters.add(Location.BUKIT_MERAH);
+        locationFilters.add(Location.CHUA_CHU_KANG);
+        locationFilters.add(Location.CENTRAL_AREA);
+        locationFilters.add(Location.BUKIT_TIMAH);
+        locationFilters.add(Location.BUKIT_PANJANG);
+        locationFilters.add(Location.CLEMENTI);
+        locationFilters.add(Location.GEYLANG);
+        locationFilters.add(Location.HOUGANG);
+        locationFilters.add(Location.JURONG_EAST);
+        locationFilters.add(Location.JURONG_WEST);
+        locationFilters.add(Location.KALLANG_WHAMPOA);
+        locationFilters.add(Location.MARINE_PARADE);
+        locationFilters.add(Location.PASIR_RIS);
+        locationFilters.add(Location.PUNGGOL);
+        locationFilters.add(Location.QUEENSTOWN);
+        locationFilters.add(Location.SEMBAWANG);
+        locationFilters.add(Location.SENGKANG);
+        locationFilters.add(Location.SERANGOON);
+        locationFilters.add(Location.TAMPINES);
+        locationFilters.add(Location.TOA_PAYOH);
+        locationFilters.add(Location.WOODLANDS);
+        locationFilters.add(Location.YISHUN);
+
+        // enable ALL rooms
+        sizeFilters.add(Size.ROOM_2);
+        sizeFilters.add(Size.ROOM_3);
+        sizeFilters.add(Size.ROOM_4);
+        sizeFilters.add(Size.ROOM_5);
+        sizeFilters.add(Size.EXECUTIVE);
+
+        // default prices
+        priceFilters[0] = 0;
+        priceFilters[1] = 2000000;
+
+        // enable ALL amenities
+        amenitiesFilters.add(Amenities.CLINIC);
+        amenitiesFilters.add(Amenities.MRT);
+        amenitiesFilters.add(Amenities.MALL);
+
+        Query query = new Query.Builder().locations(locationFilters).size(sizeFilters).price(priceFilters).amenities(amenitiesFilters).build();
+        return query;
     }
 
     private Query createUserQuery(){
