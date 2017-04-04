@@ -1,4 +1,4 @@
-package ntu.ce2006.swensens.hdbdesirabilityapp.data.api.daointerface;
+package ntu.ce2006.swensens.hdbdesirabilityapp.data.api;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

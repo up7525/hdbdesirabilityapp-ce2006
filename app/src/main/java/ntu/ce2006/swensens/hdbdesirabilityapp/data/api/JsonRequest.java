@@ -9,7 +9,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import ntu.ce2006.swensens.hdbdesirabilityapp.data.api.daointerface.APIDAO;
-import ntu.ce2006.swensens.hdbdesirabilityapp.data.api.daointerface.RequestThread;
 
 /**
  * Created by trollpc on 24/03/17.

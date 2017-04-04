@@ -8,6 +8,9 @@ import java.util.HashMap;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Size;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNotSame;
+import static junit.framework.Assert.assertTrue;
 
 /**
  * Created by trollpc on 21/03/17.
@@ -46,5 +49,21 @@ public class FlatTest {
         assertEquals(flat.getAmenities().get("MRT"), amenities.get("MRT"));
         assertEquals(flat.getAmenities().get("Mall"), amenities.get("Mall"));
         assertEquals(flat.getAmenities().get("Clinics"), amenities.get("Clinics"));
+    }
+
+    /**
+     * Test Overriden equals and hashcode
+     */
+    @Test
+    public void testEquals() {
+        Flat otherFlat = new Flat.Builder(block, streetName, town, address, size, price, area).amenities(amenities).build();
+        // Test True Case
+        assertTrue(flat.equals(otherFlat));
+        assertEquals(flat.hashCode(), otherFlat.hashCode());
+
+        // Test False Case
+        Flat falseFlat = new Flat.Builder(block, streetName, town, address, size + 1, price, area).amenities(amenities).build();
+        assertFalse(flat.equals(falseFlat));
+        assertNotSame(flat.hashCode(), falseFlat.hashCode());
     }
 }

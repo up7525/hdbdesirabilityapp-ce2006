@@ -33,8 +33,6 @@ public class FlatManager {
     // For Logger
     private static final String TAG = "FlatManager";
 
-    private final int RESULT_LIMIT = 10;
-
     private Query query;
     private List<Flat> flats = new ArrayList<>();
 
@@ -46,7 +44,7 @@ public class FlatManager {
         this.query = query;
     }
 
-    public List<Flat> getFlats() throws IOException, ExecutionException, InterruptedException, APIErrorException {
+    public List<Flat> getFlats() throws IOException, ExecutionException, InterruptedException {
         if (flats.size() < 1) {
             requestAPI();
         }
@@ -54,17 +52,14 @@ public class FlatManager {
         return flats;
     }
 
-    private void requestAPI() throws IOException, ExecutionException, InterruptedException, APIErrorException {
-        List<Flat> filteredFlatList = new ArrayList<>();
+    private void requestAPI() throws IOException, ExecutionException, InterruptedException {
         // Request of General Flat Data and make it into list of Flats object
         GovDataAPIImpl govDataAPI = new GovDataAPIImpl();
-        filteredFlatList = makeFlat(govDataAPI.getData());
-        // TODO remove this when don't need anymore
-        System.out.println(filteredFlatList);
-        flats = filteredFlatList;
+        flats = makeFlat(govDataAPI.getData());
+        Log.d(TAG, flats.toString());
     }
 
-    private List<Flat> makeFlat(JsonObject jsonObject) throws IOException, ExecutionException, InterruptedException, APIErrorException {
+    private List<Flat> makeFlat(JsonObject jsonObject) throws IOException, ExecutionException, InterruptedException {
         List<Flat> flatList = new ArrayList<>();
         JsonArray jsonArray = jsonObject.getAsJsonObject("result").getAsJsonArray("records");
         for (int i = 0; i < jsonArray.size(); i++) {
@@ -73,18 +68,22 @@ public class FlatManager {
         return filterFlat(flatList);
     }
 
-    private List<Flat> filterFlat(List<Flat> flatList) throws IOException, ExecutionException, InterruptedException, APIErrorException {
+    private List<Flat> filterFlat(List<Flat> flatList) throws IOException, ExecutionException, InterruptedException {
         List<Flat> filteredList = new ArrayList<>();
-        // TODO FIND MORE EFFICIENT THAN O(flatList.size()*locationFilter.size())
+        int limit = 10;
         for (int i = 0; i < flatList.size(); i++) {
             // Filters
-            if (i >= RESULT_LIMIT) {
+            if (filteredList.size() >= limit) {
                 break;
             }
-            if (containsLocation(flatList.get(i), filteredList) && isWithinPrice(flatList.get(i))
-                    && hasSize(flatList.get(i)) && hasAmenities(flatList.get(i))) {
-                filteredList.add(flatList.get(i));
-                computeScore(flatList.get(i));
+            try {
+                if (containsLocation(flatList.get(i), filteredList) && isWithinPrice(flatList.get(i))
+                        && hasSize(flatList.get(i)) && hasAmenities(flatList.get(i))) {
+                    filteredList.add(flatList.get(i));
+                    computeScore(flatList.get(i));
+                }
+            } catch (APIErrorException e) {
+                limit += 1;
             }
         }
         return filteredList;
@@ -143,6 +142,7 @@ public class FlatManager {
             }
         }
         for (Location loc : query.getLocationFilters()) {
+
             if (loc.toString().equals(flat.getTown())) {
                 return true;
             }

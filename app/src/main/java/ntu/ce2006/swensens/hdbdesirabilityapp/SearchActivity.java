@@ -111,8 +111,6 @@ public class SearchActivity extends AppCompatActivity {
                     Log.d(TAG, "Exception", e);
                 } catch (ExecutionException e) {
                     e.printStackTrace();
-                } catch (APIErrorException e) {
-                    e.printStackTrace();
                 }
             }
         });

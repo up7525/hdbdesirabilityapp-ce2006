@@ -182,6 +182,41 @@ public class Flat implements Serializable, Comparable<Flat> {
         return sb.toString();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Flat flat = (Flat) o;
+
+        if (Double.compare(flat.score, score) != 0) return false;
+        if (Double.compare(flat.price, price) != 0) return false;
+        if (Double.compare(flat.area, area) != 0) return false;
+        if (!address.equals(flat.address)) return false;
+        if (!streetName.equals(flat.streetName)) return false;
+        if (!block.equals(flat.block)) return false;
+        if (!town.equals(flat.town)) return false;
+        return size.equals(flat.size);
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(score);
+        result = (int) (temp ^ (temp >>> 32));
+        result = 31 * result + address.hashCode();
+        result = 31 * result + streetName.hashCode();
+        result = 31 * result + block.hashCode();
+        result = 31 * result + town.hashCode();
+        result = 31 * result + size.hashCode();
+        temp = Double.doubleToLongBits(price);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(area);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
+
     // DEFAULT (By Score) UNDERNEATH ARE SORTING
     // TODO (TIP): Use Collections.sort(arrayList<Flat>, Flat.DefaultComparator());
     @Override
