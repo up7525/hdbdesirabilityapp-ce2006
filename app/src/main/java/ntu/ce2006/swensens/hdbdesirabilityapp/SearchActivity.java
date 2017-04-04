@@ -33,6 +33,8 @@ public class SearchActivity extends AppCompatActivity {
     public ImageButton SearchButtonSmall;
     public ImageButton InfoButtonSmall;
     public ImageButton ClearButtonSmall;
+    public Query userQuery;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,76 +44,54 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void init(){
-
-        // Code to be placed in RECEIVING class's init()
-        Intent i = getIntent();
-
-        // Create a new object, cast the intent's stored object
-        // getIntExtra / getSerializable based on object type.
-        // getExtra("<package name>.<object name>", <valueifobject is not found>);
-        // setContentView / TextView is just formatting.
-        int a = (int) i.getIntExtra("java.lang.Integer.integerObject",0);
-        setContentView(R.layout.activity_search);
-        TextView textView = (TextView) findViewById(R.id.textView);
-        textView.setText(Integer.toString(a));
-
-
         locationButton = (Button)findViewById(R.id.locationButton);
         locationButton.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
-
                 Intent location = new Intent(SearchActivity.this,Search_Loc_Activity.class);
-
                 startActivity(location);
             }
         });
-
         priceButton = (Button)findViewById(R.id.priceButton);
         priceButton.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
-
                 Intent price = new Intent(SearchActivity.this,Search_Price_Activity.class);
-
                 startActivity(price);
             }
         });
-
         sizeButton = (Button)findViewById(R.id.sizeButton);
         sizeButton.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
-
                 Intent size = new Intent(SearchActivity.this,Search_Size_Activity.class);
-
                 startActivity(size);
             }
         });
-
         amenitiesButton = (Button)findViewById(R.id.amenitiesButton);
         amenitiesButton.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
-
                 Intent ameni = new Intent(SearchActivity.this,Search_Ameni_Activity.class);
-
                 startActivity(ameni);
             }
         });
-
         SearchButtonSmall = (ImageButton) findViewById(R.id.SearchButtonSmall);
         SearchButtonSmall.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
 
-                // Query userQuery = createUserQuery();
-                Query userQuery = createDefaultQuery();
+                if(checkIfUserInput())
+                    userQuery = createUserQuery();
+                else
+                    userQuery = createDefaultQuery();
+
                 FlatManager flatManager = new FlatManager(userQuery);
                 List<Flat> listOfFlats;
                 ArrayList<String> listOfFlatsString = new ArrayList<String>();
 
                 try {
+
                     listOfFlats = flatManager.getFlats();
 
                     // convert listOfFlats to String BEFORE sending to ResultsActivity
@@ -123,6 +103,8 @@ public class SearchActivity extends AppCompatActivity {
                         intentFlat.putStringArrayListExtra("java.util.List<java.lang.String>", listOfFlatsString);
                         startActivity(intentFlat);
                     }
+                    else
+                        noResultsFound(v);
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
@@ -138,7 +120,6 @@ public class SearchActivity extends AppCompatActivity {
         InfoButtonSmall.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
-
                 showAlert(v);
             }
         });
@@ -148,13 +129,18 @@ public class SearchActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String s = "Cleared all filters.";
                 Toast.makeText(SearchActivity.this,s,Toast.LENGTH_LONG).show();
-
                 SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.clear();
                 editor.commit();
             }
         });
+    }
+
+    public void noResultsFound(View v){
+        AlertDialog.Builder info = new AlertDialog.Builder(this);
+        info.setMessage("No results were found with your filters!").create();
+        info.show();
     }
 
     public void showAlert(View v) {
@@ -171,7 +157,6 @@ public class SearchActivity extends AppCompatActivity {
                 alert5
         ).create();
         info.show();
-
     }
 
     private Query createDefaultQuery(){
@@ -210,7 +195,7 @@ public class SearchActivity extends AppCompatActivity {
 //        locationFilters.add(Location.YISHUN);
 
         // enable rooms - 2 room only
-        sizeFilters.add(Size.ROOM_2);
+          sizeFilters.add(Size.ROOM_2);
 //        sizeFilters.add(Size.ROOM_3);
 //        sizeFilters.add(Size.ROOM_4);
 //        sizeFilters.add(Size.ROOM_5);
@@ -281,12 +266,6 @@ public class SearchActivity extends AppCompatActivity {
         boolean Yishun = load("Yishun");
         boolean[] locationsBoolean = {AngMoKio, Bedok, Bishan, BukitBatok, BukitMerah, BukitPanjang, BukitTimah, CentralArea, ChoaChuKang, Clementi, Geylang, Hougang, JurongEast, JurongWest, KallangWhampoa, MarineParade, PasirRis, Punggol, Queenstown, Sembawang, Sengkang, Serangoon, Tampines, ToaPayoh, Woodlands, Yishun};
 
-        // Check: if none checked, default = all checked
-        if (!(AngMoKio | Bedok | Bishan | BukitBatok | BukitMerah | BukitPanjang | BukitTimah | CentralArea | ChoaChuKang | Clementi | Geylang | Hougang | JurongEast | JurongWest | KallangWhampoa | MarineParade | PasirRis | Punggol | Queenstown | Sembawang | Sengkang | Serangoon | Tampines | ToaPayoh | Woodlands | Yishun)){
-            for(int i = 0; i < locationsBoolean.length; i++)
-                locationsBoolean[i] = true;
-        }
-
         ArrayList<Location> locationsList = new ArrayList<>();
 
         if(locationsBoolean[0])	//	AngMoKio
@@ -355,12 +334,6 @@ public class SearchActivity extends AppCompatActivity {
         boolean boolE = load("ExecutiveCheckBox");
         boolean[] sizesBoolean = {bool2, bool3, bool4, bool5, boolE};
 
-        // Check: if none checked, default = all checked
-        if(!(bool2 | bool3 | bool4 | bool5 | boolE)){
-            for(int i = 0; i < sizesBoolean.length; i++)
-                sizesBoolean[i] = true;
-        }
-
         ArrayList<Size> sizeList = new ArrayList<>();
         if(sizesBoolean[0])
             sizeList.add(Size.ROOM_2);
@@ -415,12 +388,6 @@ public class SearchActivity extends AppCompatActivity {
         boolean Clinic = load("checkBoxClinic");
         boolean[] amenitiesBoolean = {Mall, MRT, Clinic};
 
-        // Check: if none checked, default = all checked
-        if(!(Mall | MRT | Clinic)){
-            for(int i = 0; i < amenitiesBoolean.length; i++)
-                amenitiesBoolean[i] = true;
-        }
-
         ArrayList<Amenities> amenitiesList = new ArrayList<>();
         if(amenitiesBoolean[0])
             amenitiesList.add(Amenities.MALL);
@@ -429,6 +396,52 @@ public class SearchActivity extends AppCompatActivity {
         if(amenitiesBoolean[2])
             amenitiesList.add(Amenities.CLINIC);
         return amenitiesList;
+    }
+
+    private boolean checkIfUserInput(){
+        boolean AngMoKio = load("AngMoKio");
+        boolean Bedok = load("Bedok");
+        boolean Bishan = load("Bishan");
+        boolean BukitBatok = load("BukitBatok");
+        boolean BukitMerah = load("BukitMerah");
+        boolean BukitPanjang = load("BukitPanjang");
+        boolean BukitTimah = load("BukitTimah");
+        boolean CentralArea = load("CentralArea");
+        boolean ChoaChuKang = load("ChoaChuKang");
+        boolean Clementi = load("Clementi");
+        boolean Geylang = load("Geylang");
+        boolean Hougang = load("Hougang");
+        boolean JurongEast = load("JurongEast");
+        boolean JurongWest = load("JurongWest");
+        boolean KallangWhampoa = load("KallangWhampoa");
+        boolean MarineParade = load("MarineParade");
+        boolean PasirRis = load("PasirRis");
+        boolean Punggol = load("Punggol");
+        boolean Queenstown = load("Queenstown");
+        boolean Sembawang = load("Sembawang");
+        boolean Sengkang = load("Sengkang");
+        boolean Serangoon = load("Serangoon");
+        boolean Tampines = load("Tampines");
+        boolean ToaPayoh = load("ToaPayoh");
+        boolean Woodlands = load("Woodlands");
+        boolean Yishun = load("Yishun");        boolean bool2 = load("TwoRoomCheckBox");
+        boolean bool3 = load("ThreeRoomCheckBox");
+        boolean bool4 = load("FourRoomCheckBox");
+        boolean bool5 = load("FiveRoomCheckBox");
+        boolean boolE = load("ExecutiveCheckBox");
+        boolean Mall = load("checkBoxMall");
+        boolean MRT = load("checkBoxClinic");
+        boolean Clinic = load("checkBoxClinic");
+        String minPrice = loadString("MinPriceInput");
+        String maxPrice = loadString("MaxPriceInput");
+        boolean minIsNull = minPrice.equalsIgnoreCase("NULLSTRING") | minPrice.equalsIgnoreCase("0") | minPrice.equalsIgnoreCase("");
+        boolean maxIsNull = maxPrice.equalsIgnoreCase("NULLSTRING") | maxPrice.equalsIgnoreCase("0") | maxPrice.equalsIgnoreCase("");
+
+        if(!(AngMoKio | Bedok | Bishan | BukitBatok | BukitMerah | BukitPanjang | BukitTimah | CentralArea | ChoaChuKang | Clementi | Geylang | Hougang | JurongEast | JurongWest | KallangWhampoa | MarineParade | PasirRis | Punggol | Queenstown | Sembawang | Sengkang | Serangoon | Tampines | ToaPayoh | Woodlands | Yishun | bool3 | bool4 | bool5 | boolE | Mall | MRT | Clinic) )
+            if(minIsNull && maxIsNull)
+                return true;
+
+        return false;
     }
 
     private boolean load(String name) {
