@@ -33,6 +33,8 @@ public class FlatManager {
     // For Logger
     private static final String TAG = "FlatManager";
 
+    private final int RESULT_LIMIT = 10;
+
     private Query query;
     private List<Flat> flats = new ArrayList<>();
 
@@ -71,21 +73,20 @@ public class FlatManager {
         return filterFlat(flatList);
     }
 
-    // TODO not completed
     private List<Flat> filterFlat(List<Flat> flatList) throws IOException, ExecutionException, InterruptedException, APIErrorException {
         List<Flat> filteredList = new ArrayList<>();
         // TODO FIND MORE EFFICIENT THAN O(flatList.size()*locationFilter.size())
         for (int i = 0; i < flatList.size(); i++) {
             // Filters
+            if (i >= RESULT_LIMIT) {
+                break;
+            }
             if (containsLocation(flatList.get(i), filteredList) && isWithinPrice(flatList.get(i))
                     && hasSize(flatList.get(i)) && hasAmenities(flatList.get(i))) {
                 filteredList.add(flatList.get(i));
                 computeScore(flatList.get(i));
             }
         }
-        // TODO PLease confirm if still using Filter by size
-
-
         return filteredList;
     }
 
