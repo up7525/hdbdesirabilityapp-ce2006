@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import ntu.ce2006.swensens.hdbdesirabilityapp.exceptions.APIErrorException;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Amenities;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Location;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Size;
@@ -56,7 +57,7 @@ public class FlatManagerTest {
     }
 
     @Test
-    public void testGetFlat() throws IOException, ExecutionException, InterruptedException {
+    public void testGetFlat() throws IOException, ExecutionException, InterruptedException, APIErrorException {
         flatManager.getFlats();
         assertTrue(true);
     }

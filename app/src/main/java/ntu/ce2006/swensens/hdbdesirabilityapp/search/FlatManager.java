@@ -77,7 +77,7 @@ public class FlatManager {
         // TODO FIND MORE EFFICIENT THAN O(flatList.size()*locationFilter.size())
         for (int i = 0; i < flatList.size(); i++) {
             // Filters
-            if (containsLocation(flatList.get(i)) && isWithinPrice(flatList.get(i))
+            if (containsLocation(flatList.get(i), filteredList) && isWithinPrice(flatList.get(i))
                     && hasSize(flatList.get(i)) && hasAmenities(flatList.get(i))) {
                 filteredList.add(flatList.get(i));
                 computeScore(flatList.get(i));
@@ -135,7 +135,12 @@ public class FlatManager {
         return true;
     }
 
-    private boolean containsLocation(Flat flat) {
+    private boolean containsLocation(Flat flat, List<Flat> filteredList) {
+        for (Flat existingFlat : filteredList) {
+            if (existingFlat.getAddress().equals(flat.getAddress())) {
+                return false;
+            }
+        }
         for (Location loc : query.getLocationFilters()) {
             if (loc.toString().equals(flat.getTown())) {
                 return true;

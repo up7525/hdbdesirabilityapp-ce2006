@@ -18,7 +18,7 @@ import ntu.ce2006.swensens.hdbdesirabilityapp.data.api.daointerface.RequestThrea
 public abstract class JsonRequest implements APIDAO {
 
     // Available Google API Keys
-    protected final String[] GOOGLEKEY = {"AIzaSyAMSDKBMf-Bwvhe_8vkmp5KgKr8ivQocw4"};
+    protected final String[] GOOGLEKEY = {"AIzaSyDb4T0qH-QsLBETqDQUCnuryyQIP2e25Qs", "AIzaSyAMSDKBMf-Bwvhe_8vkmp5KgKr8ivQocw4"};
 
     protected JsonObject requestAPI(String urlString) throws IOException, ExecutionException, InterruptedException {
         RequestThread requestThread = new RequestThread(urlString);
