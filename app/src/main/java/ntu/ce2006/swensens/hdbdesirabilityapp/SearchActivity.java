@@ -81,10 +81,10 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(checkIfUserInput())
-                    userQuery = createUserQuery();
-                else
-                    userQuery = createDefaultQuery();
+//                if(checkIfUserInput())
+                userQuery = createUserQuery();
+//                else
+//                    userQuery = createDefaultQuery();
 
                 FlatManager flatManager = new FlatManager(userQuery);
                 List<Flat> listOfFlats;
@@ -95,9 +95,12 @@ public class SearchActivity extends AppCompatActivity {
                     listOfFlats = flatManager.getFlats();
 
                     // convert listOfFlats to String BEFORE sending to ResultsActivity
-                    for(int i = 0; i < listOfFlats.size(); i++){
+                    for(int i = 0; i < listOfFlats.size(); i++)
                         listOfFlatsString.add(listOfFlats.get(i).toString());
-                    }
+
+                    // temp fix to add space at bottom
+                    listOfFlatsString.add("");
+
                     if(listOfFlats.size() > 0) {
                         Intent intentFlat = new Intent(SearchActivity.this, ResultsActivity.class);
                         intentFlat.putStringArrayListExtra("java.util.List<java.lang.String>", listOfFlatsString);
@@ -112,6 +115,7 @@ public class SearchActivity extends AppCompatActivity {
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
+
             }
         });
         InfoButtonSmall = (ImageButton) findViewById(R.id.InfoButtonSmall);
@@ -193,7 +197,7 @@ public class SearchActivity extends AppCompatActivity {
 //        locationFilters.add(Location.YISHUN);
 
         // enable rooms - 2 room only
-          sizeFilters.add(Size.ROOM_2);
+        sizeFilters.add(Size.ROOM_2);
 //        sizeFilters.add(Size.ROOM_3);
 //        sizeFilters.add(Size.ROOM_4);
 //        sizeFilters.add(Size.ROOM_5);
@@ -436,7 +440,7 @@ public class SearchActivity extends AppCompatActivity {
         boolean maxIsNull = maxPrice.equalsIgnoreCase("NULLSTRING") | maxPrice.equalsIgnoreCase("0") | maxPrice.equalsIgnoreCase("");
 
         if(!(AngMoKio | Bedok | Bishan | BukitBatok | BukitMerah | BukitPanjang | BukitTimah | CentralArea | ChoaChuKang | Clementi | Geylang | Hougang | JurongEast | JurongWest | KallangWhampoa | MarineParade | PasirRis | Punggol | Queenstown | Sembawang | Sengkang | Serangoon | Tampines | ToaPayoh | Woodlands | Yishun | bool3 | bool4 | bool5 | boolE | Mall | MRT | Clinic) )
-            if(minIsNull && maxIsNull)
+            if(minIsNull & maxIsNull)
                 return true;
 
         return false;
