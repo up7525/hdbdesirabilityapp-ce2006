@@ -59,6 +59,7 @@ public class FlatManager {
         filteredFlatList = makeFlat(govDataAPI.getData());
         // TODO remove this when don't need anymore
         System.out.println(filteredFlatList);
+        flats = filteredFlatList;
     }
 
     private List<Flat> makeFlat(JsonObject jsonObject) throws IOException, ExecutionException, InterruptedException, APIErrorException {
