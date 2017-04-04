@@ -25,9 +25,11 @@ public class ResultsActivity extends AppCompatActivity {
 //        List<Flat> flats = new ArrayList<>();
 //        List<String> your_array_list = new ArrayList<String>();
 
-        Intent i =getIntent();
-        List<Flat> altListOfFlats = null;
-        List<Flat> listOfFlats = (List<Flat>) i.getSerializableExtra("java.util.List<ntu.ce2006.swensens.hdbdesirabilityapp.search.result.Flat>");
+        // Retrieve Flat list
+        Intent i = getIntent();
+        ArrayList<String> listOfFlats = (ArrayList<String>) i.getStringArrayListExtra("java.util.List<java.lang.String>");
+        int listOfFlatsStringSize = i.getIntExtra("listOfFlatsString.size()",999);
+        int listOfFlatsSize = i.getIntExtra("listOfFlats.size()",999);
 //        // Code to be placed in RECEIVING class's init()
 //        Intent i = getIntent();
 //
@@ -40,11 +42,7 @@ public class ResultsActivity extends AppCompatActivity {
 //        TextView textView = (TextView) findViewById(R.id.textView);
 //        textView.setText(Integer.toString(a));
 
-        List<String> listOfStrings = new ArrayList<String>();
-        for(int k = 0; k < listOfFlats.size(); k++)
-            listOfStrings.add(listOfFlats.get(k).toString());
-
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listOfStrings);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listOfFlats);
         lv.setAdapter(arrayAdapter);
         init();
     }

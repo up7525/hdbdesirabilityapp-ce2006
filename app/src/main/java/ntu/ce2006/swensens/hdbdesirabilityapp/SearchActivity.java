@@ -109,12 +109,20 @@ public class SearchActivity extends AppCompatActivity {
                 Query userQuery = createDefaultQuery();
                 FlatManager flatManager = new FlatManager(userQuery);
                 List<Flat> listOfFlats;
+                ArrayList<String> listOfFlatsString = new ArrayList<String>();
 
                 try {
                     listOfFlats = flatManager.getFlats();
-//                    Intent intentFlat = new Intent(SearchActivity.this,ResultsActivity.class);
-//                    intentFlat.putExtra("java.util.List<ntu.ce2006.swensens.hdbdesirabilityapp.search.result.Flat>", (Serializable) listOfFlats);
-//                    startActivity(intentFlat);
+
+                    // convert listOfFlats to String BEFORE sending to ResultsActivity
+                    for(int i = 0; i < listOfFlats.size(); i++){
+                        listOfFlatsString.add(listOfFlats.get(i).toString());
+                    }
+                    if(listOfFlats.size() > 0) {
+                        Intent intentFlat = new Intent(SearchActivity.this, ResultsActivity.class);
+                        intentFlat.putStringArrayListExtra("java.util.List<java.lang.String>", listOfFlatsString);
+                        startActivity(intentFlat);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
@@ -173,7 +181,7 @@ public class SearchActivity extends AppCompatActivity {
         int[] priceFilters = new int[2];
         ArrayList<Amenities> amenitiesFilters = new ArrayList<>();
 
-        // enable ALL locations
+        // enable locations - ang mo kio only
         locationFilters.add(Location.ANG_MO_KIO);
 //        locationFilters.add(Location.BEDOK);
 //        locationFilters.add(Location.BISHAN);
@@ -201,16 +209,16 @@ public class SearchActivity extends AppCompatActivity {
 //        locationFilters.add(Location.WOODLANDS);
 //        locationFilters.add(Location.YISHUN);
 
-        // enable ALL rooms
+        // enable rooms - 2 room only
         sizeFilters.add(Size.ROOM_2);
 //        sizeFilters.add(Size.ROOM_3);
 //        sizeFilters.add(Size.ROOM_4);
 //        sizeFilters.add(Size.ROOM_5);
 //        sizeFilters.add(Size.EXECUTIVE);
 
-        // default prices
-        priceFilters[0] = 0;
-        priceFilters[1] = 2000000;
+        // default prices - 300k to 400k
+        priceFilters[0] = 300000;
+        priceFilters[1] = 400000;
 
         // enable ALL amenities
         amenitiesFilters.add(Amenities.CLINIC);
