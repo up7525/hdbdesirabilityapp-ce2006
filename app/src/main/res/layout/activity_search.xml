@@ -19,13 +19,6 @@
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="TextView" />
-
         <Button
             android:id="@+id/locationButton"
             android:layout_width="match_parent"
