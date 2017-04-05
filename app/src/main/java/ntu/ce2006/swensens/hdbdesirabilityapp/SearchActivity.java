@@ -26,13 +26,8 @@ public class SearchActivity extends AppCompatActivity {
     // FOr logger
     private static final String TAG = "SearchActivity";
 
-    public Button locationButton;
-    public Button priceButton;
-    public Button sizeButton;
-    public Button amenitiesButton;
-    public ImageButton SearchButtonSmall;
-    public ImageButton InfoButtonSmall;
-    public ImageButton ClearButtonSmall;
+    public Button locationButton, priceButton, sizeButton, amenitiesButton;
+    public ImageButton SearchButtonSmall, InfoButtonSmall, ClearButtonSmall;
     public Query userQuery;
 
     @Override
@@ -80,39 +75,38 @@ public class SearchActivity extends AppCompatActivity {
         SearchButtonSmall.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
-
-//                if(checkIfUserInput())
+                if(checkIfUserInput())
                     userQuery = createUserQuery();
-//                else
-//                    userQuery = createDefaultQuery();
+                else
+                    userQuery = createDefaultQuery();
 
                 FlatManager flatManager = new FlatManager(userQuery);
                 List<Flat> listOfFlats;
                 ArrayList<String> listOfFlatsString = new ArrayList<String>();
 
                 try {
-
                     listOfFlats = flatManager.getFlats();
 
-                    // convert listOfFlats to String BEFORE sending to ResultsActivity
-                    for(int i = 0; i < listOfFlats.size(); i++)
-                        listOfFlatsString.add(listOfFlats.get(i).toString());
-
-                    // temp fix to add space at bottom
-                    listOfFlatsString.add("");
-
-                    if(listOfFlats.size() > 0) {
+                    if(listOfFlats != null)
+                        if(listOfFlats.size() > 0){
+                            // convert listOfFlats to String BEFORE sending to ResultsActivity
+                            for(int i = 0; i < listOfFlats.size(); i++)
+                                listOfFlatsString.add(listOfFlats.get(i).toString());
+                            listOfFlatsString.add("");
+                        }
+                    if(listOfFlatsString.size() > 0) {
                         Intent intentFlat = new Intent(SearchActivity.this, ResultsActivity.class);
                         intentFlat.putStringArrayListExtra("java.util.List<java.lang.String>", listOfFlatsString);
-                        intentFlat.putExtra("userQuery",userQuery);
+                        intentFlat.putExtra("ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query",(Serializable) userQuery);
                         startActivity(intentFlat);
                     }
                     else
                         noResultsFound(v);
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
-                    Log.d(TAG, "Exception", e);
+                    Log.d("", "Exception", e);
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
@@ -162,7 +156,13 @@ public class SearchActivity extends AppCompatActivity {
         info.show();
     }
 
-    private Query createDefaultQuery(){
+    public void showAlertQuick(View v, String stringToDisplay){
+        AlertDialog.Builder info = new AlertDialog.Builder(this);
+        info.setMessage(stringToDisplay).create();
+        info.show();
+    }
+
+    public Query createDefaultQuery(){
         // load filter values
         ArrayList<Location> locationFilters = new ArrayList<>();
         ArrayList<Size> sizeFilters = new ArrayList<>();
@@ -205,8 +205,8 @@ public class SearchActivity extends AppCompatActivity {
 //        sizeFilters.add(Size.EXECUTIVE);
 
         // default prices - 300k to 400k
-        priceFilters[0] = 300000;
-        priceFilters[1] = 400000;
+        priceFilters[0] = 230000;
+        priceFilters[1] = 250000;
 
         // enable ALL amenities
         amenitiesFilters.add(Amenities.CLINIC);
@@ -216,6 +216,8 @@ public class SearchActivity extends AppCompatActivity {
         Query query = new Query.Builder().locations(locationFilters).size(sizeFilters).price(priceFilters).amenities(amenitiesFilters).build();
         return query;
     }
+
+
 
     private Query createUserQuery(){
 
@@ -444,12 +446,8 @@ public class SearchActivity extends AppCompatActivity {
         boolean maxIsNull = maxPrice.equalsIgnoreCase("NULLSTRING") | maxPrice.equalsIgnoreCase("0") | maxPrice.equalsIgnoreCase("");
 
         // no locations chosen
-        if(!(AngMoKio | Bedok | Bishan | BukitBatok | BukitMerah | BukitPanjang | BukitTimah | CentralArea | ChoaChuKang | Clementi | Geylang | Hougang | JurongEast | JurongWest | KallangWhampoa | MarineParade | PasirRis | Punggol | Queenstown | Sembawang | Sengkang | Serangoon | Tampines | ToaPayoh | Woodlands | Yishun))
-//                if(!(bool2 | bool3 | bool4 | bool5 | boolE | Mall | MRT | Clinic))
-//                    if(minIsNull & maxIsNull)
-                        return false;
+        return AngMoKio | Bedok | Bishan | BukitBatok | BukitMerah | BukitPanjang | BukitTimah | CentralArea | ChoaChuKang | Clementi | Geylang | Hougang | JurongEast | JurongWest | KallangWhampoa | MarineParade | PasirRis | Punggol | Queenstown | Sembawang | Sengkang | Serangoon | Tampines | ToaPayoh | Woodlands | Yishun;
 
-        return true;
     }
 
     private boolean load(String name) {

@@ -77,10 +77,13 @@ public class MainActivity extends AppCompatActivity {
         historyButton.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
-
-                Intent makeHistory = new Intent(MainActivity.this,HistoryActivity.class);
-
-                startActivity(makeHistory);
+                DbHandler database = new DbHandler(getApplicationContext());
+                if(database.getQueryCount() == 0)
+                    Toast.makeText(MainActivity.this,"No saved queries!",Toast.LENGTH_LONG).show();
+                else{
+                    Intent makeHistory = new Intent(MainActivity.this,HistoryActivity.class);
+                    startActivity(makeHistory);
+                }
             }
         });
     }

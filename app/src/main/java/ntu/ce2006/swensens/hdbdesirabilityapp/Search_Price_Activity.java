@@ -66,7 +66,7 @@ public class Search_Price_Activity extends AppCompatActivity {
         }
     }
 
-  private String sanitizePrice(String inputString){
+    private String sanitizePrice(String inputString){
         // convert user input into proper range.
         // 1. Remove non-numeric characters.
         // 2. If user has not inputted price, save as "NULLSTRING"
@@ -77,21 +77,20 @@ public class Search_Price_Activity extends AppCompatActivity {
         inputString.replaceAll("[^0-9.]", "");
 
         if(inputString.length() == 0)
-            inputString = "NULLSTRING";
+            return "NULLSTRING";
 
         // convert to number
         long price = Integer.parseInt(inputString);
 
         // set within limits
         if(price > 2000000)
-            inputString =  "2000000";
+            return "2000000";
         if(price < 0)
-            inputString = "0";
+            return "0";
 
-        inputString = Long.toString(price);
-
-        return inputString;
+        return Long.toString(price);
     }
+
 
     @Override
     public void onResume() {
