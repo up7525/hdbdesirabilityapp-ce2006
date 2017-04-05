@@ -9,12 +9,18 @@ import android.widget.*;
 import java.io.Serializable;
 import java.util.*;
 
+import ntu.ce2006.swensens.hdbdesirabilityapp.data.db.dbconfig.DbHandler;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.FlatManager;
+import ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.result.Flat;
 
 public class ResultsActivity extends AppCompatActivity {
     private ListView lv;
     public Button saveQueryButton;
+    public DbHandler database;
+    public Query userQuery;
+    public int userQueryCount;
+
     @Override
     protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -22,25 +28,11 @@ public class ResultsActivity extends AppCompatActivity {
         setTitle("Results");
         lv = (ListView) findViewById(R.id.List);
 
-//        List<Flat> flats = new ArrayList<>();
-//        List<String> your_array_list = new ArrayList<String>();
 
         // Retrieve Flat list
         Intent i = getIntent();
         ArrayList<String> listOfFlats = (ArrayList<String>) i.getStringArrayListExtra("java.util.List<java.lang.String>");
-        int listOfFlatsStringSize = i.getIntExtra("listOfFlatsString.size()",999);
-        int listOfFlatsSize = i.getIntExtra("listOfFlats.size()",999);
-//        // Code to be placed in RECEIVING class's init()
-//        Intent i = getIntent();
-//
-//        // Create a new object, cast the intent's stored object
-//        // getIntExtra / getSerializable based on object type.
-//        // getExtra("<package name>.<object name>", <valueifobject is not found>);
-//        // setContentView / TextView is just formatting.
-//        int a = (int) i.getIntExtra("java.lang.Integer.integerObject",0);
-//        setContentView(R.layout.activity_search);
-//        TextView textView = (TextView) findViewById(R.id.textView);
-//        textView.setText(Integer.toString(a));
+        userQuery = (Query) i.getSerializableExtra("userQuery");
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listOfFlats);
         lv.setAdapter(arrayAdapter);
@@ -48,10 +40,13 @@ public class ResultsActivity extends AppCompatActivity {
     }
 
     public void init(){
+        database = new DbHandler(getApplicationContext());
+        userQueryCount = database.getQueryCount();
         saveQueryButton = (Button) findViewById(R.id.SaveQuery);
         saveQueryButton.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
+                database.addQuery(userQueryCount+1,userQuery);
                 Toast.makeText(ResultsActivity.this,"Query saved.",Toast.LENGTH_LONG).show();
                 // TODO save query to database
             }

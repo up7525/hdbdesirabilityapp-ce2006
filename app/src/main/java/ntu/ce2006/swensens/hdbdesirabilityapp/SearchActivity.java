@@ -104,6 +104,7 @@ public class SearchActivity extends AppCompatActivity {
                     if(listOfFlats.size() > 0) {
                         Intent intentFlat = new Intent(SearchActivity.this, ResultsActivity.class);
                         intentFlat.putStringArrayListExtra("java.util.List<java.lang.String>", listOfFlatsString);
+                        intentFlat.putExtra("userQuery",userQuery);
                         startActivity(intentFlat);
                     }
                     else
