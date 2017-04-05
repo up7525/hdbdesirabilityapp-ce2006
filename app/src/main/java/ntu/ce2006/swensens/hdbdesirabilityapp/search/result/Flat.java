@@ -223,9 +223,9 @@ public class Flat implements Serializable, Comparable<Flat> {
     public int compareTo(Flat otherFlat) {
         double compareScore = this.score - otherFlat.getScore();
         if (compareScore < 0) {
-            return -1;
-        } else if (compareScore > 0) {
             return 1;
+        } else if (compareScore > 0) {
+            return -1;
         }
         return 0;
     }
