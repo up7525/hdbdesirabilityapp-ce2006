@@ -70,7 +70,7 @@ public class FlatManagerTest {
 
     @Test
     public void testGetFlat() throws IOException, ExecutionException, InterruptedException, APIErrorException {
-        flatManager.getFlats();
+        System.out.println(flatManager.getFlats());
         assertTrue(true);
     }
 }

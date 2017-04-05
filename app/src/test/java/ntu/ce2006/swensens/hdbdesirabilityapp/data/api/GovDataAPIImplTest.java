@@ -28,10 +28,21 @@ public class GovDataAPIImplTest {
 
     private GovDataAPIImpl govDataAPI = new GovDataAPIImpl();
 
+    @Before
+    public void setUp() {
+        // Logger Mock
+        PowerMockito.mockStatic(Log.class);
+    }
+
     @Test
     public void testExample() throws IOException, ExecutionException, InterruptedException {
         JsonParser parser = new JsonParser();
         System.out.println(parser.parse(govDataAPI.getData().getAsJsonObject("result").getAsJsonArray("records").get(0).toString()).getAsJsonObject().get("town"));
+    }
+
+    @Test
+    public void testUpdateData() throws InterruptedException, ExecutionException, IOException {
+        govDataAPI.updateData();
     }
 
 }
