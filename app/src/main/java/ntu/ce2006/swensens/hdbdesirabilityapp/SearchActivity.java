@@ -82,7 +82,7 @@ public class SearchActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 //                if(checkIfUserInput())
-                userQuery = createUserQuery();
+                    userQuery = createUserQuery();
 //                else
 //                    userQuery = createDefaultQuery();
 
@@ -401,6 +401,8 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private boolean checkIfUserInput(){
+        // return TRUE if at least one location chosen.
+
         boolean AngMoKio = load("AngMoKio");
         boolean Bedok = load("Bedok");
         boolean Bishan = load("Bishan");
@@ -426,7 +428,8 @@ public class SearchActivity extends AppCompatActivity {
         boolean Tampines = load("Tampines");
         boolean ToaPayoh = load("ToaPayoh");
         boolean Woodlands = load("Woodlands");
-        boolean Yishun = load("Yishun");        boolean bool2 = load("TwoRoomCheckBox");
+        boolean Yishun = load("Yishun");
+        boolean bool2 = load("TwoRoomCheckBox");
         boolean bool3 = load("ThreeRoomCheckBox");
         boolean bool4 = load("FourRoomCheckBox");
         boolean bool5 = load("FiveRoomCheckBox");
@@ -439,11 +442,13 @@ public class SearchActivity extends AppCompatActivity {
         boolean minIsNull = minPrice.equalsIgnoreCase("NULLSTRING") | minPrice.equalsIgnoreCase("0") | minPrice.equalsIgnoreCase("");
         boolean maxIsNull = maxPrice.equalsIgnoreCase("NULLSTRING") | maxPrice.equalsIgnoreCase("0") | maxPrice.equalsIgnoreCase("");
 
-        if(!(AngMoKio | Bedok | Bishan | BukitBatok | BukitMerah | BukitPanjang | BukitTimah | CentralArea | ChoaChuKang | Clementi | Geylang | Hougang | JurongEast | JurongWest | KallangWhampoa | MarineParade | PasirRis | Punggol | Queenstown | Sembawang | Sengkang | Serangoon | Tampines | ToaPayoh | Woodlands | Yishun | bool3 | bool4 | bool5 | boolE | Mall | MRT | Clinic) )
-            if(minIsNull & maxIsNull)
-                return true;
+        // no locations chosen
+        if(!(AngMoKio | Bedok | Bishan | BukitBatok | BukitMerah | BukitPanjang | BukitTimah | CentralArea | ChoaChuKang | Clementi | Geylang | Hougang | JurongEast | JurongWest | KallangWhampoa | MarineParade | PasirRis | Punggol | Queenstown | Sembawang | Sengkang | Serangoon | Tampines | ToaPayoh | Woodlands | Yishun))
+//                if(!(bool2 | bool3 | bool4 | bool5 | boolE | Mall | MRT | Clinic))
+//                    if(minIsNull & maxIsNull)
+                        return false;
 
-        return false;
+        return true;
     }
 
     private boolean load(String name) {
