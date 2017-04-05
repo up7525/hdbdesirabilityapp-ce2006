@@ -3,6 +3,7 @@ package ntu.ce2006.swensens.hdbdesirabilityapp.search.query;
 /**
  * Created by Jonathan on 29-Mar-17.
  */
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +37,7 @@ import java.util.List;
  * Created by Swensens on 20/03/17.
  */
 
-public class Query {
+public class Query implements Serializable{
 
     @SerializedName("id")
     private int id_key;
