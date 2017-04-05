@@ -81,12 +81,17 @@ public class PinActivity extends AppCompatActivity {
 
     private String sanitizePostalCode(String inputString){
         inputString.replaceAll("[^0-9.]", "");
+
         if(inputString.length() > 6)
             inputString = inputString.substring(0,6);
-        if(inputString.length() > 0)
-            if(Integer.parseInt(inputString) >= 0 && Integer.parseInt(inputString) <= 2000000)
-                return inputString;
-        return "";
+
+        if(inputString.length() == 0)
+            inputString = "";
+        
+        if (Integer.parseInt(inputString) < 0 | Integer.parseInt(inputString) > 2000000)
+            inputString = "";
+
+        return inputString;
     }
 
 
