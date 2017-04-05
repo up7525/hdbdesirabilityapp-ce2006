@@ -1,30 +1,18 @@
 package ntu.ce2006.swensens.hdbdesirabilityapp.data.api;
 
-import android.util.Log;
-
+import com.google.common.io.Files;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVRecord;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.nio.charset.Charset;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query;
+import ntu.ce2006.swensens.hdbdesirabilityapp.MainActivity;
 
 /**
  * Created by trollpc on 24/03/17.
@@ -50,28 +38,21 @@ public class GovDataAPIImpl extends JsonRequest {
      */
     @Override
     public JsonObject getData() throws IOException, ExecutionException, InterruptedException {
-        StringBuilder sb = new StringBuilder();
-        BufferedReader reader = new BufferedReader(new FileReader(HDB_FILE));
-        String line = reader.readLine();
-        while(line != null) {
-            sb.append(line);
-            line = reader.readLine();
-        }
-        reader.close();
+        File path = MainActivity.appContext.getFilesDir();
+        File file = new File(path, "resale-flat-price.json");
+        String fileContent = Files.toString(file, Charset.forName("UTF-8"));
         JsonParser parser = new JsonParser();
-        JsonObject results = parser.parse(sb.toString()).getAsJsonObject();
+        JsonObject results = parser.parse(fileContent).getAsJsonObject();
         return results;
     }
 
-    public void updateData() throws IOException, ExecutionException, InterruptedException {
+    public void updateData(File file) throws IOException, ExecutionException, InterruptedException {
         RequestThread requestThread = new RequestThread(GOVDATA);
         ExecutorService executor = Executors.newFixedThreadPool(1);
         Future<JsonObject> future = executor.submit(requestThread);
         JsonObject result = future.get();
         executor.shutdown();
 
-        PrintWriter writer = new PrintWriter(new FileOutputStream(HDB_FILE, false));
-        writer.print(result);
-        writer.close();
+        Files.write(result.toString(), file, Charset.forName("UTF-8"));
     }
 }
