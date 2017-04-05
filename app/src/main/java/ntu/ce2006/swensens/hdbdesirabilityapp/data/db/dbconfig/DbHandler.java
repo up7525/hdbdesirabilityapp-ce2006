@@ -175,18 +175,16 @@ public class DbHandler extends SQLiteOpenHelper {
     }
 
     // Deleting single query
-    public void deleteQuery(Query query) {
-        Gson gson = new Gson();
+    public void deleteQuery(int row) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_QUERY, QUERY + "=?", new String[] { gson.toJson(query) });
+        db.delete(TABLE_QUERY, KEY_ID + "=?", new String[] { Integer.toString(row) });
         db.close();
     }
 
     // Deleting single pin
-    public void deletePin(Pin pin) {
-        Gson gson = new Gson();
+    public void deletePin(int row) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_PIN, PIN + "=?", new String[] { gson.toJson(pin) });
+        db.delete(TABLE_PIN, KEY_ID + "=?", new String[] { Integer.toString(row) });
         db.close();
     }
 
