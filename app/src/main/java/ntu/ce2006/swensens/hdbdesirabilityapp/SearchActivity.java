@@ -75,6 +75,9 @@ public class SearchActivity extends AppCompatActivity {
         SearchButtonSmall.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
+
+                showAlert2(v);
+
                 if(checkIfUserInput())
                     userQuery = createUserQuery();
                 else
@@ -133,7 +136,12 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
     }
-
+    public void showAlert2(View v) {
+        AlertDialog.Builder info = new AlertDialog.Builder(this);
+        String alert1 = "                        Loading.....";
+        info.setMessage(alert1).create();
+        info.show();
+    }
     public void noResultsFound(View v){
         AlertDialog.Builder info = new AlertDialog.Builder(this);
         info.setMessage("No results were found with your filters!").create();
