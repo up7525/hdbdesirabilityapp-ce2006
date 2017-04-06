@@ -137,9 +137,15 @@ public class Query implements Serializable{
         // Faith - for ResultsActivity
         desc = "";
         if(getLocationFilters().size() > 0)
-            desc = desc + getLocationFilters().get(0) + "...; ";
+            if(getLocationFilters().size() > 1)
+                desc = desc + getLocationFilters().get(0) + "...; ";
+            else
+                desc = desc + getLocationFilters().get(0) + "; ";
         if(getSizeFilters().size() > 0)
-            desc = desc + getSizeFilters().get(0) + "...; ";
+            if(getSizeFilters().size() > 1)
+                desc = desc + getSizeFilters().get(0) + "...; ";
+            else
+                desc = desc + getSizeFilters().get(0) + "; ";
         desc = desc + "$" + (getPriceFilters()[0] / 1000) + "k to $" + (getPriceFilters()[1] / 1000) + "k; ";
         if(getAmenitiesFilters().size() > 0){
             for(int u = 0; u < getAmenitiesFilters().size(); u++){
