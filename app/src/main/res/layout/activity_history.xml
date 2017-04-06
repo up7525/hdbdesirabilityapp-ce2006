@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="ntu.ce2006.swensens.hdbdesirabilityapp.PinActivity">
+    tools:context="ntu.ce2006.swensens.hdbdesirabilityapp.HistoryActivity">
 
     <LinearLayout
         android:layout_width="368dp"
