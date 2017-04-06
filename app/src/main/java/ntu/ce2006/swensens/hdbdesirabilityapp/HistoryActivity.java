@@ -30,18 +30,25 @@ public class HistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
         setTitle("History");
+        retrieveQueries();
+        displayButtons();
+        init();
+    }
 
+    private void retrieveQueries(){
+        // retrieve queries from database
+        database = new DbHandler(getApplicationContext());
+        listOfQueries = database.getAllQueries();
+        queryCount = listOfQueries.size();
+    }
+
+    private void displayButtons(){
         // set radiobuttons
         one = (RadioButton) findViewById(R.id.History1);
         two = (RadioButton) findViewById(R.id.History2);
         three = (RadioButton) findViewById(R.id.History3);
         four = (RadioButton) findViewById(R.id.History4);
         five = (RadioButton) findViewById(R.id.History5);
-
-        // retrieve queries from database
-        database = new DbHandler(getApplicationContext());
-        listOfQueries = database.getAllQueries();
-        queryCount = listOfQueries.size();
 
         // set visibilities of radiobuttons depending on how many queries there are
         if(queryCount == 0){
@@ -109,7 +116,6 @@ public class HistoryActivity extends AppCompatActivity {
             four.setText(Q4.getDesc());
             five.setText(Q5.getDesc());
         }
-        init();
     }
 
     public void init(){
@@ -201,13 +207,6 @@ public class HistoryActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-
-    public void showQuery(View v, Query userQuery) {
-        AlertDialog.Builder info = new AlertDialog.Builder(this);
-        info.setMessage(userQuery.getLocationFilters().get(0).toString()).create();
-        info.show();
     }
 
     public void onPause() {

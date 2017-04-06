@@ -7,16 +7,9 @@ import android.content.*;
 import android.widget.*;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
 
 import ntu.ce2006.swensens.hdbdesirabilityapp.data.api.GovDataAPIImpl;
 import ntu.ce2006.swensens.hdbdesirabilityapp.data.db.dbconfig.DbHandler;
-
-import ntu.ce2006.swensens.hdbdesirabilityapp.HistoryActivity;
-import ntu.ce2006.swensens.hdbdesirabilityapp.PinActivity;
-import ntu.ce2006.swensens.hdbdesirabilityapp.R;
-import ntu.ce2006.swensens.hdbdesirabilityapp.SearchActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
     public static Context appContext;
 
     public Button searchMenuButton;
-    public Button pinButton;
     public Button historyButton;
 
     public void init(){
@@ -61,18 +53,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(makeQuery);
             }
         });
-
-        pinButton = (Button)findViewById(R.id.pinButton);
-        pinButton.setOnClickListener(new View.OnClickListener()  {
-            @Override
-            public void onClick(View v) {
-
-                Intent pinMake = new Intent(MainActivity.this,PinActivity.class);
-
-                startActivity(pinMake);
-            }
-        });
-
         historyButton = (Button)findViewById(R.id.historyButton);
         historyButton.setOnClickListener(new View.OnClickListener()  {
             @Override

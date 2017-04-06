@@ -29,8 +29,10 @@ public class Search_Price_Activity extends AppCompatActivity {
         String maxPriceString = ((EditText) findViewById(R.id.MaxPriceInput)).getText().toString();
         maxPriceString = sanitizePrice(maxPriceString);
 
-        // "NULLSTRING" = user has not inputted price
+        savePrices(maxPriceString, minPriceString);
+    }
 
+    private void savePrices(String maxPriceString, String minPriceString){
         if(minPriceString.equalsIgnoreCase("NULLSTRING") | maxPriceString.equalsIgnoreCase("NULLSTRING")){
             if(minPriceString.equalsIgnoreCase("NULLSTRING") & maxPriceString.equalsIgnoreCase("NULLSTRING")){
                 save("MinPriceInput","NULLSTRING");
@@ -62,7 +64,6 @@ public class Search_Price_Activity extends AppCompatActivity {
                 save("MinPriceInput", Integer.toString(0));
                 save("MaxPriceInput", Integer.toString(1));
             }
-
         }
     }
 

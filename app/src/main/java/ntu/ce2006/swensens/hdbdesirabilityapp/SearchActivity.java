@@ -76,8 +76,6 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                showAlertQuick(v, "                        Loading.....");
-
                 userQuery = createUserQuery();
 
                 FlatManager flatManager = new FlatManager(userQuery);
@@ -87,22 +85,24 @@ public class SearchActivity extends AppCompatActivity {
                 try {
                     listOfFlats = flatManager.getFlats();
 
-                    if(listOfFlats != null)
+                    if(listOfFlats != null){
                         if(listOfFlats.size() > 0){
                             // convert listOfFlats to String BEFORE sending to ResultsActivity
                             for(int i = 0; i < listOfFlats.size(); i++)
                                 listOfFlatsString.add(listOfFlats.get(i).toString());
                             listOfFlatsString.add("");
+                            Intent intentFlat = new Intent(SearchActivity.this, ResultsActivity.class);
+                            intentFlat.putStringArrayListExtra("java.util.List<java.lang.String>", listOfFlatsString);
+                            intentFlat.putExtra("ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query",(Serializable) userQuery);
+                            startActivity(intentFlat);
                         }
-                    if(listOfFlatsString.size() > 0) {
-                        Intent intentFlat = new Intent(SearchActivity.this, ResultsActivity.class);
-                        intentFlat.putStringArrayListExtra("java.util.List<java.lang.String>", listOfFlatsString);
-                        intentFlat.putExtra("ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query",(Serializable) userQuery);
-                        startActivity(intentFlat);
+                        else{
+                            showAlert(v, "No results found with your filters!");
+                        }
                     }
-                    else
+                    else{
                         showAlert(v, "No results found with your filters!");
-
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
@@ -147,11 +147,45 @@ public class SearchActivity extends AppCompatActivity {
         AlertDialog.Builder info = new AlertDialog.Builder(this);
         info.setMessage(displayString).create().show();
     }
+    private Query createUserQuery(){
+        Query query;
+        if(checkIfUserInput())
+            query = new Query.Builder().locations(convertLocs()).size(convertSize()).price(convertPrice()).amenities(convertAmenities()).build();
+        else
+            query = createDefaultQuery();
+        return query;
+    }
 
-    public void showAlertQuick(View v, String stringToDisplay){
-        AlertDialog.Builder info = new AlertDialog.Builder(this);
-        info.setMessage(stringToDisplay).create();
-        info.show();
+    private boolean checkIfUserInput(){
+        // return TRUE if user has inputted something / at least one location chosen.
+        boolean AngMoKio = load("AngMoKio");
+        boolean Bedok = load("Bedok");
+        boolean Bishan = load("Bishan");
+        boolean BukitBatok = load("BukitBatok");
+        boolean BukitMerah = load("BukitMerah");
+        boolean BukitPanjang = load("BukitPanjang");
+        boolean BukitTimah = load("BukitTimah");
+        boolean CentralArea = load("CentralArea");
+        boolean ChoaChuKang = load("ChoaChuKang");
+        boolean Clementi = load("Clementi");
+        boolean Geylang = load("Geylang");
+        boolean Hougang = load("Hougang");
+        boolean JurongEast = load("JurongEast");
+        boolean JurongWest = load("JurongWest");
+        boolean KallangWhampoa = load("KallangWhampoa");
+        boolean MarineParade = load("MarineParade");
+        boolean PasirRis = load("PasirRis");
+        boolean Punggol = load("Punggol");
+        boolean Queenstown = load("Queenstown");
+        boolean Sembawang = load("Sembawang");
+        boolean Sengkang = load("Sengkang");
+        boolean Serangoon = load("Serangoon");
+        boolean Tampines = load("Tampines");
+        boolean ToaPayoh = load("ToaPayoh");
+        boolean Woodlands = load("Woodlands");
+        boolean Yishun = load("Yishun");
+
+        return AngMoKio | Bedok | Bishan | BukitBatok | BukitMerah | BukitPanjang | BukitTimah | CentralArea | ChoaChuKang | Clementi | Geylang | Hougang | JurongEast | JurongWest | KallangWhampoa | MarineParade | PasirRis | Punggol | Queenstown | Sembawang | Sengkang | Serangoon | Tampines | ToaPayoh | Woodlands | Yishun;
     }
 
     public Query createDefaultQuery(){
@@ -206,17 +240,6 @@ public class SearchActivity extends AppCompatActivity {
         amenitiesFilters.add(Amenities.MALL);
 
         Query query = new Query.Builder().locations(locationFilters).size(sizeFilters).price(priceFilters).amenities(amenitiesFilters).build();
-        return query;
-    }
-
-
-
-    private Query createUserQuery(){
-        Query query;
-        if(checkIfUserInput())
-            query = new Query.Builder().locations(convertLocs()).size(convertSize()).price(convertPrice()).amenities(convertAmenities()).build();
-        else
-            query = createDefaultQuery();
         return query;
     }
 
@@ -367,38 +390,6 @@ public class SearchActivity extends AppCompatActivity {
         return amenitiesList;
     }
 
-    private boolean checkIfUserInput(){
-        // return TRUE if user has inputted something / at least one location chosen.
-        boolean AngMoKio = load("AngMoKio");
-        boolean Bedok = load("Bedok");
-        boolean Bishan = load("Bishan");
-        boolean BukitBatok = load("BukitBatok");
-        boolean BukitMerah = load("BukitMerah");
-        boolean BukitPanjang = load("BukitPanjang");
-        boolean BukitTimah = load("BukitTimah");
-        boolean CentralArea = load("CentralArea");
-        boolean ChoaChuKang = load("ChoaChuKang");
-        boolean Clementi = load("Clementi");
-        boolean Geylang = load("Geylang");
-        boolean Hougang = load("Hougang");
-        boolean JurongEast = load("JurongEast");
-        boolean JurongWest = load("JurongWest");
-        boolean KallangWhampoa = load("KallangWhampoa");
-        boolean MarineParade = load("MarineParade");
-        boolean PasirRis = load("PasirRis");
-        boolean Punggol = load("Punggol");
-        boolean Queenstown = load("Queenstown");
-        boolean Sembawang = load("Sembawang");
-        boolean Sengkang = load("Sengkang");
-        boolean Serangoon = load("Serangoon");
-        boolean Tampines = load("Tampines");
-        boolean ToaPayoh = load("ToaPayoh");
-        boolean Woodlands = load("Woodlands");
-        boolean Yishun = load("Yishun");
-
-        return AngMoKio | Bedok | Bishan | BukitBatok | BukitMerah | BukitPanjang | BukitTimah | CentralArea | ChoaChuKang | Clementi | Geylang | Hougang | JurongEast | JurongWest | KallangWhampoa | MarineParade | PasirRis | Punggol | Queenstown | Sembawang | Sengkang | Serangoon | Tampines | ToaPayoh | Woodlands | Yishun;
-    }
-
     private boolean load(String name) {
         SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
         return sharedPreferences.getBoolean(name, false);
@@ -407,17 +398,5 @@ public class SearchActivity extends AppCompatActivity {
     private String loadString(String name) {
         SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
         return sharedPreferences.getString(name, "");
-    }
-    private void saveBoolean(boolean boolValue, String name) {
-        SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(name, boolValue);
-        editor.commit();
-    }
-    private void saveString(String string, String name){
-        SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(name, string);
-        editor.commit();
     }
 }

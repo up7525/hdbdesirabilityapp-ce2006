@@ -48,8 +48,6 @@ public class ResultsActivity extends AppCompatActivity {
         saveQueryButton.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
-
-                // TODO for some reason getAllQueries.contains(userQuery) doesn't work as it should
                 if(!(database.getAllQueries().contains(userQuery))){ // query doesn't exist in database yet
                     if(database.getQueryCount() >= 5){ // overwrite oldest query
                         List<Query> listOfQueries = database.getAllQueries();
