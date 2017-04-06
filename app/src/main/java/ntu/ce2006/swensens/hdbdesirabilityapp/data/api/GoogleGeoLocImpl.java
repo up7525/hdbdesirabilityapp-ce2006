@@ -1,5 +1,7 @@
 package ntu.ce2006.swensens.hdbdesirabilityapp.data.api;
 
+import android.app.ProgressDialog;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 

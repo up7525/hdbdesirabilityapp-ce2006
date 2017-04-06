@@ -1,30 +1,34 @@
 package ntu.ce2006.swensens.hdbdesirabilityapp;
 
-import android.support.v4.media.MediaBrowserServiceCompat;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.*;
-import android.util.Log;
-import android.view.*;
-import android.content.*;
-import android.widget.*;
-import android.app.*;
-import java.io.*;
-import java.util.*;
-import java.util.concurrent.ExecutionException;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
-import ntu.ce2006.swensens.hdbdesirabilityapp.exceptions.APIErrorException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import ntu.ce2006.swensens.hdbdesirabilityapp.search.FlatManager;
+import ntu.ce2006.swensens.hdbdesirabilityapp.search.ResultAsyncCallback;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Amenities;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Location;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Size;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query;
-import ntu.ce2006.swensens.hdbdesirabilityapp.search.FlatManager ;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.result.Flat;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity implements ResultAsyncCallback<List<Flat>> {
 
     // FOr logger
     private static final String TAG = "SearchActivity";
+
+    public static SearchActivity searchActivity;
 
     public Button locationButton, priceButton, sizeButton, amenitiesButton;
     public ImageButton SearchButtonSmall, InfoButtonSmall, ClearButtonSmall;
@@ -33,88 +37,55 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SearchActivity.searchActivity = SearchActivity.this;
         setContentView(R.layout.activity_search);
         setTitle("");
         init();
     }
 
-    public void init(){
-        locationButton = (Button)findViewById(R.id.locationButton);
-        locationButton.setOnClickListener(new View.OnClickListener()  {
+    public void init() {
+        locationButton = (Button) findViewById(R.id.locationButton);
+        locationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent location = new Intent(SearchActivity.this,Search_Loc_Activity.class);
+                Intent location = new Intent(SearchActivity.this, Search_Loc_Activity.class);
                 startActivity(location);
             }
         });
-        priceButton = (Button)findViewById(R.id.priceButton);
-        priceButton.setOnClickListener(new View.OnClickListener()  {
+        priceButton = (Button) findViewById(R.id.priceButton);
+        priceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent price = new Intent(SearchActivity.this,Search_Price_Activity.class);
+                Intent price = new Intent(SearchActivity.this, Search_Price_Activity.class);
                 startActivity(price);
             }
         });
-        sizeButton = (Button)findViewById(R.id.sizeButton);
-        sizeButton.setOnClickListener(new View.OnClickListener()  {
+        sizeButton = (Button) findViewById(R.id.sizeButton);
+        sizeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent size = new Intent(SearchActivity.this,Search_Size_Activity.class);
+                Intent size = new Intent(SearchActivity.this, Search_Size_Activity.class);
                 startActivity(size);
             }
         });
-        amenitiesButton = (Button)findViewById(R.id.amenitiesButton);
-        amenitiesButton.setOnClickListener(new View.OnClickListener()  {
+        amenitiesButton = (Button) findViewById(R.id.amenitiesButton);
+        amenitiesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent ameni = new Intent(SearchActivity.this,Search_Ameni_Activity.class);
+                Intent ameni = new Intent(SearchActivity.this, Search_Ameni_Activity.class);
                 startActivity(ameni);
             }
         });
         SearchButtonSmall = (ImageButton) findViewById(R.id.SearchButtonSmall);
-        SearchButtonSmall.setOnClickListener(new View.OnClickListener()  {
+        SearchButtonSmall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 userQuery = createUserQuery();
-
-                FlatManager flatManager = new FlatManager(userQuery);
-                List<Flat> listOfFlats;
-                ArrayList<String> listOfFlatsString = new ArrayList<String>();
-
-                try {
-                    listOfFlats = flatManager.getFlats();
-
-                    if(listOfFlats != null){
-                        if(listOfFlats.size() > 0){
-                            // convert listOfFlats to String BEFORE sending to ResultsActivity
-                            for(int i = 0; i < listOfFlats.size(); i++)
-                                listOfFlatsString.add(listOfFlats.get(i).toString());
-                            listOfFlatsString.add("");
-                            Intent intentFlat = new Intent(SearchActivity.this, ResultsActivity.class);
-                            intentFlat.putStringArrayListExtra("java.util.List<java.lang.String>", listOfFlatsString);
-                            intentFlat.putExtra("ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query",(Serializable) userQuery);
-                            startActivity(intentFlat);
-                        }
-                        else{
-                            showAlert(v, "No results found with your filters!");
-                        }
-                    }
-                    else{
-                        showAlert(v, "No results found with your filters!");
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    Log.d("", "Exception", e);
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-
+                new FlatManager(SearchActivity.searchActivity, userQuery).execute();
             }
         });
         InfoButtonSmall = (ImageButton) findViewById(R.id.InfoButtonSmall);
-        InfoButtonSmall.setOnClickListener(new View.OnClickListener()  {
+        InfoButtonSmall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String displayString;
@@ -123,40 +94,41 @@ public class SearchActivity extends AppCompatActivity {
                 String alert3 = "Size: Select the room type.";
                 String alert4 = "Price: Set the minimum and maximum prices";
                 String alert5 = "Amenities: Choose nearby places of interest";
-                displayString = alert1+"\n"+"\n"+"\n"+
-                        alert2+"\n"+"\n"+
-                        alert3+"\n"+"\n"+
-                        alert4+"\n"+"\n"+
+                displayString = alert1 + "\n" + "\n" + "\n" +
+                        alert2 + "\n" + "\n" +
+                        alert3 + "\n" + "\n" +
+                        alert4 + "\n" + "\n" +
                         alert5;
                 showAlert(v, displayString);
             }
         });
         ClearButtonSmall = (ImageButton) findViewById(R.id.ClearButtonSmall);
-        ClearButtonSmall.setOnClickListener(new View.OnClickListener()  {
+        ClearButtonSmall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(SearchActivity.this,"Cleared all filters.",Toast.LENGTH_LONG).show();
-                SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
+                Toast.makeText(SearchActivity.this, "Cleared all filters.", Toast.LENGTH_LONG).show();
+                SharedPreferences sharedPreferences = getSharedPreferences("x", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.clear().commit();
             }
         });
     }
 
-    public void showAlert(View v, String displayString){
+    public void showAlert(View v, String displayString) {
         AlertDialog.Builder info = new AlertDialog.Builder(this);
         info.setMessage(displayString).create().show();
     }
-    private Query createUserQuery(){
+
+    private Query createUserQuery() {
         Query query;
-        if(checkIfUserInput())
+        if (checkIfUserInput())
             query = new Query.Builder().locations(convertLocs()).size(convertSize()).price(convertPrice()).amenities(convertAmenities()).build();
         else
             query = createDefaultQuery();
         return query;
     }
 
-    private boolean checkIfUserInput(){
+    private boolean checkIfUserInput() {
         // return TRUE if user has inputted something / at least one location chosen.
         boolean AngMoKio = load("AngMoKio");
         boolean Bedok = load("Bedok");
@@ -188,7 +160,7 @@ public class SearchActivity extends AppCompatActivity {
         return AngMoKio | Bedok | Bishan | BukitBatok | BukitMerah | BukitPanjang | BukitTimah | CentralArea | ChoaChuKang | Clementi | Geylang | Hougang | JurongEast | JurongWest | KallangWhampoa | MarineParade | PasirRis | Punggol | Queenstown | Sembawang | Sengkang | Serangoon | Tampines | ToaPayoh | Woodlands | Yishun;
     }
 
-    public Query createDefaultQuery(){
+    public Query createDefaultQuery() {
         // load filter values
         ArrayList<Location> locationFilters = new ArrayList<>();
         ArrayList<Size> sizeFilters = new ArrayList<>();
@@ -243,7 +215,7 @@ public class SearchActivity extends AppCompatActivity {
         return query;
     }
 
-    private ArrayList<Location> convertLocs(){
+    private ArrayList<Location> convertLocs() {
 
         // load locations
         boolean AngMoKio = load("AngMoKio");
@@ -276,78 +248,78 @@ public class SearchActivity extends AppCompatActivity {
 
         ArrayList<Location> locationsList = new ArrayList<>();
 
-        if(locationsBoolean[0])	//	AngMoKio
+        if (locationsBoolean[0])    //	AngMoKio
             locationsList.add(Location.ANG_MO_KIO);
-        if(locationsBoolean[1])	//	Bedok
+        if (locationsBoolean[1])    //	Bedok
             locationsList.add(Location.BEDOK);
-        if(locationsBoolean[2])	//	Bishan
+        if (locationsBoolean[2])    //	Bishan
             locationsList.add(Location.BISHAN);
-        if(locationsBoolean[3])	//	BukitBatok
+        if (locationsBoolean[3])    //	BukitBatok
             locationsList.add(Location.BUKIT_BATOK);
-        if(locationsBoolean[4])	//	BukitMerah
+        if (locationsBoolean[4])    //	BukitMerah
             locationsList.add(Location.BUKIT_MERAH);
-        if(locationsBoolean[5])	//	BukitPanjang
+        if (locationsBoolean[5])    //	BukitPanjang
             locationsList.add(Location.BUKIT_PANJANG);
-        if(locationsBoolean[6])	//	BukitTimah
+        if (locationsBoolean[6])    //	BukitTimah
             locationsList.add(Location.BUKIT_TIMAH);
-        if(locationsBoolean[7])	//	CentralArea
+        if (locationsBoolean[7])    //	CentralArea
             locationsList.add(Location.CENTRAL_AREA);
-        if(locationsBoolean[8])	//	ChoaChuKang
+        if (locationsBoolean[8])    //	ChoaChuKang
             locationsList.add(Location.CHUA_CHU_KANG);
-        if(locationsBoolean[9])	//	Clementi
+        if (locationsBoolean[9])    //	Clementi
             locationsList.add(Location.CLEMENTI);
-        if(locationsBoolean[10])	//	Geylang
+        if (locationsBoolean[10])    //	Geylang
             locationsList.add(Location.GEYLANG);
-        if(locationsBoolean[11])	//	Hougang
+        if (locationsBoolean[11])    //	Hougang
             locationsList.add(Location.HOUGANG);
-        if(locationsBoolean[12])	//	JurongEast
+        if (locationsBoolean[12])    //	JurongEast
             locationsList.add(Location.JURONG_EAST);
-        if(locationsBoolean[13])	//	JurongWest
+        if (locationsBoolean[13])    //	JurongWest
             locationsList.add(Location.JURONG_WEST);
-        if(locationsBoolean[14])	//	KallangWhampoa
+        if (locationsBoolean[14])    //	KallangWhampoa
             locationsList.add(Location.KALLANG_WHAMPOA);
-        if(locationsBoolean[15])	//	MarineParade
+        if (locationsBoolean[15])    //	MarineParade
             locationsList.add(Location.MARINE_PARADE);
-        if(locationsBoolean[16])	//	PasirRis
+        if (locationsBoolean[16])    //	PasirRis
             locationsList.add(Location.PASIR_RIS);
-        if(locationsBoolean[17])	//	Punggol
+        if (locationsBoolean[17])    //	Punggol
             locationsList.add(Location.PUNGGOL);
-        if(locationsBoolean[18])	//	Queenstown
+        if (locationsBoolean[18])    //	Queenstown
             locationsList.add(Location.QUEENSTOWN);
-        if(locationsBoolean[19])	//	Sembawang
+        if (locationsBoolean[19])    //	Sembawang
             locationsList.add(Location.SEMBAWANG);
-        if(locationsBoolean[20])	//	Sengkang
+        if (locationsBoolean[20])    //	Sengkang
             locationsList.add(Location.SENGKANG);
-        if(locationsBoolean[21])	//	Serangoon
+        if (locationsBoolean[21])    //	Serangoon
             locationsList.add(Location.SERANGOON);
-        if(locationsBoolean[22])	//	Tampines
+        if (locationsBoolean[22])    //	Tampines
             locationsList.add(Location.TAMPINES);
-        if(locationsBoolean[23])	//	ToaPayoh
+        if (locationsBoolean[23])    //	ToaPayoh
             locationsList.add(Location.TOA_PAYOH);
-        if(locationsBoolean[24])	//	Woodlands
+        if (locationsBoolean[24])    //	Woodlands
             locationsList.add(Location.WOODLANDS);
-        if(locationsBoolean[25])	//	Yishun
+        if (locationsBoolean[25])    //	Yishun
             locationsList.add(Location.YISHUN);
 
         return locationsList;
     }
 
-    private ArrayList<Size> convertSize(){
+    private ArrayList<Size> convertSize() {
         ArrayList<Size> sizeList = new ArrayList<>();
-        if(load("TwoRoomCheckBox"))
+        if (load("TwoRoomCheckBox"))
             sizeList.add(Size.ROOM_2);
-        if(load("ThreeRoomCheckBox"))
+        if (load("ThreeRoomCheckBox"))
             sizeList.add(Size.ROOM_3);
-        if(load("FourRoomCheckBox"))
+        if (load("FourRoomCheckBox"))
             sizeList.add(Size.ROOM_4);
-        if(load("FiveRoomCheckBox"))
+        if (load("FiveRoomCheckBox"))
             sizeList.add(Size.ROOM_5);
-        if(load("ExecutiveCheckBox"))
+        if (load("ExecutiveCheckBox"))
             sizeList.add(Size.EXECUTIVE);
         return sizeList;
     }
 
-    private int[] convertPrice(){
+    private int[] convertPrice() {
         // load price
         String minPrice = loadString("MinPriceInput");
         String maxPrice = loadString("MaxPriceInput");
@@ -358,45 +330,64 @@ public class SearchActivity extends AppCompatActivity {
         boolean maxIsNull = maxPrice.equalsIgnoreCase("NULLSTRING") | maxPrice.equalsIgnoreCase("0") | maxPrice.equalsIgnoreCase("");
 
         // Check: if no values, default = 0 to 2000000
-        if(minIsNull | maxIsNull){
-            if(minIsNull & maxIsNull){
+        if (minIsNull | maxIsNull) {
+            if (minIsNull & maxIsNull) {
                 priceArray[0] = 0;
                 priceArray[1] = 2000000;
-            }
-            else if (minIsNull){
+            } else if (minIsNull) {
                 priceArray[0] = 0;
                 priceArray[1] = Integer.parseInt(maxPrice);
-            }
-            else if (maxIsNull){
+            } else if (maxIsNull) {
                 priceArray[0] = Integer.parseInt(minPrice);
                 priceArray[1] = 2000000;
             }
-        }
-        else if (!minIsNull & !maxIsNull){
+        } else if (!minIsNull & !maxIsNull) {
             priceArray[0] = Integer.parseInt(minPrice);
             priceArray[1] = Integer.parseInt(maxPrice);
         }
         return priceArray;
     }
 
-    private ArrayList<Amenities> convertAmenities(){
+    private ArrayList<Amenities> convertAmenities() {
         ArrayList<Amenities> amenitiesList = new ArrayList<>();
-        if(load("checkBoxMall"))
+        if (load("checkBoxMall"))
             amenitiesList.add(Amenities.MALL);
-        if(load("checkBoxClinic"))
+        if (load("checkBoxClinic"))
             amenitiesList.add(Amenities.MRT);
-        if(load("checkBoxClinic"))
+        if (load("checkBoxClinic"))
             amenitiesList.add(Amenities.CLINIC);
         return amenitiesList;
     }
 
     private boolean load(String name) {
-        SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("x", Context.MODE_PRIVATE);
         return sharedPreferences.getBoolean(name, false);
     }
 
     private String loadString(String name) {
-        SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("x", Context.MODE_PRIVATE);
         return sharedPreferences.getString(name, "");
+    }
+
+    @Override
+    public void onTaskComplete(List<Flat> listOfFlats) {
+        ArrayList<String> listOfFlatsString = new ArrayList<String>();
+        if (listOfFlats != null) {
+            if (listOfFlats.size() > 0) {
+                // convert listOfFlats to String BEFORE sending to ResultsActivity
+                for (int i = 0; i < listOfFlats.size(); i++)
+                    listOfFlatsString.add(listOfFlats.get(i).toString());
+                listOfFlatsString.add("");
+                Intent intentFlat = new Intent(SearchActivity.this, ResultsActivity.class);
+                intentFlat.putStringArrayListExtra("java.util.List<java.lang.String>", listOfFlatsString);
+                intentFlat.putExtra("ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query", (Serializable) userQuery);
+                startActivity(intentFlat);
+            } else {
+                showAlert(findViewById(android.R.id.content), "No results found with your filters!");
+            }
+        } else {
+            showAlert(findViewById(android.R.id.content), "No results found with your filters!");
+        }
+
     }
 }

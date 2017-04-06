@@ -1,5 +1,7 @@
 package ntu.ce2006.swensens.hdbdesirabilityapp.data.api;
 
+import android.app.ProgressDialog;
+
 import com.google.common.io.Files;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -28,9 +30,6 @@ public class GovDataAPIImpl extends JsonRequest {
 
     private final String GOVDATA = "https://data.gov.sg/api/action/datastore_search?resource_id=83b2fc37-ce8c-4df4-968b-370fd818138b&limit=100000";
 
-    // For Debugging to be fast and not waste limits on API access
-
-
     /**
      * Retrieves the data from API based on the filters defined in the Query
      *
@@ -47,12 +46,6 @@ public class GovDataAPIImpl extends JsonRequest {
     }
 
     public void updateData(File file) throws IOException, ExecutionException, InterruptedException {
-        RequestThread requestThread = new RequestThread(GOVDATA);
-        ExecutorService executor = Executors.newFixedThreadPool(1);
-        Future<JsonObject> future = executor.submit(requestThread);
-        JsonObject result = future.get();
-        executor.shutdown();
-
-        Files.write(result.toString(), file, Charset.forName("UTF-8"));
+        Files.write(requestAPI(GOVDATA).toString(), file, Charset.forName("UTF-8"));
     }
 }

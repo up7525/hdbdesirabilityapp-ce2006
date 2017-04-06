@@ -1,4 +1,5 @@
 package ntu.ce2006.swensens.hdbdesirabilityapp;
+import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.*;
 import android.util.Log;

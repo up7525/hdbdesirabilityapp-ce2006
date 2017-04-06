@@ -1,5 +1,8 @@
 package ntu.ce2006.swensens.hdbdesirabilityapp.search;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.google.gson.JsonArray;
@@ -28,16 +31,24 @@ import ntu.ce2006.swensens.hdbdesirabilityapp.search.result.Flat;
  * Created by trollpc on 27/03/17.
  */
 
-public class FlatManager {
+public class FlatManager extends AsyncTask<Void, Void, List<Flat>> {
 
     // For Logger
     private static final String TAG = "FlatManager";
 
     private Query query;
+
+    private ProgressDialog progressDialog;
+
+    private Activity activity;
+
+    private Exception asyncTaskException;
+
     private List<Flat> flats = new ArrayList<>();
 
-    public FlatManager(Query query) {
+    public FlatManager(Activity activity, Query query) {
         this.query = query;
+        this.activity = activity;
     }
 
     public void setQuery(Query query) {
@@ -190,5 +201,48 @@ public class FlatManager {
     private String makeAddress(JsonObject flatJson) {
         return flatJson.get("block").getAsString() + " " + flatJson.get("street_name").getAsString() + " "
                 + flatJson.get("town").getAsString();
+    }
+
+    /**
+     * Override this method to perform a computation on a background thread. The
+     * specified parameters are the parameters passed to {@link #execute}
+     * by the caller of this task.
+     * <p>
+     * This method can call {@link #publishProgress} to publish updates
+     * on the UI thread.
+     *
+     * @param voids The parameters of the task.
+     * @return A result, defined by the subclass of this task.
+     * @see #onPreExecute()
+     * @see #onPostExecute
+     * @see #publishProgress
+     */
+    @Override
+    protected List<Flat> doInBackground(Void...voids) {
+        try {
+            getFlats();
+        } catch (Exception e) {
+            asyncTaskException = e;
+        }
+        return flats;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        progressDialog = new ProgressDialog(activity);
+        progressDialog.setTitle("Searching");
+        progressDialog.setMessage("Please wait...");
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
+
+    @Override
+    protected void onPostExecute(List<Flat> result) {
+        if (asyncTaskException != null) {
+            Log.e(TAG, "SOME ANNOYING EXCEPTIONS SIGH TRY HANDLING SOMEHOW", asyncTaskException);
+        }
+        ((ResultAsyncCallback) activity).onTaskComplete(result);
+        progressDialog.dismiss();
     }
 }
