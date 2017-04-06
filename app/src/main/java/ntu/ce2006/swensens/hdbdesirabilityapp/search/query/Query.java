@@ -133,7 +133,23 @@ public class Query implements Serializable{
         return id_key;
     }
 
-    public String getDesc(){return desc;}
+    public String getDesc(){
+        // Faith - for ResultsActivity
+        desc = "";
+        if(getLocationFilters().size() > 0)
+            desc = desc + getLocationFilters().get(0) + "...; ";
+        if(getSizeFilters().size() > 0)
+            desc = desc + getSizeFilters().get(0) + "...; ";
+        if(getAmenitiesFilters().size() > 0){
+            for(int u = 0; u < getAmenitiesFilters().size(); u++){
+                if(u != (getAmenitiesFilters().size()-1))
+                    desc = desc + getAmenitiesFilters().get(u) + " + ";
+                else
+                    desc = desc + getAmenitiesFilters().get(u);
+            }
+        }
+        return desc;
+        }
 
     public List<Location> getLocationFilters() {
         return locationFilters;
