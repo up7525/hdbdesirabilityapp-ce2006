@@ -140,6 +140,7 @@ public class Query implements Serializable{
             desc = desc + getLocationFilters().get(0) + "...; ";
         if(getSizeFilters().size() > 0)
             desc = desc + getSizeFilters().get(0) + "...; ";
+        desc = desc + "$" + (getPriceFilters()[0] / 1000) + "k to $" + (getPriceFilters()[1] / 1000) + "k; ";
         if(getAmenitiesFilters().size() > 0){
             for(int u = 0; u < getAmenitiesFilters().size(); u++){
                 if(u != (getAmenitiesFilters().size()-1))
@@ -149,7 +150,7 @@ public class Query implements Serializable{
             }
         }
         return desc;
-        }
+    }
 
     public List<Location> getLocationFilters() {
         return locationFilters;
