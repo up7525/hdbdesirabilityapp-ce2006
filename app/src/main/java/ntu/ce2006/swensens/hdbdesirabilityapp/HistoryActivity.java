@@ -61,7 +61,7 @@ public class HistoryActivity extends AppCompatActivity {
             five.setVisibility(View.INVISIBLE);
 
             Q1 = listOfQueries.get(0);
-            one.setText(convertQueryToDescription(Q1));
+            one.setText(Q1.getDesc());
         }
         else if(queryCount == 2){
             three.setVisibility(View.INVISIBLE);
@@ -70,8 +70,8 @@ public class HistoryActivity extends AppCompatActivity {
 
             Q1 = listOfQueries.get(0);
             Q2 = listOfQueries.get(1);
-            one.setText(convertQueryToDescription(Q1));
-            two.setText(convertQueryToDescription(Q2));
+            one.setText(Q1.getDesc());
+            two.setText(Q2.getDesc());
 
         }
         else if(queryCount == 3){
@@ -81,9 +81,9 @@ public class HistoryActivity extends AppCompatActivity {
             Q1 = listOfQueries.get(0);
             Q2 = listOfQueries.get(1);
             Q3 = listOfQueries.get(2);
-            one.setText(convertQueryToDescription(Q1));
-            two.setText(convertQueryToDescription(Q2));
-            three.setText(convertQueryToDescription(Q3));
+            one.setText(Q1.getDesc());
+            two.setText(Q2.getDesc());
+            three.setText(Q3.getDesc());
         }
         else if(queryCount == 4){
             five.setVisibility(View.INVISIBLE);
@@ -92,10 +92,10 @@ public class HistoryActivity extends AppCompatActivity {
             Q2 = listOfQueries.get(1);
             Q3 = listOfQueries.get(2);
             Q4 = listOfQueries.get(3);
-            one.setText(convertQueryToDescription(Q1));
-            two.setText(convertQueryToDescription(Q2));
-            three.setText(convertQueryToDescription(Q3));
-            four.setText(convertQueryToDescription(Q4));
+            one.setText(Q1.getDesc());
+            two.setText(Q2.getDesc());
+            three.setText(Q3.getDesc());
+            four.setText(Q4.getDesc());
         }
         else{ // 5 or more queries BUT display only 5
             Q1 = listOfQueries.get(0);
@@ -103,30 +103,13 @@ public class HistoryActivity extends AppCompatActivity {
             Q3 = listOfQueries.get(2);
             Q4 = listOfQueries.get(3);
             Q5 = listOfQueries.get(4);
-            one.setText(convertQueryToDescription(Q1));
-            two.setText(convertQueryToDescription(Q2));
-            three.setText(convertQueryToDescription(Q3));
-            four.setText(convertQueryToDescription(Q4));
-            five.setText(convertQueryToDescription(Q5));
+            one.setText(Q1.getDesc());
+            two.setText(Q2.getDesc());
+            three.setText(Q3.getDesc());
+            four.setText(Q4.getDesc());
+            five.setText(Q5.getDesc());
         }
         init();
-    }
-
-    public String convertQueryToDescription(Query userQuery){
-        String displayString = "";
-        if(userQuery.getLocationFilters().size() > 0)
-            displayString = displayString + userQuery.getLocationFilters().get(0) + "...; ";
-        if(userQuery.getSizeFilters().size() > 0)
-            displayString = displayString + userQuery.getSizeFilters().get(0) + "...; ";
-        if(userQuery.getAmenitiesFilters().size() > 0){
-            for(int u = 0; u < userQuery.getAmenitiesFilters().size(); u++){
-                if(u != (userQuery.getAmenitiesFilters().size()-1))
-                    displayString = displayString + userQuery.getAmenitiesFilters().get(u) + " + ";
-                else
-                    displayString = displayString + userQuery.getAmenitiesFilters().get(u);
-            }
-        }
-        return displayString;
     }
 
     public void init(){
