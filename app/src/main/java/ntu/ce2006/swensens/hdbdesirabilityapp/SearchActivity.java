@@ -76,12 +76,9 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                showAlert2(v);
+                showAlertQuick(v, "                        Loading.....");
 
-                if(checkIfUserInput())
-                    userQuery = createUserQuery();
-                else
-                    userQuery = createDefaultQuery();
+                userQuery = createUserQuery();
 
                 FlatManager flatManager = new FlatManager(userQuery);
                 List<Flat> listOfFlats;
@@ -104,7 +101,7 @@ public class SearchActivity extends AppCompatActivity {
                         startActivity(intentFlat);
                     }
                     else
-                        noResultsFound(v);
+                        showAlert(v, "No results found with your filters!");
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -120,48 +117,35 @@ public class SearchActivity extends AppCompatActivity {
         InfoButtonSmall.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
-                showAlert(v);
+                String displayString;
+                String alert1 = "Set the following filters:";
+                String alert2 = "Location: Set town(s).";
+                String alert3 = "Size: Select the room type.";
+                String alert4 = "Price: Set the minimum and maximum prices";
+                String alert5 = "Amenities: Choose nearby places of interest";
+                displayString = alert1+"\n"+"\n"+"\n"+
+                        alert2+"\n"+"\n"+
+                        alert3+"\n"+"\n"+
+                        alert4+"\n"+"\n"+
+                        alert5;
+                showAlert(v, displayString);
             }
         });
         ClearButtonSmall = (ImageButton) findViewById(R.id.ClearButtonSmall);
         ClearButtonSmall.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
-                String s = "Cleared all filters.";
-                Toast.makeText(SearchActivity.this,s,Toast.LENGTH_LONG).show();
+                Toast.makeText(SearchActivity.this,"Cleared all filters.",Toast.LENGTH_LONG).show();
                 SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.clear();
-                editor.commit();
+                editor.clear().commit();
             }
         });
     }
-    public void showAlert2(View v) {
-        AlertDialog.Builder info = new AlertDialog.Builder(this);
-        String alert1 = "                        Loading.....";
-        info.setMessage(alert1).create();
-        info.show();
-    }
-    public void noResultsFound(View v){
-        AlertDialog.Builder info = new AlertDialog.Builder(this);
-        info.setMessage("No results were found with your filters!").create();
-        info.show();
-    }
 
-    public void showAlert(View v) {
+    public void showAlert(View v, String displayString){
         AlertDialog.Builder info = new AlertDialog.Builder(this);
-        String alert1 = "Set the following filters:";
-        String alert2 = "Location: Set town(s).";
-        String alert3 = "Size: Select the room type.";
-        String alert4 = "Price: Set the minimum and maximum prices";
-        String alert5 = "Amenities: Choose nearby places of interest";
-        info.setMessage(alert1+"\n"+"\n"+"\n"+
-                alert2+"\n"+"\n"+
-                alert3+"\n"+"\n"+
-                alert4+"\n"+"\n"+
-                alert5
-        ).create();
-        info.show();
+        info.setMessage(displayString).create().show();
     }
 
     public void showAlertQuick(View v, String stringToDisplay){
@@ -228,24 +212,12 @@ public class SearchActivity extends AppCompatActivity {
 
 
     private Query createUserQuery(){
-
-        // load filter values
-        ArrayList<Location> locationFilters = convertLocs();
-        ArrayList<Size> sizeFilters = convertSize();
-        int[] priceFilters = convertPrice();
-        ArrayList<Amenities> amenitiesFilters = convertAmenities();
-
-        Query query = new Query.Builder().locations(locationFilters).size(sizeFilters).price(priceFilters).amenities(amenitiesFilters).build();
+        Query query;
+        if(checkIfUserInput())
+            query = new Query.Builder().locations(convertLocs()).size(convertSize()).price(convertPrice()).amenities(convertAmenities()).build();
+        else
+            query = createDefaultQuery();
         return query;
-    }
-
-    private void loadPins(){
-        // TODO Pass pins to database, not through user query
-        // load pins
-        String Pin1Input = loadString("Pin1Input");
-        String Pin2Input = loadString("Pin2Input");
-        String Pin3Input = loadString("Pin3Input");
-        return;
     }
 
     private ArrayList<Location> convertLocs(){
@@ -338,25 +310,16 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private ArrayList<Size> convertSize(){
-
-        // load size
-        boolean bool2 = load("TwoRoomCheckBox");
-        boolean bool3 = load("ThreeRoomCheckBox");
-        boolean bool4 = load("FourRoomCheckBox");
-        boolean bool5 = load("FiveRoomCheckBox");
-        boolean boolE = load("ExecutiveCheckBox");
-        boolean[] sizesBoolean = {bool2, bool3, bool4, bool5, boolE};
-
         ArrayList<Size> sizeList = new ArrayList<>();
-        if(sizesBoolean[0])
+        if(load("TwoRoomCheckBox"))
             sizeList.add(Size.ROOM_2);
-        if(sizesBoolean[1])
+        if(load("ThreeRoomCheckBox"))
             sizeList.add(Size.ROOM_3);
-        if(sizesBoolean[2])
+        if(load("FourRoomCheckBox"))
             sizeList.add(Size.ROOM_4);
-        if(sizesBoolean[3])
+        if(load("FiveRoomCheckBox"))
             sizeList.add(Size.ROOM_5);
-        if(sizesBoolean[4])
+        if(load("ExecutiveCheckBox"))
             sizeList.add(Size.EXECUTIVE);
         return sizeList;
     }
@@ -390,30 +353,22 @@ public class SearchActivity extends AppCompatActivity {
             priceArray[0] = Integer.parseInt(minPrice);
             priceArray[1] = Integer.parseInt(maxPrice);
         }
-
         return priceArray;
     }
 
     private ArrayList<Amenities> convertAmenities(){
-        // load amenities
-        boolean Mall = load("checkBoxMall");
-        boolean MRT = load("checkBoxClinic");
-        boolean Clinic = load("checkBoxClinic");
-        boolean[] amenitiesBoolean = {Mall, MRT, Clinic};
-
         ArrayList<Amenities> amenitiesList = new ArrayList<>();
-        if(amenitiesBoolean[0])
+        if(load("checkBoxMall"))
             amenitiesList.add(Amenities.MALL);
-        if(amenitiesBoolean[1])
+        if(load("checkBoxClinic"))
             amenitiesList.add(Amenities.MRT);
-        if(amenitiesBoolean[2])
+        if(load("checkBoxClinic"))
             amenitiesList.add(Amenities.CLINIC);
         return amenitiesList;
     }
 
     private boolean checkIfUserInput(){
-        // return TRUE if at least one location chosen.
-
+        // return TRUE if user has inputted something / at least one location chosen.
         boolean AngMoKio = load("AngMoKio");
         boolean Bedok = load("Bedok");
         boolean Bishan = load("Bishan");
@@ -440,22 +395,8 @@ public class SearchActivity extends AppCompatActivity {
         boolean ToaPayoh = load("ToaPayoh");
         boolean Woodlands = load("Woodlands");
         boolean Yishun = load("Yishun");
-        boolean bool2 = load("TwoRoomCheckBox");
-        boolean bool3 = load("ThreeRoomCheckBox");
-        boolean bool4 = load("FourRoomCheckBox");
-        boolean bool5 = load("FiveRoomCheckBox");
-        boolean boolE = load("ExecutiveCheckBox");
-        boolean Mall = load("checkBoxMall");
-        boolean MRT = load("checkBoxClinic");
-        boolean Clinic = load("checkBoxClinic");
-        String minPrice = loadString("MinPriceInput");
-        String maxPrice = loadString("MaxPriceInput");
-        boolean minIsNull = minPrice.equalsIgnoreCase("NULLSTRING") | minPrice.equalsIgnoreCase("0") | minPrice.equalsIgnoreCase("");
-        boolean maxIsNull = maxPrice.equalsIgnoreCase("NULLSTRING") | maxPrice.equalsIgnoreCase("0") | maxPrice.equalsIgnoreCase("");
 
-        // no locations chosen
         return AngMoKio | Bedok | Bishan | BukitBatok | BukitMerah | BukitPanjang | BukitTimah | CentralArea | ChoaChuKang | Clementi | Geylang | Hougang | JurongEast | JurongWest | KallangWhampoa | MarineParade | PasirRis | Punggol | Queenstown | Sembawang | Sengkang | Serangoon | Tampines | ToaPayoh | Woodlands | Yishun;
-
     }
 
     private boolean load(String name) {
@@ -467,25 +408,16 @@ public class SearchActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
         return sharedPreferences.getString(name, "");
     }
-
-
     private void saveBoolean(boolean boolValue, String name) {
         SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(name, boolValue);
         editor.commit();
     }
-
     private void saveString(String string, String name){
         SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(name, string);
         editor.commit();
-    }
-
-
-    public void onDisplay(View v) {
-        String s = "Cleared";
-        Toast.makeText(SearchActivity.this,s,Toast.LENGTH_LONG).show();
     }
 }

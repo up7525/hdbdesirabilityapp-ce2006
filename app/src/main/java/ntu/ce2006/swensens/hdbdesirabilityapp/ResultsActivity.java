@@ -22,6 +22,7 @@ public class ResultsActivity extends AppCompatActivity {
     public Query userQuery;
     public int userQueryCount;
     public ArrayList<String> listOfFlats;
+    public boolean isSaved;
 
     @Override
     protected void onCreate (Bundle savedInstanceState){
@@ -30,17 +31,13 @@ public class ResultsActivity extends AppCompatActivity {
         setTitle("Results");
         lv = (ListView) findViewById(R.id.List);
 
-
-        // Retrieve Flat list
         Intent i = getIntent();
         listOfFlats = i.getStringArrayListExtra("java.util.List<java.lang.String>");
         userQuery = (Query) i.getSerializableExtra("ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query");
 
-        if(listOfFlats != null){
-            if(listOfFlats.size() > 0){
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listOfFlats);
-                lv.setAdapter(arrayAdapter);
-            }
+        if(listOfFlats != null && listOfFlats.size() > 0){
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listOfFlats);
+            lv.setAdapter(arrayAdapter);
         }
         init();
     }
@@ -51,19 +48,27 @@ public class ResultsActivity extends AppCompatActivity {
         saveQueryButton.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
-                if(database.getQueryCount() > 4){ // overwrite oldest query
-                    List<Query> listOfQueries = database.getAllQueries();
-                    database.deleteAllQuery();
-                    listOfQueries.remove(0);
-                    listOfQueries.add(userQuery);
-                    for(int i = 0; i < listOfQueries.size(); i++)
-                        database.addQuery(i,listOfQueries.get(i));
+
+                // TODO for some reason getAllQueries.contains(userQuery) doesn't work as it should
+                if(!(database.getAllQueries().contains(userQuery))){ // query doesn't exist in database yet
+                    if(database.getQueryCount() >= 5){ // overwrite oldest query
+                        List<Query> listOfQueries = database.getAllQueries();
+                        database.deleteAllQuery();      // database cleared; to be written to later
+                        listOfQueries.remove(0);        // remove oldest query
+                        listOfQueries.add(userQuery);   // append current entry to end (newest)
+                        for(int i = 0; i < listOfQueries.size(); i++)   // re-add everything to database
+                            database.addQuery(i,listOfQueries.get(i));
+                    }
+                    else{ // fewer than 5 queries
+                        database.addQuery(database.getQueryCount(),userQuery);
+                    }
+                    isSaved = true;
+                    Toast.makeText(ResultsActivity.this,"Query saved.",Toast.LENGTH_LONG).show();
                 }
                 else{
-                    database.addQuery(database.getQueryCount(),userQuery);
+                    saveQueryButton.setVisibility(View.INVISIBLE);
+                    Toast.makeText(ResultsActivity.this,"Query already exists in database.",Toast.LENGTH_LONG).show();
                 }
-                Toast.makeText(ResultsActivity.this,"Query saved.",Toast.LENGTH_LONG).show();
-                // TODO save query to database
             }
         });
     }

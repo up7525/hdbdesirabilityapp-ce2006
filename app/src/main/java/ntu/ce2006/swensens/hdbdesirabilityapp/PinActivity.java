@@ -38,21 +38,21 @@ public class PinActivity extends AppCompatActivity {
         InfoButtonSmall.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
-                showAlert(v);
+                String displayString;
+                String alert1 = "Enter postal code of desired locations.";
+                String alert2 = "Application will calculate the distance between the pinned locations and the flats searched.";
+                displayString = alert1+"\n"+"\n"+"\n"+alert2;
+                showAlert(v, displayString);
             }
         });
 
     }
-    public void showAlert(View v) {
-        AlertDialog.Builder info = new AlertDialog.Builder(this);
-        String alert1 = "Enter postal code of desired locations.";
-        String alert2 = "Application will calculate the distance between the pinned locations and the flats searched.";
-        info.setMessage(alert1+"\n"+"\n"+"\n"+
-                alert2
-        ).create();
-        info.show();
 
+    public void showAlert(View v, String displayString){
+        AlertDialog.Builder info = new AlertDialog.Builder(this);
+        info.setMessage(displayString).create().show();
     }
+
     @Override
     public void onPause() {
         super.onPause();

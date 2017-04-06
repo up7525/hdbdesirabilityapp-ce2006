@@ -176,7 +176,7 @@ public class HistoryActivity extends AppCompatActivity {
                             startActivity(intentFlat);
                         }
                         else
-                            showAlertQuick(v, "No results found using selected filters.");
+                            showAlert(v, "No results found using selected filters.");
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -187,7 +187,7 @@ public class HistoryActivity extends AppCompatActivity {
                     }
                 }
                 else{
-                    showAlertQuick(v, "Please choose a query!");
+                    showAlert(v, "Please choose a query!");
                 }
             }
         });
@@ -195,7 +195,7 @@ public class HistoryActivity extends AppCompatActivity {
         InfoButtonSmall.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
-                showAlertQuick(v, "Previously saved queries shown here. Select a query and then press the search icon to generate a new search.");
+                showAlert(v, "Previously saved queries shown here. Select a query and then press the search icon to generate a new search.");
             }
         });
         ClearButtonSmall = (ImageButton) findViewById(R.id.ClearButtonSmall);
@@ -210,9 +210,11 @@ public class HistoryActivity extends AppCompatActivity {
                     four.setVisibility(View.INVISIBLE);
                     five.setVisibility(View.INVISIBLE);
                     Toast.makeText(HistoryActivity.this,"Cleared all saved queries.",Toast.LENGTH_LONG).show();
+                    Intent returnToMain = new Intent(HistoryActivity.this, MainActivity.class);
+                    startActivity(returnToMain);
                 }
                 else{
-                    showAlertQuick(v, "No saved queries!");
+                    showAlert(v, "No saved queries!");
                 }
             }
         });
@@ -234,7 +236,7 @@ public class HistoryActivity extends AppCompatActivity {
         super.onResume();
     }
 
-    public void showAlertQuick(View v, String displayString){
+    public void showAlert(View v, String displayString){
         AlertDialog.Builder info = new AlertDialog.Builder(this);
         info.setMessage(displayString).create();
         info.show();
