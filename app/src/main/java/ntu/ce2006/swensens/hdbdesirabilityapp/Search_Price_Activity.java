@@ -20,15 +20,8 @@ public class Search_Price_Activity extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-
-        // item = text field
-        String minPriceString = ((EditText) findViewById(R.id.MinPriceInput)).getText().toString();
-        minPriceString = sanitizePrice(minPriceString);
-
-        // item = text field
-        String maxPriceString = ((EditText) findViewById(R.id.MaxPriceInput)).getText().toString();
-        maxPriceString = sanitizePrice(maxPriceString);
-
+        String minPriceString = sanitizePrice(((EditText) findViewById(R.id.MinPriceInput)).getText().toString());
+        String maxPriceString = sanitizePrice(((EditText) findViewById(R.id.MaxPriceInput)).getText().toString());
         savePrices(maxPriceString, minPriceString);
     }
 
@@ -96,25 +89,15 @@ public class Search_Price_Activity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+        restoreText((EditText) findViewById(R.id.MinPriceInput), "MinPriceInput");
+        restoreText((EditText) findViewById(R.id.MaxPriceInput), "MaxPriceInput");
+    }
 
-        EditText tempEditText;
-        String savedString;
-
-        // item = text field with number input
-        tempEditText = (EditText) findViewById(R.id.MinPriceInput);
-        savedString = load("MinPriceInput");
-        if(!savedString.equalsIgnoreCase("NULLSTRING"))
-            tempEditText.setText(savedString);
+    private void restoreText(EditText textField, String varName){
+        if(!(load(varName)).equalsIgnoreCase("NULLSTRING"))
+            textField.setText(load(varName));
         else
-            tempEditText.setText("");
-
-        // item = text field with number input
-        tempEditText = (EditText) findViewById(R.id.MaxPriceInput);
-        savedString = load("MaxPriceInput");
-        if(!savedString.equalsIgnoreCase("NULLSTRING"))
-            tempEditText.setText(savedString);
-        else
-            tempEditText.setText("");
+            textField.setText("");
     }
 
     private void save(String itemName, String itemString) {
