@@ -127,34 +127,11 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
 
     private boolean checkIfUserInput() {
         // return TRUE if user has inputted something / at least one location chosen.
-        boolean AngMoKio = load("AngMoKio");
-        boolean Bedok = load("Bedok");
-        boolean Bishan = load("Bishan");
-        boolean BukitBatok = load("BukitBatok");
-        boolean BukitMerah = load("BukitMerah");
-        boolean BukitPanjang = load("BukitPanjang");
-        boolean BukitTimah = load("BukitTimah");
-        boolean CentralArea = load("CentralArea");
-        boolean ChoaChuKang = load("ChoaChuKang");
-        boolean Clementi = load("Clementi");
-        boolean Geylang = load("Geylang");
-        boolean Hougang = load("Hougang");
-        boolean JurongEast = load("JurongEast");
-        boolean JurongWest = load("JurongWest");
-        boolean KallangWhampoa = load("KallangWhampoa");
-        boolean MarineParade = load("MarineParade");
-        boolean PasirRis = load("PasirRis");
-        boolean Punggol = load("Punggol");
-        boolean Queenstown = load("Queenstown");
-        boolean Sembawang = load("Sembawang");
-        boolean Sengkang = load("Sengkang");
-        boolean Serangoon = load("Serangoon");
-        boolean Tampines = load("Tampines");
-        boolean ToaPayoh = load("ToaPayoh");
-        boolean Woodlands = load("Woodlands");
-        boolean Yishun = load("Yishun");
-
-        return AngMoKio | Bedok | Bishan | BukitBatok | BukitMerah | BukitPanjang | BukitTimah | CentralArea | ChoaChuKang | Clementi | Geylang | Hougang | JurongEast | JurongWest | KallangWhampoa | MarineParade | PasirRis | Punggol | Queenstown | Sembawang | Sengkang | Serangoon | Tampines | ToaPayoh | Woodlands | Yishun;
+        return (load("AngMoKio") | load("Bedok") | load("Bishan") | load("BukitBatok") | load("BukitMerah") | load("BukitPanjang") |
+                load("BukitTimah") | load("CentralArea") | load("ChoaChuKang") | load("Clementi") | load("Geylang") | load("Hougang") |
+                load("JurongEast") | load("JurongWest") | load("KallangWhampoa") | load("MarineParade") | load("PasirRis") | load("Punggol") |
+                load("Queenstown") | load("Sembawang") | load("Sengkang") | load("Serangoon") | load("Tampines") | load("ToaPayoh") |
+                load("Woodlands") | load("Yishun"));
     }
 
     public Query createDefaultQuery() {
