@@ -214,88 +214,59 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
 
     private ArrayList<Location> convertLocs() {
 
-        // load locations
-        boolean AngMoKio = load("AngMoKio");
-        boolean Bedok = load("Bedok");
-        boolean Bishan = load("Bishan");
-        boolean BukitBatok = load("BukitBatok");
-        boolean BukitMerah = load("BukitMerah");
-        boolean BukitPanjang = load("BukitPanjang");
-        boolean BukitTimah = load("BukitTimah");
-        boolean CentralArea = load("CentralArea");
-        boolean ChoaChuKang = load("ChoaChuKang");
-        boolean Clementi = load("Clementi");
-        boolean Geylang = load("Geylang");
-        boolean Hougang = load("Hougang");
-        boolean JurongEast = load("JurongEast");
-        boolean JurongWest = load("JurongWest");
-        boolean KallangWhampoa = load("KallangWhampoa");
-        boolean MarineParade = load("MarineParade");
-        boolean PasirRis = load("PasirRis");
-        boolean Punggol = load("Punggol");
-        boolean Queenstown = load("Queenstown");
-        boolean Sembawang = load("Sembawang");
-        boolean Sengkang = load("Sengkang");
-        boolean Serangoon = load("Serangoon");
-        boolean Tampines = load("Tampines");
-        boolean ToaPayoh = load("ToaPayoh");
-        boolean Woodlands = load("Woodlands");
-        boolean Yishun = load("Yishun");
-        boolean[] locationsBoolean = {AngMoKio, Bedok, Bishan, BukitBatok, BukitMerah, BukitPanjang, BukitTimah, CentralArea, ChoaChuKang, Clementi, Geylang, Hougang, JurongEast, JurongWest, KallangWhampoa, MarineParade, PasirRis, Punggol, Queenstown, Sembawang, Sengkang, Serangoon, Tampines, ToaPayoh, Woodlands, Yishun};
-
         ArrayList<Location> locationsList = new ArrayList<>();
 
-        if (locationsBoolean[0])    //	AngMoKio
+        if(load("AngMoKio")) // AngMoKio
             locationsList.add(Location.ANG_MO_KIO);
-        if (locationsBoolean[1])    //	Bedok
+        if(load("Bedok")) // Bedok
             locationsList.add(Location.BEDOK);
-        if (locationsBoolean[2])    //	Bishan
+        if(load("Bishan")) // Bishan
             locationsList.add(Location.BISHAN);
-        if (locationsBoolean[3])    //	BukitBatok
+        if(load("BukitBatok")) // BukitBatok
             locationsList.add(Location.BUKIT_BATOK);
-        if (locationsBoolean[4])    //	BukitMerah
+        if(load("BukitMerah")) // BukitMerah
             locationsList.add(Location.BUKIT_MERAH);
-        if (locationsBoolean[5])    //	BukitPanjang
+        if(load("BukitPanjang")) // BukitPanjang
             locationsList.add(Location.BUKIT_PANJANG);
-        if (locationsBoolean[6])    //	BukitTimah
+        if(load("BukitTimah")) // BukitTimah
             locationsList.add(Location.BUKIT_TIMAH);
-        if (locationsBoolean[7])    //	CentralArea
+        if(load("CentralArea")) // CentralArea
             locationsList.add(Location.CENTRAL_AREA);
-        if (locationsBoolean[8])    //	ChoaChuKang
+        if(load("ChoaChuKang")) // ChoaChuKang
             locationsList.add(Location.CHUA_CHU_KANG);
-        if (locationsBoolean[9])    //	Clementi
+        if(load("Clementi")) // Clementi
             locationsList.add(Location.CLEMENTI);
-        if (locationsBoolean[10])    //	Geylang
+        if(load("Geylang")) // Geylang
             locationsList.add(Location.GEYLANG);
-        if (locationsBoolean[11])    //	Hougang
+        if(load("Hougang")) // Hougang
             locationsList.add(Location.HOUGANG);
-        if (locationsBoolean[12])    //	JurongEast
+        if(load("JurongEast")) // JurongEast
             locationsList.add(Location.JURONG_EAST);
-        if (locationsBoolean[13])    //	JurongWest
+        if(load("JurongWest")) // JurongWest
             locationsList.add(Location.JURONG_WEST);
-        if (locationsBoolean[14])    //	KallangWhampoa
+        if(load("KallangWhampoa")) // KallangWhampoa
             locationsList.add(Location.KALLANG_WHAMPOA);
-        if (locationsBoolean[15])    //	MarineParade
+        if(load("MarineParade")) // MarineParade
             locationsList.add(Location.MARINE_PARADE);
-        if (locationsBoolean[16])    //	PasirRis
+        if(load("PasirRis")) // PasirRis
             locationsList.add(Location.PASIR_RIS);
-        if (locationsBoolean[17])    //	Punggol
+        if(load("Punggol")) // Punggol
             locationsList.add(Location.PUNGGOL);
-        if (locationsBoolean[18])    //	Queenstown
+        if(load("Queenstown")) // Queenstown
             locationsList.add(Location.QUEENSTOWN);
-        if (locationsBoolean[19])    //	Sembawang
+        if(load("Sembawang")) // Sembawang
             locationsList.add(Location.SEMBAWANG);
-        if (locationsBoolean[20])    //	Sengkang
+        if(load("Sengkang")) // Sengkang
             locationsList.add(Location.SENGKANG);
-        if (locationsBoolean[21])    //	Serangoon
+        if(load("Serangoon")) // Serangoon
             locationsList.add(Location.SERANGOON);
-        if (locationsBoolean[22])    //	Tampines
+        if(load("Tampines")) // Tampines
             locationsList.add(Location.TAMPINES);
-        if (locationsBoolean[23])    //	ToaPayoh
+        if(load("ToaPayoh")) // ToaPayoh
             locationsList.add(Location.TOA_PAYOH);
-        if (locationsBoolean[24])    //	Woodlands
+        if(load("Woodlands")) // Woodlands
             locationsList.add(Location.WOODLANDS);
-        if (locationsBoolean[25])    //	Yishun
+        if(load("Yishun")) // Yishun
             locationsList.add(Location.YISHUN);
 
         return locationsList;
