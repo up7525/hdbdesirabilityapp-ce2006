@@ -19,48 +19,28 @@ public class Search_Size_Activity extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-        boolean TwoRoomCheckBox = ((CheckBox) findViewById(R.id.TwoRoomCheckBox)).isChecked();
-        save(TwoRoomCheckBox, "TwoRoomCheckBox");
-        boolean ThreeRoomCheckBox = ((CheckBox) findViewById(R.id.ThreeRoomCheckBox)).isChecked();
-        save(ThreeRoomCheckBox, "ThreeRoomCheckBox");
-        boolean FourRoomCheckBox = ((CheckBox) findViewById(R.id.FourRoomCheckBox)).isChecked();
-        save(FourRoomCheckBox, "FourRoomCheckBox");
-        boolean FiveRoomCheckBox = ((CheckBox) findViewById(R.id.FiveRoomCheckBox)).isChecked();
-        save(FiveRoomCheckBox, "FiveRoomCheckBox");
-        boolean ExecutiveCheckBox = ((CheckBox) findViewById(R.id.ExecutiveCheckBox)).isChecked();
-        save(ExecutiveCheckBox, "ExecutiveCheckBox");
+        save(((CheckBox) findViewById(R.id.TwoRoomCheckBox)).isChecked(), "TwoRoomCheckBox");
+        save(((CheckBox) findViewById(R.id.ThreeRoomCheckBox)).isChecked(), "ThreeRoomCheckBox");
+        save(((CheckBox) findViewById(R.id.FourRoomCheckBox)).isChecked(), "FourRoomCheckBox");
+        save(((CheckBox) findViewById(R.id.FiveRoomCheckBox)).isChecked(), "FiveRoomCheckBox");
+        save(((CheckBox) findViewById(R.id.ExecutiveCheckBox)).isChecked(), "ExecutiveCheckBox");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
-        CheckBox checkboxTwoRoomCheckBox = (CheckBox) findViewById(R.id.TwoRoomCheckBox);
-        boolean booleanTwoRoomCheckBox = checkboxTwoRoomCheckBox.isChecked();
-        checkboxTwoRoomCheckBox.setChecked(load("TwoRoomCheckBox"));
-        CheckBox checkboxThreeRoomCheckBox = (CheckBox) findViewById(R.id.ThreeRoomCheckBox);
-        boolean booleanThreeRoomCheckBox = checkboxThreeRoomCheckBox.isChecked();
-        checkboxThreeRoomCheckBox.setChecked(load("ThreeRoomCheckBox"));
-        CheckBox checkboxFourRoomCheckBox = (CheckBox) findViewById(R.id.FourRoomCheckBox);
-        boolean booleanFourRoomCheckBox = checkboxFourRoomCheckBox.isChecked();
-        checkboxFourRoomCheckBox.setChecked(load("FourRoomCheckBox"));
-        CheckBox checkboxFiveRoomCheckBox = (CheckBox) findViewById(R.id.FiveRoomCheckBox);
-        boolean booleanFiveRoomCheckBox = checkboxFiveRoomCheckBox.isChecked();
-        checkboxFiveRoomCheckBox.setChecked(load("FiveRoomCheckBox"));
-        CheckBox checkboxExecutiveCheckBox = (CheckBox) findViewById(R.id.ExecutiveCheckBox);
-        boolean booleanExecutiveCheckBox = checkboxExecutiveCheckBox.isChecked();
-        checkboxExecutiveCheckBox.setChecked(load("ExecutiveCheckBox"));
+        ((CheckBox) findViewById(R.id.TwoRoomCheckBox)).setChecked(load("TwoRoomCheckBox"));
+        ((CheckBox) findViewById(R.id.ThreeRoomCheckBox)).setChecked(load("ThreeRoomCheckBox"));
+        ((CheckBox) findViewById(R.id.FourRoomCheckBox)).setChecked(load("FourRoomCheckBox"));
+        ((CheckBox) findViewById(R.id.FiveRoomCheckBox)).setChecked(load("FiveRoomCheckBox"));
+        ((CheckBox) findViewById(R.id.ExecutiveCheckBox)).setChecked(load("ExecutiveCheckBox"));
     }
 
     private void save(boolean ch, String name) {
-        SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(name, ch);
-        editor.commit();
+        getSharedPreferences("x",Context.MODE_PRIVATE).edit().putBoolean(name,ch).commit();
     }
 
     private boolean load(String name) {
-        SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
-        return sharedPreferences.getBoolean(name, false);
+        return getSharedPreferences("x",Context.MODE_PRIVATE).getBoolean(name, false);
     }
 }

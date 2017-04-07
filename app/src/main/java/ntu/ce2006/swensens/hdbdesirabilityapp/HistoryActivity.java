@@ -58,6 +58,7 @@ public class HistoryActivity extends AppCompatActivity implements ResultAsyncCal
         five = (RadioButton) findViewById(R.id.History5);
 
         // set visibilities of radiobuttons depending on how many queries there are
+
         if (queryCount == 0) {
             one.setVisibility(View.INVISIBLE);
             two.setVisibility(View.INVISIBLE);
@@ -206,8 +207,6 @@ public class HistoryActivity extends AppCompatActivity implements ResultAsyncCal
     public void onTaskComplete(List<Flat> result) {
         List<Flat> listOfFlats;
         ArrayList<String> listOfFlatsString = new ArrayList<String>();
-
-
         listOfFlats = result;
         if (listOfFlats != null)
             if (listOfFlats.size() > 0) {
@@ -219,7 +218,7 @@ public class HistoryActivity extends AppCompatActivity implements ResultAsyncCal
         if (listOfFlatsString.size() > 0) {
             Intent intentFlat = new Intent(HistoryActivity.this, ResultsActivity.class);
             intentFlat.putStringArrayListExtra("java.util.List<java.lang.String>", listOfFlatsString);
-            intentFlat.putExtra("ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query", (Serializable) userQuery);
+            intentFlat.putExtra("ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query", userQuery);
             startActivity(intentFlat);
         } else {
             showAlert(findViewById(android.R.id.content), "No results found using selected filters.");

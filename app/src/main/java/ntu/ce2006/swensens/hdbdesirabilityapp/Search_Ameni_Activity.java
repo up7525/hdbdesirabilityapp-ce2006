@@ -20,42 +20,24 @@ public class Search_Ameni_Activity extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-        boolean Mall = ((CheckBox) findViewById(R.id.checkBoxMall)).isChecked();
-        save(Mall, "checkBoxMall");
-
-        boolean MRT = ((CheckBox) findViewById(R.id.checkBoxMRT)).isChecked();
-        save(MRT, "checkBoxMRT");
-
-        boolean Clinic = ((CheckBox) findViewById(R.id.checkBoxClinic)).isChecked();
-        save(Clinic, "checkBoxClinic");
+        save(((CheckBox) findViewById(R.id.checkBoxMall)).isChecked(), "checkBoxMall");
+        save(((CheckBox) findViewById(R.id.checkBoxMRT)).isChecked(), "checkBoxMRT");
+        save(((CheckBox) findViewById(R.id.checkBoxClinic)).isChecked(), "checkBoxClinic");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
-        CheckBox checkBoxMall2 = (CheckBox) findViewById(R.id.checkBoxMall);
-        boolean Mall = checkBoxMall2.isChecked();
-        checkBoxMall2.setChecked(load("checkBoxMall"));
-
-        CheckBox checkBoxMRT2 = (CheckBox) findViewById(R.id.checkBoxMRT);
-        boolean MRT = checkBoxMRT2.isChecked();
-        checkBoxMRT2.setChecked(load("checkBoxMRT"));
-
-        CheckBox checkBoxClinic2 = (CheckBox) findViewById(R.id.checkBoxClinic);
-        boolean Clinic = checkBoxClinic2.isChecked();
-        checkBoxClinic2.setChecked(load("checkBoxClinic"));
+        ((CheckBox) findViewById(R.id.checkBoxMall)).setChecked(load("checkBoxMall"));
+        ((CheckBox) findViewById(R.id.checkBoxMRT)).setChecked(load("checkBoxMRT"));
+        ((CheckBox) findViewById(R.id.checkBoxClinic)).setChecked(load("checkBoxClinic"));
     }
 
     private void save(boolean ch, String name) {
-        SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(name, ch);
-        editor.commit();
+        getSharedPreferences("x",Context.MODE_PRIVATE).edit().putBoolean(name, ch).commit();
     }
 
     private boolean load(String name) {
-        SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
-        return sharedPreferences.getBoolean(name, false);
+        return getSharedPreferences("x",Context.MODE_PRIVATE).getBoolean(name,false);
     }
 }

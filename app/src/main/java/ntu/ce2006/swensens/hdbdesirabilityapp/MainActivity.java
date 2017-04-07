@@ -42,15 +42,7 @@ public class MainActivity extends AppCompatActivity {
         searchMenuButton.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
-
-                // Code to be added in SENDING class, under button press call
-                // When clicking button, make a new intent
                 Intent makeQuery = new Intent(MainActivity.this,SearchActivity.class);
-                int a = 3;
-
-                // intent.putExtra("<object package name>.<object name>", <actual object>);
-                // putExtra / putSerializableExtra depending on object type
-                makeQuery.putExtra("java.lang.Integer.integerObject", a);
                 startActivity(makeQuery);
             }
         });

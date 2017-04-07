@@ -107,9 +107,7 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
             @Override
             public void onClick(View v) {
                 Toast.makeText(SearchActivity.this, "Cleared all filters.", Toast.LENGTH_LONG).show();
-                SharedPreferences sharedPreferences = getSharedPreferences("x", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.clear().commit();
+                getSharedPreferences("x", Context.MODE_PRIVATE).edit().clear().commit();
             }
         });
     }
@@ -122,10 +120,9 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
     private Query createUserQuery() {
         Query query;
         if (checkIfUserInput())
-            query = new Query.Builder().locations(convertLocs()).size(convertSize()).price(convertPrice()).amenities(convertAmenities()).build();
+            return new Query.Builder().locations(convertLocs()).size(convertSize()).price(convertPrice()).amenities(convertAmenities()).build();
         else
-            query = createDefaultQuery();
-        return query;
+            return createDefaultQuery();
     }
 
     private boolean checkIfUserInput() {
@@ -360,34 +357,27 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
     }
 
     private boolean load(String name) {
-        SharedPreferences sharedPreferences = getSharedPreferences("x", Context.MODE_PRIVATE);
-        return sharedPreferences.getBoolean(name, false);
+        return getSharedPreferences("x", Context.MODE_PRIVATE).getBoolean(name, false);
     }
 
     private String loadString(String name) {
-        SharedPreferences sharedPreferences = getSharedPreferences("x", Context.MODE_PRIVATE);
-        return sharedPreferences.getString(name, "");
+        return getSharedPreferences("x", Context.MODE_PRIVATE).getString(name, "");
     }
 
     @Override
     public void onTaskComplete(List<Flat> listOfFlats) {
         ArrayList<String> listOfFlatsString = new ArrayList<String>();
-        if (listOfFlats != null) {
-            if (listOfFlats.size() > 0) {
-                // convert listOfFlats to String BEFORE sending to ResultsActivity
-                for (int i = 0; i < listOfFlats.size(); i++)
-                    listOfFlatsString.add(listOfFlats.get(i).toString());
-                listOfFlatsString.add("");
-                Intent intentFlat = new Intent(SearchActivity.this, ResultsActivity.class);
-                intentFlat.putStringArrayListExtra("java.util.List<java.lang.String>", listOfFlatsString);
-                intentFlat.putExtra("ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query", (Serializable) userQuery);
-                startActivity(intentFlat);
-            } else {
-                showAlert(findViewById(android.R.id.content), "No results found with your filters!");
-            }
+        if ((listOfFlats != null) & (listOfFlats.size() > 0)) {
+            // convert listOfFlats to String BEFORE sending to ResultsActivity
+            for (int i = 0; i < listOfFlats.size(); i++)
+                listOfFlatsString.add(listOfFlats.get(i).toString());
+            listOfFlatsString.add("");
+            Intent intentFlat = new Intent(SearchActivity.this, ResultsActivity.class);
+            intentFlat.putStringArrayListExtra("java.util.List<java.lang.String>", listOfFlatsString);
+            intentFlat.putExtra("ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query", userQuery);
+            startActivity(intentFlat);
         } else {
             showAlert(findViewById(android.R.id.content), "No results found with your filters!");
         }
-
     }
 }
