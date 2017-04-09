@@ -29,17 +29,19 @@ public class ResultsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
         setTitle("Results");
-        lv = (ListView) findViewById(R.id.List);
-
         Intent i = getIntent();
         listOfFlats = i.getStringArrayListExtra("java.util.List<java.lang.String>");
         userQuery = (Query) i.getSerializableExtra("ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query");
+        displayFlats();
+        init();
+    }
 
+    public void displayFlats(){
+        lv = (ListView) findViewById(R.id.List);
         if(listOfFlats != null && listOfFlats.size() > 0){
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listOfFlats);
             lv.setAdapter(arrayAdapter);
         }
-        init();
     }
 
     public void init(){
