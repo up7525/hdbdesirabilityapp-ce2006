@@ -10,7 +10,7 @@ import android.widget.*;
 import java.io.File;
 
 import ntu.ce2006.swensens.hdbdesirabilityapp.data.api.GovDataAPIImpl;
-import ntu.ce2006.swensens.hdbdesirabilityapp.data.db.dbconfig.DbHandler;
+import ntu.ce2006.swensens.hdbdesirabilityapp.data.DbHandler;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -13,7 +13,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import ntu.ce2006.swensens.hdbdesirabilityapp.data.db.dbconfig.DbHandler;
+import ntu.ce2006.swensens.hdbdesirabilityapp.data.DbHandler;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.FlatManager;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.ResultAsyncCallback;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query;

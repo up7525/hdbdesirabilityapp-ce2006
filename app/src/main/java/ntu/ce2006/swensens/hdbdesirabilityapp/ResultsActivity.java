@@ -10,7 +10,7 @@ import android.widget.*;
 import java.io.Serializable;
 import java.util.*;
 
-import ntu.ce2006.swensens.hdbdesirabilityapp.data.db.dbconfig.DbHandler;
+import ntu.ce2006.swensens.hdbdesirabilityapp.data.DbHandler;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.FlatManager;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.result.Flat;
