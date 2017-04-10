@@ -30,21 +30,6 @@ public class GooglePlacesImpl extends JsonRequest {
         this.amenities = amenities;
     }
 
-    // TODO BELOW NEEDS TO BE PLACED SOMEWHERE ELSE NOT IN THIS CLASS
-    /***************************************************
-    public HashMap<String, Integer> getNearbyAmenities(double latitude, double longitude, int radius) throws IOException {
-        HashMap<String, Integer> amenitiesQuantity = new HashMap<>();
-        // MRT
-        amenitiesQuantity.put("MRT", getAmenitiesQuantity(latitude, longitude, radius, Amenities.MRT));
-        // Clinic
-        amenitiesQuantity.put("Clinics", getAmenitiesQuantity(latitude, longitude, radius, Amenities.CLINIC));
-        // Mall
-        amenitiesQuantity.put("Shopping Mall", getAmenitiesQuantity(latitude, longitude, radius, Amenities.MALL));
-        return amenitiesQuantity;
-    }
-    // jsonArray = jsonObject.getAsJsonArray("results");
-     ***************************************************/
-
     /**
      * Retrieves the data from API based on the filters defined in the Query
      *

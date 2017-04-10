@@ -1,5 +1,6 @@
 package ntu.ce2006.swensens.hdbdesirabilityapp.search;
 
+import android.app.Activity;
 import android.util.Log;
 
 import com.google.gson.JsonObject;
@@ -9,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -29,6 +31,7 @@ import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Size;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
 /**
@@ -47,13 +50,17 @@ public class FlatManagerTest {
 
     private FlatManager flatManager;
 
+    private Activity activity;
+
     @Before
     public void setUp() throws InterruptedException, ExecutionException, IOException {
 
         // Logger Mock
         PowerMockito.mockStatic(Log.class);
-        // TODO DETERMINE HOW SIZE IS GOING TO FIT IN, ALSO NOT PRESENT IN Flat class
-        //when(query.getSizeFilters()).thenReturn()
+
+        // Activity Mock
+
+        Mockito.doNothing().when(((ResultAsyncCallback) activity)).onTaskComplete(new ArrayList<>());
 
         // Size
         List<Size> sizes = new ArrayList<>();
@@ -83,12 +90,11 @@ public class FlatManagerTest {
         JsonParser parser = new JsonParser();
         JsonObject results = parser.parse(sb.toString()).getAsJsonObject();
         when(govDataAPI.getData()).thenReturn(results);
-        flatManager = new FlatManager(query);
+        flatManager = new FlatManager(activity, query);
     }
 
     @Test
     public void testGetFlat() throws IOException, ExecutionException, InterruptedException, APIErrorException {
-        System.out.println(flatManager.getFlats());
-        assertTrue(true);
+        assertNotNull(flatManager.getFlats());
     }
 }

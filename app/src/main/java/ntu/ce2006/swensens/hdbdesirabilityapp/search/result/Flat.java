@@ -56,8 +56,7 @@ public class Flat implements Serializable, Comparable<Flat> {
             this.price = price;
             this.area = area;
         }
-
-        // TODO depends on when you want to sort the amenities from the API
+        
         /*
         public Builder amenities(String Name)
         */
@@ -218,7 +217,7 @@ public class Flat implements Serializable, Comparable<Flat> {
     }
 
     // DEFAULT (By Score) UNDERNEATH ARE SORTING
-    // TODO (TIP): Use Collections.sort(arrayList<Flat>, Flat.DefaultComparator());
+    // (TIP): Use Collections.sort(arrayList<Flat>, Flat.DefaultComparator());
     @Override
     public int compareTo(Flat otherFlat) {
         double compareScore = this.score - otherFlat.getScore();
