@@ -13,9 +13,11 @@ import ntu.ce2006.swensens.hdbdesirabilityapp.R;
 import ntu.ce2006.swensens.hdbdesirabilityapp.data.DbHandler;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query;
 
+import static ntu.ce2006.swensens.hdbdesirabilityapp.R.id.InfoButtonSmall;
+
 public class ResultsActivity extends AppCompatActivity {
     private ListView lv;
-    public Button saveQueryButton;
+    public ImageButton saveQueryButton, InfoButtonSmall;
     public DbHandler database;
     public Query userQuery;
     public int userQueryCount;
@@ -44,7 +46,7 @@ public class ResultsActivity extends AppCompatActivity {
 
     public void init(){
         database = new DbHandler(getApplicationContext());
-        saveQueryButton = (Button) findViewById(R.id.SaveQuery);
+        saveQueryButton = (ImageButton) findViewById(R.id.SaveQuery);
         saveQueryButton.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
@@ -69,6 +71,20 @@ public class ResultsActivity extends AppCompatActivity {
                 }
             }
         });
+        InfoButtonSmall = (ImageButton) findViewById(R.id.InfoButtonSmall);
+        InfoButtonSmall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String displayString;
+                displayString = "The higher the score, the more matching amenities there are.";
+                showAlert(v, displayString);
+            }
+        });
+
+    }
+    public void showAlert(View v, String displayString) {
+        AlertDialog.Builder info = new AlertDialog.Builder(this);
+        info.setMessage(displayString).create().show();
     }
 
 }

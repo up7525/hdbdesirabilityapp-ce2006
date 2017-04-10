@@ -14,7 +14,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import ntu.ce2006.swensens.hdbdesirabilityapp.MainActivity;
+import ntu.ce2006.swensens.hdbdesirabilityapp.activity.MainActivity;
 
 /**
  * Created by trollpc on 24/03/17.
