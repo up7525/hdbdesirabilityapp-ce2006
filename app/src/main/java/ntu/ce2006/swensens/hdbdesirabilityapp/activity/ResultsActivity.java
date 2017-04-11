@@ -73,7 +73,12 @@ public class ResultsActivity extends AppCompatActivity {
         });
         InfoButtonSmall = (ImageButton) findViewById(R.id.InfoButtonSmall);
         InfoButtonSmall.setOnClickListener(new View.OnClickListener() {
-            showAlert(v, "The higher the score, the more matching amenities there are.");
+              @Override
+              public void onClick(View v) {
+                 String displayString;
+                 displayString = "The higher the score, the more matching amenities there are.";
+                 showAlert(v, displayString);
+             }
         });
 
     }
