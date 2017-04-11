@@ -64,9 +64,9 @@ public class ResultsActivity extends AppCompatActivity {
                     }
                     isSaved = true;
                     Toast.makeText(ResultsActivity.this,"Query saved.",Toast.LENGTH_LONG).show();
+                    saveQueryButton.setClickable(false);
                 }
                 else{
-                    saveQueryButton.setVisibility(View.INVISIBLE);
                     Toast.makeText(ResultsActivity.this,"Query already exists in database.",Toast.LENGTH_LONG).show();
                 }
             }
