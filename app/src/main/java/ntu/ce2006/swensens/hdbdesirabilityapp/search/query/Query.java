@@ -134,27 +134,14 @@ public class Query implements Serializable{
     }
 
     public String getDesc(){
-        // Faith - for ResultsActivity
         desc = "";
         if(getLocationFilters().size() > 0)
-            if(getLocationFilters().size() > 1)
-                desc = desc + getLocationFilters().get(0) + "...; ";
-            else
-                desc = desc + getLocationFilters().get(0) + "; ";
+            desc = desc + getLocationFilters().get(0) + "; ";
         if(getSizeFilters().size() > 0)
-            if(getSizeFilters().size() > 1)
-                desc = desc + getSizeFilters().get(0) + "...; ";
-            else
-                desc = desc + getSizeFilters().get(0) + "; ";
+            desc = desc + getSizeFilters().get(0) + "; ";
         desc = desc + "$" + (getPriceFilters()[0] / 1000) + "k to $" + (getPriceFilters()[1] / 1000) + "k; ";
-        if(getAmenitiesFilters().size() > 0){
-            for(int u = 0; u < getAmenitiesFilters().size(); u++){
-                if(u != (getAmenitiesFilters().size()-1))
-                    desc = desc + getAmenitiesFilters().get(u) + " + ";
-                else
-                    desc = desc + getAmenitiesFilters().get(u);
-            }
-        }
+        for(int u = 0; u < getAmenitiesFilters().size(); u++)
+            desc = desc + getAmenitiesFilters().get(u) + " ";
         return desc;
     }
 
