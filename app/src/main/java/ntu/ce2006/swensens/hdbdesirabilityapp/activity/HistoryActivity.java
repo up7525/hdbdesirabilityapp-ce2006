@@ -24,100 +24,43 @@ public class HistoryActivity extends AppCompatActivity implements ResultAsyncCal
     public ImageButton SearchButtonSmall, InfoButtonSmall, ClearButtonSmall;
     public DbHandler database;
     public List<Query> listOfQueries;
-    public int queryCount;
     public Query userQuery;
     private static HistoryActivity historyActivity;
-    RadioButton one, two, three, four, five;
-    Query Q1, Q2, Q3, Q4, Q5;
+    private RadioButton[] radioButtonArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
         setTitle("History");
+
+        // radioButton initialization
+        radioButtonArray = new RadioButton[5];
+        radioButtonArray[0] = (RadioButton) findViewById(R.id.History1);
+        radioButtonArray[1] = (RadioButton) findViewById(R.id.History2);
+        radioButtonArray[2] = (RadioButton) findViewById(R.id.History3);
+        radioButtonArray[3] = (RadioButton) findViewById(R.id.History4);
+        radioButtonArray[4] = (RadioButton) findViewById(R.id.History5);
+
         retrieveQueries();
         displayButtons();
         HistoryActivity.historyActivity = HistoryActivity.this;
         init();
     }
-
     private void retrieveQueries() {
-        // retrieve queries from database
         database = new DbHandler(getApplicationContext());
         listOfQueries = database.getAllQueries();
-        queryCount = listOfQueries.size();
     }
-
-
     private void displayButtons() {
-        // set radiobuttons
-        one = (RadioButton) findViewById(R.id.History1);
-        two = (RadioButton) findViewById(R.id.History2);
-        three = (RadioButton) findViewById(R.id.History3);
-        four = (RadioButton) findViewById(R.id.History4);
-        five = (RadioButton) findViewById(R.id.History5);
+        for(int i = 0; i < radioButtonArray.length; i++)
+            radioButtonArray[i].setVisibility(View.INVISIBLE);
 
-        // set visibilities of radiobuttons depending on how many queries there are
-
-        if (queryCount == 0) {
-            one.setVisibility(View.INVISIBLE);
-            two.setVisibility(View.INVISIBLE);
-            three.setVisibility(View.INVISIBLE);
-            four.setVisibility(View.INVISIBLE);
-            five.setVisibility(View.INVISIBLE);
-            Toast.makeText(HistoryActivity.this, "No saved queries!", Toast.LENGTH_LONG).show();
-            Intent returnToMain = new Intent(HistoryActivity.this, MainActivity.class);
-            startActivity(returnToMain);
-        } else if (queryCount == 1) {
-            two.setVisibility(View.INVISIBLE);
-            three.setVisibility(View.INVISIBLE);
-            four.setVisibility(View.INVISIBLE);
-            five.setVisibility(View.INVISIBLE);
-
-            Q1 = listOfQueries.get(0);
-            one.setText(Q1.getDesc());
-        } else if (queryCount == 2) {
-            three.setVisibility(View.INVISIBLE);
-            four.setVisibility(View.INVISIBLE);
-            five.setVisibility(View.INVISIBLE);
-
-            Q1 = listOfQueries.get(0);
-            Q2 = listOfQueries.get(1);
-            one.setText(Q1.getDesc());
-            two.setText(Q2.getDesc());
-
-        } else if (queryCount == 3) {
-            four.setVisibility(View.INVISIBLE);
-            five.setVisibility(View.INVISIBLE);
-
-            Q1 = listOfQueries.get(0);
-            Q2 = listOfQueries.get(1);
-            Q3 = listOfQueries.get(2);
-            one.setText(Q1.getDesc());
-            two.setText(Q2.getDesc());
-            three.setText(Q3.getDesc());
-        } else if (queryCount == 4) {
-            five.setVisibility(View.INVISIBLE);
-
-            Q1 = listOfQueries.get(0);
-            Q2 = listOfQueries.get(1);
-            Q3 = listOfQueries.get(2);
-            Q4 = listOfQueries.get(3);
-            one.setText(Q1.getDesc());
-            two.setText(Q2.getDesc());
-            three.setText(Q3.getDesc());
-            four.setText(Q4.getDesc());
-        } else { // 5 or more queries BUT display only 5
-            Q1 = listOfQueries.get(0);
-            Q2 = listOfQueries.get(1);
-            Q3 = listOfQueries.get(2);
-            Q4 = listOfQueries.get(3);
-            Q5 = listOfQueries.get(4);
-            one.setText(Q1.getDesc());
-            two.setText(Q2.getDesc());
-            three.setText(Q3.getDesc());
-            four.setText(Q4.getDesc());
-            five.setText(Q5.getDesc());
+        // set visibility according to how many queries there are
+        for(int i = 0; i < 5; i++){
+            if(listOfQueries.size() > i) {
+                radioButtonArray[i].setVisibility(View.VISIBLE);
+                radioButtonArray[i].setText(listOfQueries.get(i).getDesc());
+            }
         }
     }
 
@@ -126,33 +69,16 @@ public class HistoryActivity extends AppCompatActivity implements ResultAsyncCal
         SearchButtonSmall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                boolean oneChecked = one.isChecked();
-                boolean twoChecked = two.isChecked();
-                boolean threeChecked = three.isChecked();
-                boolean fourChecked = four.isChecked();
-                boolean fiveChecked = five.isChecked();
-
-                // if at least ONE checked
-                // prevents situation where no queries are displayed
-                // but user tries to be funny and presses search anyway
-                if (oneChecked | twoChecked | threeChecked | fourChecked | fiveChecked) {
-                    if (oneChecked)
-                        userQuery = Q1;
-                    else if (twoChecked)
-                        userQuery = Q2;
-                    else if (threeChecked)
-                        userQuery = Q3;
-                    else if (fourChecked)
-                        userQuery = Q4;
-                    else if (fiveChecked)
-                        userQuery = Q5;
-
-                    new FlatManager(HistoryActivity.historyActivity, userQuery).execute();
-
-                } else {
-                    showAlert(v, "Please choose a query!");
+                boolean isChecked = false;
+                for(int i = 0; i < radioButtonArray.length; i++){
+                    if(radioButtonArray[i].isChecked()){
+                        isChecked = true;
+                        new FlatManager(HistoryActivity.historyActivity, listOfQueries.get(i)).execute();
+                        break;
+                    }
                 }
+                if(!isChecked)
+                    showAlert(v, "Please choose a query!");
             }
         });
         InfoButtonSmall = (ImageButton) findViewById(R.id.InfoButtonSmall);
@@ -168,11 +94,8 @@ public class HistoryActivity extends AppCompatActivity implements ResultAsyncCal
             public void onClick(View v) {
                 if (database.getQueryCount() > 0) {
                     database.deleteAllQuery();
-                    one.setVisibility(View.INVISIBLE);
-                    two.setVisibility(View.INVISIBLE);
-                    three.setVisibility(View.INVISIBLE);
-                    four.setVisibility(View.INVISIBLE);
-                    five.setVisibility(View.INVISIBLE);
+                    for(int i = 0; i < radioButtonArray.length; i++)
+                        radioButtonArray[i].setVisibility(View.INVISIBLE);
                     Toast.makeText(HistoryActivity.this, "Cleared all saved queries.", Toast.LENGTH_LONG).show();
                     Intent returnToMain = new Intent(HistoryActivity.this, MainActivity.class);
                     startActivity(returnToMain);
