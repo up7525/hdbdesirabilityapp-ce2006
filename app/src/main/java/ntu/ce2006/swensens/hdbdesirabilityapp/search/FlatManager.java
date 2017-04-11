@@ -171,7 +171,10 @@ public class FlatManager extends AsyncTask<Void, Void, List<Flat>> {
     }
 
     private boolean isWithinPrice(Flat flat) {
-        return flat.getPrice() >= query.getPriceFilters()[0] && flat.getPrice() <= query.getPriceFilters()[1];
+        if(flat.getPrice() >= query.getPriceFilters()[0])
+            if(flat.getPrice() <= query.getPriceFilters()[1])
+                return true;
+        return false;
     }
 
     private Flat flat(JsonElement jsonElement) {
