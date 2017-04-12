@@ -33,8 +33,6 @@ public class HistoryActivity extends AppCompatActivity implements ResultAsyncCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
         setTitle("History");
-
-        // radioButton initialization
         radioButtonArray = new RadioButton[5];
         radioButtonArray[0] = (RadioButton) findViewById(R.id.History1);
         radioButtonArray[1] = (RadioButton) findViewById(R.id.History2);
@@ -52,11 +50,8 @@ public class HistoryActivity extends AppCompatActivity implements ResultAsyncCal
         listOfQueries = database.getAllQueries();
     }
     private void displayButtons() {
-        for(int i = 0; i < radioButtonArray.length; i++)
-            radioButtonArray[i].setVisibility(View.INVISIBLE);
-
-        // set visibility according to how many queries there are
         for(int i = 0; i < 5; i++){
+            radioButtonArray[i].setVisibility(View.INVISIBLE);
             if(listOfQueries.size() > i) {
                 radioButtonArray[i].setVisibility(View.VISIBLE);
                 radioButtonArray[i].setText(listOfQueries.get(i).getDesc());
