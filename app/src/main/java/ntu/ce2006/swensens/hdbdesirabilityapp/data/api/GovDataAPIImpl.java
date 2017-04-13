@@ -17,23 +17,29 @@ import java.util.concurrent.Future;
 import ntu.ce2006.swensens.hdbdesirabilityapp.activity.MainActivity;
 
 /**
+ * Data access method for accessing Gov.sg API
  * @author Jonathan
  */
 
 public class GovDataAPIImpl extends JsonRequest {
 
-    // Tag for debugging and logger
+    /**
+     * Tag for debugging and logger
+     */
     private static final String TAG = "GovDataAPIImpl";
 
-    // Filename & Location for HDB CSV
+    /**
+     * Filename & Location for HDB CSV
+     */
     private final String HDB_FILE = "app/src/main/assets/resale-flat-price.json";
 
-    // URL for the main Gov HDB API data
+    /**
+     * Url link for API request
+     */
     private final String GOVDATA = "https://data.gov.sg/api/action/datastore_search?resource_id=83b2fc37-ce8c-4df4-968b-370fd818138b&limit=100000";
 
     /**
      * Retrieves the data from API based on the filters defined in the Query
-     *
      * @return JsonObject containing the information retrieved
      */
     @Override
@@ -47,11 +53,8 @@ public class GovDataAPIImpl extends JsonRequest {
     }
 
     /**
-     * Update the data from the main government website
-     *
-     * @exception IOException throws when IO error
-     * @exception ExecutionException throws when error in thread
-     * @exception InterruptedException throws when interrupted during threading
+     * Retrieves only new data from API and updates local data
+     * @param file filepath of local HDB CSV
      */
     public void updateData(File file) throws IOException, ExecutionException, InterruptedException {
         Files.write(requestAPI(GOVDATA).toString(), file, Charset.forName("UTF-8"));
