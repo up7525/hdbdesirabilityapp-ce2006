@@ -47,15 +47,35 @@ public class FlatManager extends AsyncTask<Void, Void, List<Flat>> {
 
     private List<Flat> flats = new ArrayList<>();
 
+    /**
+     * Constructor to construct the FlatMaanger class 
+     * 
+     * @param activity the parent activity of this object
+     * @param query the query specified by the user to search for a flat
+     */
     public FlatManager(Activity activity, Query query) {
         this.query = query;
         this.activity = activity;
     }
 
+    /**
+     * Set the query for FlatManager to compute. Used when query has changed but FlatManager class had already been constructed
+     *
+     * @param query the query specified by the user to search for a flat
+     */
     public void setQuery(Query query) {
         this.query = query;
     }
 
+    /**
+     * Compute the flat information, the desirability score based on the query specified by the user. The retrieves a list
+     * of computed flats. 
+     *
+     * @return flats a list of computed flats
+     * @exception IOException throws IOException when the IO connections cannot be made
+     * @exception ExecutionException thrown when error on executor thread
+     * @exception InterruptedException thrown when error when thread is interrupted for any reason
+     */
     public List<Flat> getFlats() throws IOException, ExecutionException, InterruptedException {
         if (flats.size() < 1) {
             requestAPI();
@@ -64,6 +84,13 @@ public class FlatManager extends AsyncTask<Void, Void, List<Flat>> {
         return flats;
     }
 
+    /**
+     * Private helper method to handle request from the API for the HDB flats
+     *
+     * @exception IOException throws IOException when the IO connections cannot be made
+     * @exception ExecutionException thrown when error on executor thread
+     * @exception InterruptedException thrown when error when thread is interrupted for any reason
+     */
     private void requestAPI() throws IOException, ExecutionException, InterruptedException {
         // Request of General Flat Data and make it into list of Flats object
         GovDataAPIImpl govDataAPI = new GovDataAPIImpl();
@@ -71,6 +98,14 @@ public class FlatManager extends AsyncTask<Void, Void, List<Flat>> {
         Log.d(TAG, flats.toString());
     }
 
+    /**
+     * Take a JsonObject of flat to convert them into Flat objects
+     *
+     * @return list of flats 
+     * @exception IOException throws IOException when the IO connections cannot be made
+     * @exception ExecutionException thrown when error on executor thread
+     * @exception InterruptedException thrown when error when thread is interrupted for any reason
+     */
     private List<Flat> makeFlat(JsonObject jsonObject) throws IOException, ExecutionException, InterruptedException {
         List<Flat> flatList = new ArrayList<>();
         JsonArray jsonArray = jsonObject.getAsJsonObject("result").getAsJsonArray("records");
@@ -80,6 +115,14 @@ public class FlatManager extends AsyncTask<Void, Void, List<Flat>> {
         return filterFlat(flatList);
     }
 
+    /**
+     * Filter the flats with location, price, size and amenities conditions of the query using a list of flats
+     *
+     * @return filteredList List of flats that have been filtered by the query
+     * @exception IOException throws IOException when the IO connections cannot be made
+     * @exception ExecutionException thrown when error on executor thread
+     * @exception InterruptedException thrown when error when thread is interrupted for any reason
+     */
     private List<Flat> filterFlat(List<Flat> flatList) throws IOException, ExecutionException, InterruptedException {
         List<Flat> filteredList = new ArrayList<>();
         int limit = 10;
@@ -101,6 +144,15 @@ public class FlatManager extends AsyncTask<Void, Void, List<Flat>> {
         return filteredList;
     }
 
+    /**
+     * Helper private class to check if the given Flat includes some amenities defined by the query.
+     * If exist, pass the result of the API request into the Flat class
+     *
+     * @return true when amenities exist, false otherwise
+     * @exception IOException throws IOException when the IO connections cannot be made
+     * @exception ExecutionException thrown when error on executor thread
+     * @exception InterruptedException thrown when error when thread is interrupted for any reason
+     */
     private boolean hasAmenities(Flat flat) throws IOException, ExecutionException, InterruptedException, APIErrorException {
         // Get Geolocation
         GoogleGeoLocImpl googleGeoLoc = new GoogleGeoLocImpl(flat);
@@ -147,6 +199,14 @@ public class FlatManager extends AsyncTask<Void, Void, List<Flat>> {
         return true;
     }
 
+    /**
+     * Helper private class to check if the flat is already within the filteredList,
+     * or contains in the query filters defined by the user
+     *
+     * @param flat that is to be checked
+     * @param filteredList a list of flats that has already been filtered
+     * @return true when location contains in query and not exist within the filteredList already, false otherwise
+     */
     private boolean containsLocation(Flat flat, List<Flat> filteredList) {
         for (Flat existingFlat : filteredList) {
             if (existingFlat.getAddress().equals(flat.getAddress())) {
@@ -154,7 +214,6 @@ public class FlatManager extends AsyncTask<Void, Void, List<Flat>> {
             }
         }
         for (Location loc : query.getLocationFilters()) {
-
             if (loc.toString().equals(flat.getTown())) {
                 return true;
             }
@@ -162,6 +221,12 @@ public class FlatManager extends AsyncTask<Void, Void, List<Flat>> {
         return false;
     }
 
+    /**
+     * Helper private class to check if the flat contains the size defined in the query
+     *
+     * @param flat that is to be checked
+     * @return true if flat size is queried by the query object, defined by the user, false otherwise
+     */
     private boolean hasSize(Flat flat) {
         for (Size size : query.getSizeFilters()) {
             if (size.toString().equals(flat.getSize())) {
@@ -171,6 +236,12 @@ public class FlatManager extends AsyncTask<Void, Void, List<Flat>> {
         return false;
     }
 
+    /**
+     * Helper private class to check if price is within the defined query price
+     *
+     * @param flat that is to be checked
+     * @return true if flat is within the price defined in query, false otherwise
+     */
     private boolean isWithinPrice(Flat flat) {
         if(flat.getPrice() >= query.getPriceFilters()[0])
             if(flat.getPrice() <= query.getPriceFilters()[1])
@@ -178,6 +249,12 @@ public class FlatManager extends AsyncTask<Void, Void, List<Flat>> {
         return false;
     }
 
+    /**
+     * Helper class to create the flat object from the result returned by the API
+     *
+     * @param jsonElement the result retrieved from the API in JSON
+     * @return flat that is built and returned
+     */
     private Flat flat(JsonElement jsonElement) {
         JsonParser parser = new JsonParser();
         JsonObject flatJson = parser.parse(jsonElement.toString()).getAsJsonObject();
@@ -186,6 +263,11 @@ public class FlatManager extends AsyncTask<Void, Void, List<Flat>> {
                 flatJson.get("floor_area_sqm").getAsDouble()).build();
     }
 
+    /**
+     * Helper class to compute the score of the flat, then store into the flat object
+     *
+     * @param flat to be computed
+     */
     private void computeScore(Flat flat) {
         double weight = 10.0 / flat.getAmenities().size();
         double score = 0;
@@ -202,6 +284,12 @@ public class FlatManager extends AsyncTask<Void, Void, List<Flat>> {
         flat.setScore(score);
     }
 
+    /**
+     * Make the address, then build and return the full address from the API data
+     *
+     * @param flatJson json of the flat to create the full address of the flat
+     * @return address in string created
+     */
     private String makeAddress(JsonObject flatJson) {
         return flatJson.get("block").getAsString() + " " + flatJson.get("street_name").getAsString() + " "
                 + flatJson.get("town").getAsString();
