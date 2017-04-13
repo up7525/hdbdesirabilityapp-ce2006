@@ -9,12 +9,17 @@ import android.widget.*;
 import ntu.ce2006.swensens.hdbdesirabilityapp.R;
 
 /**
+ * Search Price Activity allows user to choose minimum and maximum HDB prices
  * @author Faith, Nicholas, Chester
  *
  */
 
 public class Search_Price_Activity extends AppCompatActivity {
 
+    /**
+     * initialisation of Search Price Activity
+     * @param savedInstanceState restore the activity state to a previous state using the data stored in this bundle if it exists
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +27,9 @@ public class Search_Price_Activity extends AppCompatActivity {
         setTitle("Set Price");
     }
 
+    /**
+     * when the activity is paused, the prices are saved
+     */
     @Override
     public void onPause() {
         super.onPause();
@@ -30,6 +38,11 @@ public class Search_Price_Activity extends AppCompatActivity {
         savePrices(maxPriceString, minPriceString);
     }
 
+    /**
+     * this saves the prices
+     * @param maxPriceString maximum price
+     * @param minPriceString minimum price
+     */
     private void savePrices(String maxPriceString, String minPriceString){
         if(minPriceString.equalsIgnoreCase("NULLSTRING") | maxPriceString.equalsIgnoreCase("NULLSTRING")){
             if(minPriceString.equalsIgnoreCase("NULLSTRING") & maxPriceString.equalsIgnoreCase("NULLSTRING")){
@@ -65,32 +78,26 @@ public class Search_Price_Activity extends AppCompatActivity {
         }
     }
 
+    /**
+     * this converts the price input by user into proper range
+     * @param inputString price entered by user
+     * @return price within proper range
+     */
     private String sanitizePrice(String inputString){
-        // convert user input into proper range.
-        // 1. Remove non-numeric characters.
-        // 2. If user has not inputted price, save as "NULLSTRING"
-        // 3. If user's inputted price exceeds max, save as 2,000,000
-        // 4. If user's inputted price is below min, save as 0
-
-        // remove non-numeric characters
         inputString.replaceAll("[^0-9.]", "");
-
         if(inputString.length() == 0)
             return "NULLSTRING";
-
-        // convert to number
         long price = Integer.parseInt(inputString);
-
-        // set within limits
         if(price > 2000000)
             return "2000000";
         if(price < 0)
             return "0";
-
         return Long.toString(price);
     }
 
-
+    /**
+     * when the activity is resumed, the prices input by user are restored
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -98,6 +105,11 @@ public class Search_Price_Activity extends AppCompatActivity {
         restoreText((EditText) findViewById(R.id.MaxPriceInput), "MaxPriceInput");
     }
 
+    /**
+     * this restores the price input by the user
+     * @param textField name of textbox to be set
+     * @param varName name of variable used to store the price input by user in SharedPreferences
+     */
     private void restoreText(EditText textField, String varName){
         if(!(load(varName)).equalsIgnoreCase("NULLSTRING"))
             textField.setText(load(varName));
@@ -105,14 +117,23 @@ public class Search_Price_Activity extends AppCompatActivity {
             textField.setText("");
     }
 
+    /**
+     * this saves the string input by the user
+     * @param itemName name of string to be saved
+     * @param itemString actual string to be saved
+     */
     private void save(String itemName, String itemString) {
-        // item = int
         SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(itemName,itemString);
         editor.commit();
     }
 
+    /**
+     * this returns the stored string that was saved
+     * @param itemName name of string that was saved
+     * @return stored string that was saved
+     */
     private String load(String itemName) {
         SharedPreferences sharedPreferences = getSharedPreferences("x",Context.MODE_PRIVATE);
         return sharedPreferences.getString(itemName,"NULLSTRING");

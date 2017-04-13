@@ -8,12 +8,17 @@ import android.widget.CheckBox;
 import ntu.ce2006.swensens.hdbdesirabilityapp.R;
 
 /**
+ * Search Size Activity allows user to choose HDB sizes
  * @author Faith, Nicholas, Chester
  *
  */
 
 public class Search_Size_Activity extends AppCompatActivity {
 
+    /**
+     * initialisation of Search Size Activity
+     * @param savedInstanceState restore the activity state to a previous state using the data stored in this bundle if it exists
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +26,9 @@ public class Search_Size_Activity extends AppCompatActivity {
         setTitle("Set Size");
     }
 
+    /**
+     * when the activity is paused, the state of the checkboxes are saved
+     */
     @Override
     public void onPause() {
         super.onPause();
@@ -31,6 +39,9 @@ public class Search_Size_Activity extends AppCompatActivity {
         save(((CheckBox) findViewById(R.id.ExecutiveCheckBox)).isChecked(), "ExecutiveCheckBox");
     }
 
+    /**
+     * when the activity is resumed, the state of the checkboxes are loaded
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -41,10 +52,20 @@ public class Search_Size_Activity extends AppCompatActivity {
         ((CheckBox) findViewById(R.id.ExecutiveCheckBox)).setChecked(load("ExecutiveCheckBox"));
     }
 
+    /**
+     * this saves the state of the checkbox through a SharedPreferences object
+     * @param ch state of the checkbox
+     * @param name name of the checkbox
+     */
     private void save(boolean ch, String name) {
         getSharedPreferences("x",Context.MODE_PRIVATE).edit().putBoolean(name,ch).commit();
     }
 
+    /**
+     * this loads the state of the checkbox through a SharedPreferences object
+     * @param name name of the checkbox
+     * @return returns the state of the checkbox
+     */
     private boolean load(String name) {
         return getSharedPreferences("x",Context.MODE_PRIVATE).getBoolean(name, false);
     }
