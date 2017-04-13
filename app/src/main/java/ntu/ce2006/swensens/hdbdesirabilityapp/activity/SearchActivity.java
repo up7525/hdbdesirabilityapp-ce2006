@@ -22,7 +22,10 @@ import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Size;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.result.Flat;
 
-/**
+/**Displays the main filter categories.
+ * Allows user to clear filters across all categories.
+ * Allows user to initiate a search using selected filters.
+ * Creates a Query object from the User's filters by pulling the saved filters from SharedPreferences file.
  * @author Faith, Nicholas, Chester
  *
  */
@@ -38,6 +41,10 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
     public ImageButton SearchButtonSmall, InfoButtonSmall, ClearButtonSmall;
     public Query userQuery;
 
+
+    /** Initialisation of Search activity
+     *  @param savedInstanceState restore the activity state to a previous state using the data stored in this bundle if it exists
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +54,9 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
         init();
     }
 
+    /**
+     * Initializes buttons and their transitions to other activities.
+     */
     public void init() {
         locationButton = (Button) findViewById(R.id.locationButton);
         locationButton.setOnClickListener(new View.OnClickListener() {
@@ -118,8 +128,9 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
 
     /**
      * Displays an alert on the screen.
+     * @param v current view.
+     * @param displayString string to be displayed in the alert.
      */
-
     public void showAlert(View v, String displayString) {
         AlertDialog.Builder info = new AlertDialog.Builder(this);
         info.setMessage(displayString).create().show();
@@ -138,11 +149,9 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
             return createDefaultQuery();
     }
 
-    /**
-     * Checks if the User has inputted a location.
+    /** Checks if the User has inputted a location.
      * @return true if User has inputted a location.
      */
-
     private boolean checkIfUserInput() {
         // return TRUE if user has inputted something / at least one location chosen.
         return (load("AngMoKio") | load("Bedok") | load("Bishan") | load("BukitBatok") | load("BukitMerah") | load("BukitPanjang") |
@@ -156,7 +165,6 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
      * Creates the default Query object, if no filters are inputted.
      * @return Query object with default filters (Ang Mo Kio, 2 Room, 230k-250k, Clinic, MRT, Shops)
      */
-
     public Query createDefaultQuery() {
         // load filter values
         ArrayList<Location> locationFilters = new ArrayList<>();
@@ -216,7 +224,6 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
      * Converts the user's selected locations into an arraylist of locations.
      * @return arraylist of locations. Used as an input to create a Query object.
      */
-
     private ArrayList<Location> convertLocs() {
 
         ArrayList<Location> locationsList = new ArrayList<>();
@@ -281,7 +288,6 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
      * Converts the user's selected sizes into an arraylist of sizes.
      * @return arraylist of prices. Used as an input to create a Query object.
      */
-
     private ArrayList<Size> convertSize() {
         ArrayList<Size> sizeList = new ArrayList<>();
         if (load("TwoRoomCheckBox"))
@@ -301,7 +307,6 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
      * Converts the user's selected min/max prices into an array of prices.
      * @return array of prices. Used as an input to create a Query object.
      */
-
     private int[] convertPrice() {
         // load price
         String minPrice = loadString("MinPriceInput");
@@ -335,7 +340,6 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
      * Converts the user's selected amenities into an array of amenities.
      * @return arraylist of amenities. Used as an input to create a Query object.
      */
-
     private ArrayList<Amenities> convertAmenities() {
         ArrayList<Amenities> amenitiesList = new ArrayList<>();
         if (load("checkBoxMall"))
@@ -350,8 +354,8 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
     /**
      * Loads the User's selected boolean filters from SharedPreferences.
      * @return boolean of checbox.
+     * @param name name of filter to be loaded.
      */
-
     private boolean load(String name) {
         return getSharedPreferences("x", Context.MODE_PRIVATE).getBoolean(name, false);
     }
@@ -360,6 +364,7 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
     /**
      * Loads the User's selected string filters from SharedPreferences.
      * @return Saved string.
+     * @param name name of variable to be loaded.
      */
     private String loadString(String name) {
         return getSharedPreferences("x", Context.MODE_PRIVATE).getString(name, "");
@@ -368,6 +373,7 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
 
     /**
      * Allows for display of progress animation.
+     * @param listOfFlats list of flats returned from FlatManager.
      */
     @Override
     public void onTaskComplete(List<Flat> listOfFlats) {
