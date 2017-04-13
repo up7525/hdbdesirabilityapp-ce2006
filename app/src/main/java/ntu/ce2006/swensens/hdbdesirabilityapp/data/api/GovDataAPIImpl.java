@@ -28,6 +28,7 @@ public class GovDataAPIImpl extends JsonRequest {
     // Filename & Location for HDB CSV
     private final String HDB_FILE = "app/src/main/assets/resale-flat-price.json";
 
+    // URL for the main Gov HDB API data
     private final String GOVDATA = "https://data.gov.sg/api/action/datastore_search?resource_id=83b2fc37-ce8c-4df4-968b-370fd818138b&limit=100000";
 
     /**
@@ -45,6 +46,13 @@ public class GovDataAPIImpl extends JsonRequest {
         return results;
     }
 
+    /**
+     * Update the data from the main government website
+     *
+     * @exception IOException throws when IO error
+     * @exception ExecutionException throws when error in thread
+     * @exception InterruptedException throws when interrupted during threading
+     */
     public void updateData(File file) throws IOException, ExecutionException, InterruptedException {
         Files.write(requestAPI(GOVDATA).toString(), file, Charset.forName("UTF-8"));
     }
