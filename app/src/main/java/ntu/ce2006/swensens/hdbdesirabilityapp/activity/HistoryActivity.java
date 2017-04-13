@@ -33,6 +33,9 @@ public class HistoryActivity extends AppCompatActivity implements ResultAsyncCal
     private static HistoryActivity historyActivity;
     private RadioButton[] radioButtonArray;
 
+    /** Initialisation of History activity
+     *  @param savedInstanceState restore the activity state to a previous state using the data stored in this bundle if it exists
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,15 +48,27 @@ public class HistoryActivity extends AppCompatActivity implements ResultAsyncCal
         radioButtonArray[3] = (RadioButton) findViewById(R.id.History4);
         radioButtonArray[4] = (RadioButton) findViewById(R.id.History5);
 
+        /** Retrieve queries from DbHandler
+         */
         retrieveQueries();
+
+        /**Display the buttons for user to make selection
+         */
         displayButtons();
         HistoryActivity.historyActivity = HistoryActivity.this;
         init();
     }
+    /**
+     *  Using DbHandler to attain queries made by user in the form of a list
+     */
     private void retrieveQueries() {
         database = new DbHandler(getApplicationContext());
         listOfQueries = database.getAllQueries();
     }
+    /**
+     *  Displaying of history choice for users
+     *  Limited to 5 choices
+     */
     private void displayButtons() {
         for(int i = 0; i < 5; i++){
             radioButtonArray[i].setVisibility(View.INVISIBLE);
@@ -63,10 +78,15 @@ public class HistoryActivity extends AppCompatActivity implements ResultAsyncCal
             }
         }
     }
-
+    /**
+     * Initializes buttons and their transitions to other activities.
+     */
     public void init() {
         SearchButtonSmall = (ImageButton) findViewById(R.id.SearchButtonSmall);
         SearchButtonSmall.setOnClickListener(new View.OnClickListener() {
+            /** Upon clicking of the button, this method is called
+             * @param v current view
+             */
             @Override
             public void onClick(View v) {
                 boolean isChecked = false;
@@ -81,15 +101,26 @@ public class HistoryActivity extends AppCompatActivity implements ResultAsyncCal
                     showAlert(v, "Please choose a query!");
             }
         });
+        /**
+         *  Shows the dialog message popup of the following text message
+         */
+
         InfoButtonSmall = (ImageButton) findViewById(R.id.InfoButtonSmall);
         InfoButtonSmall.setOnClickListener(new View.OnClickListener() {
+            /** Upon clicking of the button, this method is called
+             * @param v current view
+             */
             @Override
             public void onClick(View v) {
                 showAlert(v, "Previously saved queries shown here. Select a query and then press the search icon to generate a new search.");
             }
         });
+
         ClearButtonSmall = (ImageButton) findViewById(R.id.ClearButtonSmall);
         ClearButtonSmall.setOnClickListener(new View.OnClickListener() {
+            /** Upon clicking of the button, this method is called
+             * @param v current view
+             */
             @Override
             public void onClick(View v) {
                 if (database.getQueryCount() > 0) {
@@ -105,16 +136,27 @@ public class HistoryActivity extends AppCompatActivity implements ResultAsyncCal
             }
         });
     }
-
+    /**
+     *  On escaping the History screen
+     */
     public void onPause() {
         super.onPause();
     }
 
+
+    /**
+     *  On resuming back to the History screen
+     */
     @Override
     public void onResume() {
         super.onResume();
     }
 
+    /**
+     * Displays an alert on the screen.
+     * @param v = current view.
+     * @param displayString = string to be displayed in the alert.
+     */
     public void showAlert(View v, String displayString) {
         AlertDialog.Builder info = new AlertDialog.Builder(this);
         info.setMessage(displayString).create();

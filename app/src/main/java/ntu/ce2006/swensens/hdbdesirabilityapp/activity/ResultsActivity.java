@@ -15,7 +15,7 @@ import ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query;
 
 import static ntu.ce2006.swensens.hdbdesirabilityapp.R.id.InfoButtonSmall;
 
-/**
+/** Results screen after a search is performed
  * @author Faith, Nicholas, Chester
  *
  */
@@ -29,6 +29,9 @@ public class ResultsActivity extends AppCompatActivity {
     public ArrayList<String> listOfFlats;
     public boolean isSaved;
 
+    /** Initialisation of Results Activity
+     *  @param savedInstanceState restore itself to a previous state using the data stored in this bundle if it exists
+     */
     @Override
     protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -40,7 +43,9 @@ public class ResultsActivity extends AppCompatActivity {
         displayFlats();
         init();
     }
-
+    /** Showing list of flats on the screen
+     *  Sorted in list view format under android layout
+     */
     public void displayFlats(){
         lv = (ListView) findViewById(R.id.List);
         if(listOfFlats != null && listOfFlats.size() > 0){
@@ -48,11 +53,16 @@ public class ResultsActivity extends AppCompatActivity {
             lv.setAdapter(arrayAdapter);
         }
     }
-
+    /**
+     * Initializes buttons and their transitions to other activities.
+     */
     public void init(){
         database = new DbHandler(getApplicationContext());
         saveQueryButton = (ImageButton) findViewById(R.id.SaveQuery);
         saveQueryButton.setOnClickListener(new View.OnClickListener()  {
+            /** Upon clicking of the button, this method is called
+             * @param v current view
+             */
             @Override
             public void onClick(View v) {
                 if(!(database.getAllQueries().contains(userQuery))){ // query doesn't exist in database yet
@@ -78,6 +88,9 @@ public class ResultsActivity extends AppCompatActivity {
         });
         InfoButtonSmall = (ImageButton) findViewById(R.id.InfoButtonSmall);
         InfoButtonSmall.setOnClickListener(new View.OnClickListener() {
+            /** Upon clicking of the button, this method is called
+             * @param v current view
+             */
               @Override
               public void onClick(View v) {
                  String displayString;
@@ -87,6 +100,11 @@ public class ResultsActivity extends AppCompatActivity {
         });
 
     }
+    /**
+     * Displays an alert on the screen.
+     * @param v = current view.
+     * @param displayString = string to be displayed in the alert.
+     */
     public void showAlert(View v, String displayString) {
         AlertDialog.Builder info = new AlertDialog.Builder(this);
         info.setMessage(displayString).create().show();

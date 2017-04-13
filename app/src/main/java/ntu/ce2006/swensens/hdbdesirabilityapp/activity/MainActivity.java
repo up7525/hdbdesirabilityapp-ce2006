@@ -27,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
     public Button searchMenuButton;
     public Button historyButton;
 
+    /**
+     * Initializes buttons and their transitions to other activities.
+     */
     public void init(){
         MainActivity.appContext = getApplicationContext();
         File path = MainActivity.appContext.getFilesDir();
@@ -45,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
 
         searchMenuButton = (Button)findViewById(R.id.searchMenuButton);
         searchMenuButton.setOnClickListener(new View.OnClickListener()  {
+            /** Upon clicking of the button, this method is called
+             * @param v current view
+             */
             @Override
             public void onClick(View v) {
                 Intent makeQuery = new Intent(MainActivity.this,SearchActivity.class);
@@ -53,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
         });
         historyButton = (Button)findViewById(R.id.historyButton);
         historyButton.setOnClickListener(new View.OnClickListener()  {
+            /** Upon clicking of the button, this method is called
+             * @param v current view
+             */
             @Override
             public void onClick(View v) {
                 DbHandler database = new DbHandler(getApplicationContext());
@@ -66,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /** Initialisation of Main Activity
+     *  @param savedInstanceState restore itself to a previous state using the data stored in this bundle if it exists
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
