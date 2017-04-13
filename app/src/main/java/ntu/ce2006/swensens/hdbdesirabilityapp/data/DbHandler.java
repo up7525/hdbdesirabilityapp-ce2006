@@ -19,29 +19,56 @@ import java.util.List;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query;
 
 /**
+ * Control class that handles data access to the SQLite database
  * @author Jonathan
  */
 
 public class DbHandler extends SQLiteOpenHelper {
+    /**
+     * Database version
+     */
     private static final int DATABASE_VER = 1;
+    /**
+     * Name of database to be stored
+     */
     private static final String DATABASE_NAME = "local.db";
-    // Table names
+    /**
+     * Defined name of table in database
+     */
     private static final String TABLE_QUERY = "queries";
-    // Common column names
+    /**
+     * Main column name
+     */
     private static final String KEY_ID = "id";
-    // TABLE_QUERY column names
+    /**
+     * Column name that will store the Query object
+     */
     private static final String QUERY = "query_data";
 
+    /**
+     * Constructor of this control class
+     */
     public DbHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VER);
     }
 
+    /**
+     * Will be run on construction of this object.
+     * Will create a database if there is no existing one.
+     * @param db database
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         String create_query = "CREATE TABLE " + TABLE_QUERY + "( " + KEY_ID + " INTEGER PRIMARY KEY," + QUERY + " TEXT" + ")";
         db.execSQL(create_query);
     }
 
+    /**
+     * Method to upgrade an existing database to a newer version
+     * @param db database
+     * @param oldVersion old version number
+     * @param newVersion new version number
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
@@ -50,6 +77,11 @@ public class DbHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    /**
+     * Method to add a new query to the database
+     * @param row Row to add query to
+     * @param query Query to be added
+     */
     // Adding new query
     public void addQuery(int row, Query query) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -62,6 +94,11 @@ public class DbHandler extends SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
 
+    /**
+     * Method to get a single query from the database
+     * @param id Row to get query from
+     * @return Query to be returned
+     */
     // Getting single query
     public Query getQuery(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -75,6 +112,10 @@ public class DbHandler extends SQLiteOpenHelper {
         return query;
     }
 
+    /**
+     * Method to get all queries in the database
+     * @return List of all queries
+     */
     // Getting All Queries
     public List<Query> getAllQueries() {
         List<Query> queryList = new ArrayList<Query>();
@@ -99,6 +140,11 @@ public class DbHandler extends SQLiteOpenHelper {
         return queryList;
     }
 
+    /**
+     * Update an existing query in the database
+     * @param row Row of query to be updated
+     * @param query New query to be updated with
+     */
     // Updating query
     public int updateQuery(int row, Query query) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -112,6 +158,10 @@ public class DbHandler extends SQLiteOpenHelper {
                 new String[] { Integer.toString(row) });
     }
 
+    /**
+     * Method to remove a query from database
+     * @param row Row to remove query from
+     */
     // Deleting single query
     public void deleteQuery(int row) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -119,6 +169,10 @@ public class DbHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    /**
+     * Method to find out how many queries are in the database
+     * @return number of queries in database
+     */
     // Getting query Count
     public int getQueryCount() {
         String countQuery = "SELECT  * FROM " + TABLE_QUERY;
@@ -131,6 +185,9 @@ public class DbHandler extends SQLiteOpenHelper {
         return count;
     }
 
+    /**
+     * Method to remove all queries from database, effectively a wipe
+     */
     //delete ALL queries
     public void deleteAllQuery() {
         SQLiteDatabase db = this.getWritableDatabase();
