@@ -33,6 +33,14 @@ public abstract class JsonRequest implements APIDAO {
     // Available Google API Keys
     protected final String[] GOOGLEKEY = {"AIzaSyDb4T0qH-QsLBETqDQUCnuryyQIP2e25Qs", "AIzaSyAMSDKBMf-Bwvhe_8vkmp5KgKr8ivQocw4"};
 
+    /**
+     * Request the API using JSON from the URL defined by urlString
+     *
+     * @return jsonObject a json of result returned by the API
+     * @exception IOException throws when IO error
+     * @exception ExecutionException throws when error in thread
+     * @exception InterruptedException throws when interrupted during threading
+     */
     protected JsonObject requestAPI(String urlString) throws IOException, ExecutionException, InterruptedException {
         URL url = new URL(urlString);
         URLConnection connection = url.openConnection();
