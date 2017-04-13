@@ -60,6 +60,9 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
     public void init() {
         locationButton = (Button) findViewById(R.id.locationButton);
         locationButton.setOnClickListener(new View.OnClickListener() {
+            /** Upon clicking of the button, this method is called
+             * @param v current view
+             */
             @Override
             public void onClick(View v) {
                 Intent location = new Intent(SearchActivity.this, Search_Loc_Activity.class);
@@ -68,6 +71,9 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
         });
         priceButton = (Button) findViewById(R.id.priceButton);
         priceButton.setOnClickListener(new View.OnClickListener() {
+            /** Upon clicking of the button, this method is called
+             * @param v current view
+             */
             @Override
             public void onClick(View v) {
                 Intent price = new Intent(SearchActivity.this, Search_Price_Activity.class);
@@ -76,6 +82,9 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
         });
         sizeButton = (Button) findViewById(R.id.sizeButton);
         sizeButton.setOnClickListener(new View.OnClickListener() {
+            /** Upon clicking of the button, this method is called
+             * @param v current view
+             */
             @Override
             public void onClick(View v) {
                 Intent size = new Intent(SearchActivity.this, Search_Size_Activity.class);
@@ -84,6 +93,9 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
         });
         amenitiesButton = (Button) findViewById(R.id.amenitiesButton);
         amenitiesButton.setOnClickListener(new View.OnClickListener() {
+            /** Upon clicking of the button, this method is called
+             * @param v current view
+             */
             @Override
             public void onClick(View v) {
                 Intent ameni = new Intent(SearchActivity.this, Search_Ameni_Activity.class);
@@ -92,6 +104,9 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
         });
         SearchButtonSmall = (ImageButton) findViewById(R.id.SearchButtonSmall);
         SearchButtonSmall.setOnClickListener(new View.OnClickListener() {
+            /** Upon clicking of the button, this method is called
+             * @param v current view
+             */
             @Override
             public void onClick(View v) {
                 userQuery = createUserQuery();
@@ -100,6 +115,9 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
         });
         InfoButtonSmall = (ImageButton) findViewById(R.id.InfoButtonSmall);
         InfoButtonSmall.setOnClickListener(new View.OnClickListener() {
+            /** Upon clicking of the button, this method is called
+             * @param v current view
+             */
             @Override
             public void onClick(View v) {
                 String displayString;
@@ -118,6 +136,9 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
         });
         ClearButtonSmall = (ImageButton) findViewById(R.id.ClearButtonSmall);
         ClearButtonSmall.setOnClickListener(new View.OnClickListener() {
+            /** Upon clicking of the button, this method is called
+             * @param v current view
+             */
             @Override
             public void onClick(View v) {
                 Toast.makeText(SearchActivity.this, "Cleared all filters.", Toast.LENGTH_LONG).show();
