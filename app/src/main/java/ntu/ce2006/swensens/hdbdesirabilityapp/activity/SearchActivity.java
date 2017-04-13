@@ -116,11 +116,20 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
         });
     }
 
+    /**
+     * Displays an alert on the screen.
+     */
+
     public void showAlert(View v, String displayString) {
         AlertDialog.Builder info = new AlertDialog.Builder(this);
         info.setMessage(displayString).create().show();
     }
 
+    /**
+     * Creates a query object based on the User's inputted filters.
+     * If no filters inputted, default Query created.
+     * @return Query object.
+     */
     private Query createUserQuery() {
         Query query;
         if (checkIfUserInput())
@@ -128,6 +137,11 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
         else
             return createDefaultQuery();
     }
+
+    /**
+     * Checks if the User has inputted a location.
+     * @return true if User has inputted a location.
+     */
 
     private boolean checkIfUserInput() {
         // return TRUE if user has inputted something / at least one location chosen.
@@ -137,6 +151,11 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
                 load("Queenstown") | load("Sembawang") | load("Sengkang") | load("Serangoon") | load("Tampines") | load("ToaPayoh") |
                 load("Woodlands") | load("Yishun"));
     }
+
+    /**
+     * Creates the default Query object, if no filters are inputted.
+     * @return Query object with default filters (Ang Mo Kio, 2 Room, 230k-250k, Clinic, MRT, Shops)
+     */
 
     public Query createDefaultQuery() {
         // load filter values
@@ -192,6 +211,11 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
         Query query = new Query.Builder().locations(locationFilters).size(sizeFilters).price(priceFilters).amenities(amenitiesFilters).build();
         return query;
     }
+
+    /**
+     * Converts the user's selected locations into an arraylist of locations.
+     * @return arraylist of locations. Used as an input to create a Query object.
+     */
 
     private ArrayList<Location> convertLocs() {
 
@@ -253,6 +277,11 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
         return locationsList;
     }
 
+    /**
+     * Converts the user's selected sizes into an arraylist of sizes.
+     * @return arraylist of prices. Used as an input to create a Query object.
+     */
+
     private ArrayList<Size> convertSize() {
         ArrayList<Size> sizeList = new ArrayList<>();
         if (load("TwoRoomCheckBox"))
@@ -267,6 +296,11 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
             sizeList.add(Size.EXECUTIVE);
         return sizeList;
     }
+
+    /**
+     * Converts the user's selected min/max prices into an array of prices.
+     * @return array of prices. Used as an input to create a Query object.
+     */
 
     private int[] convertPrice() {
         // load price
@@ -297,6 +331,11 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
         return priceArray;
     }
 
+    /**
+     * Converts the user's selected amenities into an array of amenities.
+     * @return arraylist of amenities. Used as an input to create a Query object.
+     */
+
     private ArrayList<Amenities> convertAmenities() {
         ArrayList<Amenities> amenitiesList = new ArrayList<>();
         if (load("checkBoxMall"))
@@ -308,14 +347,28 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
         return amenitiesList;
     }
 
+    /**
+     * Loads the User's selected boolean filters from SharedPreferences.
+     * @return boolean of checbox.
+     */
+
     private boolean load(String name) {
         return getSharedPreferences("x", Context.MODE_PRIVATE).getBoolean(name, false);
     }
 
+
+    /**
+     * Loads the User's selected string filters from SharedPreferences.
+     * @return Saved string.
+     */
     private String loadString(String name) {
         return getSharedPreferences("x", Context.MODE_PRIVATE).getString(name, "");
     }
 
+
+    /**
+     * Allows for display of progress animation.
+     */
     @Override
     public void onTaskComplete(List<Flat> listOfFlats) {
         ArrayList<String> listOfFlatsString = new ArrayList<String>();
