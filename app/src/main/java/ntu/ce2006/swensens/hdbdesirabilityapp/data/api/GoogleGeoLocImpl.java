@@ -18,9 +18,17 @@ import ntu.ce2006.swensens.hdbdesirabilityapp.search.result.Flat;
 
 public class GoogleGeoLocImpl extends JsonRequest {
 
+    // flat to be requested
     private String address;
+    
+    // URL of the API to be used
     private String apiUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=";
 
+    /**
+     * Constructor for GoogleGeoLocImpl, modifies the address string to be used for API query
+     *
+     * @param flat to be requested
+     */
     public GoogleGeoLocImpl(Flat flat) {
         address = flat.getAddress().replace(' ', '+');
     }
