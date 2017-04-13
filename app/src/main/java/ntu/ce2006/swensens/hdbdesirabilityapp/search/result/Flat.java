@@ -275,8 +275,8 @@ public class Flat implements Serializable, Comparable<Flat> {
     }
 
     /**
-     *
-     * @return
+     * Convert Flat object to hashvalue
+     * @return hashvalue
      */
     @Override
     public int hashCode() {

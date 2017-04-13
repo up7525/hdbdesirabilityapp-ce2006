@@ -14,7 +14,6 @@ import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Amenities;
 
 /**
  * @author Wang Chun-Yin
- * Created by trollpc on 24/03/17.
  */
 
 public class GooglePlacesImpl extends JsonRequest {
