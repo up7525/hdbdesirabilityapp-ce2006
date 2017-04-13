@@ -19,6 +19,11 @@ import ntu.ce2006.swensens.hdbdesirabilityapp.search.ResultAsyncCallback;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.result.Flat;
 
+/**Loads the screen on the Android screen related to Query History
+ * @author Faith, Nicholas, Chester
+ *
+ */
+
 public class HistoryActivity extends AppCompatActivity implements ResultAsyncCallback<List<Flat>> {
 
     public ImageButton SearchButtonSmall, InfoButtonSmall, ClearButtonSmall;

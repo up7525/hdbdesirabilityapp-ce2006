@@ -7,6 +7,11 @@ import android.widget.CheckBox;
 
 import ntu.ce2006.swensens.hdbdesirabilityapp.R;
 
+/**
+ * @author Faith, Nicholas, Chester
+ *
+ */
+
 public class Search_Size_Activity extends AppCompatActivity {
 
     @Override

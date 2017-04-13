@@ -22,6 +22,11 @@ import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Size;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.result.Flat;
 
+/**
+ * @author Faith, Nicholas, Chester
+ *
+ */
+
 public class SearchActivity extends AppCompatActivity implements ResultAsyncCallback<List<Flat>> {
 
     // FOr logger

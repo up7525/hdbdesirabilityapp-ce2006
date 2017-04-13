@@ -12,6 +12,11 @@ import ntu.ce2006.swensens.hdbdesirabilityapp.R;
 import ntu.ce2006.swensens.hdbdesirabilityapp.data.api.GovDataAPIImpl;
 import ntu.ce2006.swensens.hdbdesirabilityapp.data.DbHandler;
 
+/**Main screen of the Mr. HDB app
+ * @author Faith, Nicholas, Chester
+ *
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     // For Tag

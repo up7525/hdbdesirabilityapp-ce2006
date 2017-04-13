@@ -15,6 +15,11 @@ import ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query;
 
 import static ntu.ce2006.swensens.hdbdesirabilityapp.R.id.InfoButtonSmall;
 
+/**
+ * @author Faith, Nicholas, Chester
+ *
+ */
+
 public class ResultsActivity extends AppCompatActivity {
     private ListView lv;
     public ImageButton saveQueryButton, InfoButtonSmall;

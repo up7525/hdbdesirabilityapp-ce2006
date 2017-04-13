@@ -8,6 +8,11 @@ import android.widget.*;
 
 import ntu.ce2006.swensens.hdbdesirabilityapp.R;
 
+/**
+ * @author Faith, Nicholas, Chester
+ *
+ */
+
 public class Search_Price_Activity extends AppCompatActivity {
 
     @Override

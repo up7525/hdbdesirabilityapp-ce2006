@@ -17,7 +17,7 @@ import java.util.concurrent.Future;
 import ntu.ce2006.swensens.hdbdesirabilityapp.activity.MainActivity;
 
 /**
- * Created by trollpc on 24/03/17.
+ * @author Jonathan
  */
 
 public class GovDataAPIImpl extends JsonRequest {

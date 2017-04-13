@@ -1,6 +1,7 @@
 package ntu.ce2006.swensens.hdbdesirabilityapp.search.filters;
 
 /**
+ * @author Swensens
  * Created by Swensens on 20/03/17.
  */
 

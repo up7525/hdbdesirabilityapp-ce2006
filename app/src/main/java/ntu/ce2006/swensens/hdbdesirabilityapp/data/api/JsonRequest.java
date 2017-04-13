@@ -21,6 +21,7 @@ import ntu.ce2006.swensens.hdbdesirabilityapp.data.api.daointerface.APIDAO;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Location;
 
 /**
+ * @author Wang Chun-Yin
  * Created by trollpc on 24/03/17.
  */
 

@@ -1,6 +1,7 @@
 package ntu.ce2006.swensens.hdbdesirabilityapp.search;
 
 /**
+ * @author Wang Chun-Yin
  * Created by trollpc on 6/04/17.
  */
 

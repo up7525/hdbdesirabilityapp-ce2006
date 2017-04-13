@@ -5,6 +5,7 @@ import java.util.*;
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.result.sort.SortOrder;
 
 /**
+ * @author Swensens
  * Created by Swensens on 20/03/17.
  */
 

@@ -34,6 +34,7 @@ import java.util.List;
  * Query query = new Query.Builder().locations(locationList).sizes(sizesList).price(0, 100)
  *          .areas(0,4).amenities(amenitiesList).build();
  *
+ * @author Wang Chun-Yin
  * Created by Swensens on 20/03/17.
  */
 

@@ -18,6 +18,10 @@ import java.util.List;
 
 import ntu.ce2006.swensens.hdbdesirabilityapp.search.query.Query;
 
+/**
+ * @author Jonathan
+ */
+
 public class DbHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VER = 1;
     private static final String DATABASE_NAME = "local.db";
