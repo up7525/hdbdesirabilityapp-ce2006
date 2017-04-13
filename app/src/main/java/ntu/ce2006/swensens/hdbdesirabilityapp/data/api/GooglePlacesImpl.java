@@ -19,11 +19,26 @@ import ntu.ce2006.swensens.hdbdesirabilityapp.search.filters.Amenities;
 
 public class GooglePlacesImpl extends JsonRequest {
 
+    // Latitude of the flat
     private double latitude;
+    
+    // Longitude of the flat
     private double longitude;
+    
+    // Radius of nearby amenities
     private int radius;
+    
+    // Amanity of interest to be queried
     private Amenities amenities;
 
+    /**
+     * Constructor to create GoogleplacesImpl
+     * 
+     * @param latitude of the flat
+     * @param longitude of the flat
+     * @param radius of the nearby amenities
+     * @param types of amenity of interest
+     */
     public GooglePlacesImpl(double latitude, double longitude, int radius, Amenities amenities) {
         this.latitude = latitude;
         this.longitude = longitude;
