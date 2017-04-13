@@ -391,10 +391,10 @@ public class SearchActivity extends AppCompatActivity implements ResultAsyncCall
         return getSharedPreferences("x", Context.MODE_PRIVATE).getString(name, "");
     }
 
-
     /**
-     * Allows for display of progress animation.
-     * @param listOfFlats list of flats returned from FlatManager.
+     * Callback function to retrieve AsyncTask.execute() results
+     *
+     * @param result result to be returned from AsyncTask executions
      */
     @Override
     public void onTaskComplete(List<Flat> listOfFlats) {
