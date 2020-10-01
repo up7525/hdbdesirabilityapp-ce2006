@@ -33,32 +33,32 @@ public class Search_Loc_Activity extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-        save(((CheckBox) findViewById(R.id.AngMoKio)).isChecked(), "AngMoKio");
-        save(((CheckBox) findViewById(R.id.Bedok)).isChecked(), "Bedok");
-        save(((CheckBox) findViewById(R.id.Bishan)).isChecked(), "Bishan");
-        save(((CheckBox) findViewById(R.id.BukitBatok)).isChecked(), "BukitBatok");
-        save(((CheckBox) findViewById(R.id.BukitMerah)).isChecked(), "BukitMerah");
-        save(((CheckBox) findViewById(R.id.BukitPanjang)).isChecked(), "BukitPanjang");
-        save(((CheckBox) findViewById(R.id.BukitTimah)).isChecked(), "BukitTimah");
-        save(((CheckBox) findViewById(R.id.CentralArea)).isChecked(), "CentralArea");
-        save(((CheckBox) findViewById(R.id.ChoaChuKang)).isChecked(), "ChoaChuKang");
-        save(((CheckBox) findViewById(R.id.Clementi)).isChecked(), "Clementi");
-        save(((CheckBox) findViewById(R.id.Geylang)).isChecked(), "Geylang");
-        save(((CheckBox) findViewById(R.id.Hougang)).isChecked(), "Hougang");
-        save(((CheckBox) findViewById(R.id.JurongEast)).isChecked(), "JurongEast");
-        save(((CheckBox) findViewById(R.id.JurongWest)).isChecked(), "JurongWest");
-        save(((CheckBox) findViewById(R.id.KallangWhampoa)).isChecked(), "KallangWhampoa");
-        save(((CheckBox) findViewById(R.id.MarineParade)).isChecked(), "MarineParade");
-        save(((CheckBox) findViewById(R.id.PasirRis)).isChecked(), "PasirRis");
-        save(((CheckBox) findViewById(R.id.Punggol)).isChecked(), "Punggol");
-        save(((CheckBox) findViewById(R.id.Queenstown)).isChecked(), "Queenstown");
-        save(((CheckBox) findViewById(R.id.Sembawang)).isChecked(), "Sembawang");
-        save(((CheckBox) findViewById(R.id.Sengkang)).isChecked(), "Sengkang");
-        save(((CheckBox) findViewById(R.id.Serangoon)).isChecked(), "Serangoon");
-        save(((CheckBox) findViewById(R.id.Tampines)).isChecked(), "Tampines");
-        save(((CheckBox) findViewById(R.id.ToaPayoh)).isChecked(), "ToaPayoh");
-        save(((CheckBox) findViewById(R.id.Woodlands)).isChecked(), "Woodlands");
-        save(((CheckBox) findViewById(R.id.Yishun)).isChecked(), "Yishun");
+        save(( findViewById(R.id.AngMoKio)).isChecked(), "AngMoKio");
+        save(( findViewById(R.id.Bedok)).isChecked(), "Bedok");
+        save(( findViewById(R.id.Bishan)).isChecked(), "Bishan");
+        save(( findViewById(R.id.BukitBatok)).isChecked(), "BukitBatok");
+        save(( findViewById(R.id.BukitMerah)).isChecked(), "BukitMerah");
+        save(( findViewById(R.id.BukitPanjang)).isChecked(), "BukitPanjang");
+        save(( findViewById(R.id.BukitTimah)).isChecked(), "BukitTimah");
+        save(( findViewById(R.id.CentralArea)).isChecked(), "CentralArea");
+        save(( findViewById(R.id.ChoaChuKang)).isChecked(), "ChoaChuKang");
+        save(( findViewById(R.id.Clementi)).isChecked(), "Clementi");
+        save(( findViewById(R.id.Geylang)).isChecked(), "Geylang");
+        save(( findViewById(R.id.Hougang)).isChecked(), "Hougang");
+        save(( findViewById(R.id.JurongEast)).isChecked(), "JurongEast");
+        save(( findViewById(R.id.JurongWest)).isChecked(), "JurongWest");
+        save(( findViewById(R.id.KallangWhampoa)).isChecked(), "KallangWhampoa");
+        save(( findViewById(R.id.MarineParade)).isChecked(), "MarineParade");
+        save(( findViewById(R.id.PasirRis)).isChecked(), "PasirRis");
+        save(( findViewById(R.id.Punggol)).isChecked(), "Punggol");
+        save(( findViewById(R.id.Queenstown)).isChecked(), "Queenstown");
+        save(( findViewById(R.id.Sembawang)).isChecked(), "Sembawang");
+        save(( findViewById(R.id.Sengkang)).isChecked(), "Sengkang");
+        save(( findViewById(R.id.Serangoon)).isChecked(), "Serangoon");
+        save(( findViewById(R.id.Tampines)).isChecked(), "Tampines");
+        save(( findViewById(R.id.ToaPayoh)).isChecked(), "ToaPayoh");
+        save(( findViewById(R.id.Woodlands)).isChecked(), "Woodlands");
+        save(( findViewById(R.id.Yishun)).isChecked(), "Yishun");
     }
 
     /**
@@ -67,34 +67,33 @@ public class Search_Loc_Activity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        ((CheckBox) findViewById(R.id.AngMoKio)).setChecked(load("AngMoKio"));
-        ((CheckBox) findViewById(R.id.Bedok)).setChecked(load("Bedok"));
-        ((CheckBox) findViewById(R.id.Bishan)).setChecked(load("Bishan"));
-        ((CheckBox) findViewById(R.id.BukitBatok)).setChecked(load("BukitBatok"));
-        ((CheckBox) findViewById(R.id.BukitMerah)).setChecked(load("BukitMerah"));
-        ((CheckBox) findViewById(R.id.BukitPanjang)).setChecked(load("BukitPanjang"));
-        ((CheckBox) findViewById(R.id.BukitTimah)).setChecked(load("BukitTimah"));
-        ((CheckBox) findViewById(R.id.CentralArea)).setChecked(load("CentralArea"));
-        ((CheckBox) findViewById(R.id.ChoaChuKang)).setChecked(load("ChoaChuKang"));
-        ((CheckBox) findViewById(R.id.Clementi)).setChecked(load("Clementi"));
-        ((CheckBox) findViewById(R.id.Geylang)).setChecked(load("Geylang"));
-        ((CheckBox) findViewById(R.id.Hougang)).setChecked(load("Hougang"));
-        ((CheckBox) findViewById(R.id.JurongEast)).setChecked(load("JurongEast"));
-        ((CheckBox) findViewById(R.id.JurongWest)).setChecked(load("JurongWest"));
-        ((CheckBox) findViewById(R.id.KallangWhampoa)).setChecked(load("KallangWhampoa"));
-        ((CheckBox) findViewById(R.id.MarineParade)).setChecked(load("MarineParade"));
-        ((CheckBox) findViewById(R.id.PasirRis)).setChecked(load("PasirRis"));
-        ((CheckBox) findViewById(R.id.Punggol)).setChecked(load("Punggol"));
-        ((CheckBox) findViewById(R.id.Queenstown)).setChecked(load("Queenstown"));
-        ((CheckBox) findViewById(R.id.Sembawang)).setChecked(load("Sembawang"));
-        ((CheckBox) findViewById(R.id.Sengkang)).setChecked(load("Sengkang"));
-        ((CheckBox) findViewById(R.id.Serangoon)).setChecked(load("Serangoon"));
-        ((CheckBox) findViewById(R.id.Tampines)).setChecked(load("Tampines"));
-        ((CheckBox) findViewById(R.id.ToaPayoh)).setChecked(load("ToaPayoh"));
-        ((CheckBox) findViewById(R.id.Woodlands)).setChecked(load("Woodlands"));
-        ((CheckBox) findViewById(R.id.Yishun)).setChecked(load("Yishun"));
+        ( findViewById(R.id.AngMoKio)).setChecked(load("AngMoKio"));
+        ( findViewById(R.id.Bedok)).setChecked(load("Bedok"));
+        ( findViewById(R.id.Bishan)).setChecked(load("Bishan"));
+        ( findViewById(R.id.BukitBatok)).setChecked(load("BukitBatok"));
+        ( findViewById(R.id.BukitMerah)).setChecked(load("BukitMerah"));
+        ( findViewById(R.id.BukitPanjang)).setChecked(load("BukitPanjang"));
+        ( findViewById(R.id.BukitTimah)).setChecked(load("BukitTimah"));
+        ( findViewById(R.id.CentralArea)).setChecked(load("CentralArea"));
+        ( findViewById(R.id.ChoaChuKang)).setChecked(load("ChoaChuKang"));
+        ( findViewById(R.id.Clementi)).setChecked(load("Clementi"));
+        ( findViewById(R.id.Geylang)).setChecked(load("Geylang"));
+        ( findViewById(R.id.Hougang)).setChecked(load("Hougang"));
+        ( findViewById(R.id.JurongEast)).setChecked(load("JurongEast"));
+        ( findViewById(R.id.JurongWest)).setChecked(load("JurongWest"));
+        ( findViewById(R.id.KallangWhampoa)).setChecked(load("KallangWhampoa"));
+        ( findViewById(R.id.MarineParade)).setChecked(load("MarineParade"));
+        ( findViewById(R.id.PasirRis)).setChecked(load("PasirRis"));
+        ( findViewById(R.id.Punggol)).setChecked(load("Punggol"));
+        ( findViewById(R.id.Queenstown)).setChecked(load("Queenstown"));
+        ( findViewById(R.id.Sembawang)).setChecked(load("Sembawang"));
+        ( findViewById(R.id.Sengkang)).setChecked(load("Sengkang"));
+        ( findViewById(R.id.Serangoon)).setChecked(load("Serangoon"));
+        ( findViewById(R.id.Tampines)).setChecked(load("Tampines"));
+        ( findViewById(R.id.ToaPayoh)).setChecked(load("ToaPayoh"));
+        ( findViewById(R.id.Woodlands)).setChecked(load("Woodlands"));
+        ( findViewById(R.id.Yishun)).setChecked(load("Yishun"));
     }
-
     /**
      * this saves the state of the checkbox through a SharedPreferences object
      * @param ch state of the checkbox
