@@ -221,21 +221,6 @@ public class FlatManager extends AsyncTask<Void, Void, List<Flat>> {
     }
 
     /**
-     * Helper private class to check if the flat contains the size defined in the query
-     *
-     * @param flat that is to be checked
-     * @return true if flat size is queried by the query object, defined by the user, false otherwise
-     */
-    private boolean hasSize(Flat flat) {
-        for (Size size : query.getSizeFilters()) {
-            if (size.toString().equals(flat.getSize())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
      * Helper private class to check if price is within the defined query price
      *
      * @param flat that is to be checked
